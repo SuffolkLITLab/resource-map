@@ -1,0 +1,57 @@
+<html>
+    <head>
+        <title>Geo Finder</title>
+    </head>
+    <body>
+<div id="Boston">
+            <h1>Geo Finder</h1>
+            <ul>
+                <li v-for="item in items">
+                    <h3>{{ item['fields']['Name'] }}</h3>
+                    <p>{{ item['fields']['Category'] }}</p>
+                    <p><strong>Minimum Age </strong>${{ item['fields']['Minimum Age'] }}</p>
+                    <p><strong>Maximum Age </strong>{{ item['fields']['Maximum Age'] }}</p>
+                    <p>{{ item['fields']['Gender'] }}</p>
+                    <p>{{ item['fields']['Address'] }}</p>
+                    <p>{{ item['fields']['Description'] }}</p>
+                    <p>{{ item['fields']['Website'] }}</p>
+                    <p>{{ item['fields']['Contact'] }}</p>
+                </li>
+            </ul>            
+        </div><!--app-->
+        <!-- Include Dependancy Scripts -->
+        <script type="text/javascript" src="https://unpkg.com/vue"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.16.2/axios.min.js"></script>
+<script type="text/javascript">
+            var app = new Vue({
+                el: '#Boston',
+                data: {
+                    items: []
+                },
+                mounted: function(){
+                   this.loadItems(); 
+                },
+                methods: {
+                    loadItems: function(){
+                        
+                        // Init variables
+                        var self = this
+                        var app_id = "appy5ZQO8lcSOjH0J";
+                        var app_key = "keyHtA4JdvolTnmFV";
+                        this.items = []
+axios.get(
+                            "https://api.airtable.com/v0/"+app_id+"/Menu?view=Grid%20view",
+                            { 
+                                headers: { Authorization: "Bearer "+app_key } 
+                            }
+                        ).then(function(response){
+                            self.items = response.data.records
+                        }).catch(function(error){
+                            console.log(error)
+                        })
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>
