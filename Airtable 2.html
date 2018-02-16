@@ -1,57 +1,123 @@
 <html>
-    <head>
-        <title>Geo Finder</title>
-    </head>
-    <body>
-<div id="Boston">
-            <h1>Geo Finder</h1>
-            <ul>
-                <li v-for="item in items">
-                    <h3>{{ item['fields']['Name'] }}</h3>
-                    <p>{{ item['fields']['Category'] }}</p>
-                    <p><strong>Minimum Age </strong>${{ item['fields']['Minimum Age'] }}</p>
-                    <p><strong>Maximum Age </strong>{{ item['fields']['Maximum Age'] }}</p>
-                    <p>{{ item['fields']['Gender'] }}</p>
-                    <p>{{ item['fields']['Address'] }}</p>
-                    <p>{{ item['fields']['Description'] }}</p>
-                    <p>{{ item['fields']['Website'] }}</p>
-                    <p>{{ item['fields']['Contact'] }}</p>
-                </li>
-            </ul>            
-        </div><!--app-->
-        <!-- Include Dependancy Scripts -->
-        <script type="text/javascript" src="https://unpkg.com/vue"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.16.2/axios.min.js"></script>
-<script type="text/javascript">
-            var app = new Vue({
-                el: '#Boston',
-                data: {
-                    items: []
-                },
-                mounted: function(){
-                   this.loadItems(); 
-                },
-                methods: {
-                    loadItems: function(){
-                        
-                        // Init variables
-                        var self = this
-                        var app_id = "appy5ZQO8lcSOjH0J";
-                        var app_key = "keyHtA4JdvolTnmFV";
-                        this.items = []
-axios.get(
-                            "https://api.airtable.com/v0/"+app_id+"/Menu?view=Grid%20view",
-                            { 
-                                headers: { Authorization: "Bearer "+app_key } 
-                            }
-                        ).then(function(response){
-                            self.items = response.data.records
-                        }).catch(function(error){
-                            console.log(error)
-                        })
-                    }
-                }
-            })
-        </script>
-    </body>
-</html>
+<head>
+    <title>Geo Finder</title>
+    	
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+		
+</head>
+<body>
+    	
+<div data-role="page" id="filter">
+	<div data-role="header"> 
+		<h1>Filter</h1>
+		<a href="#details" data-transition="slide" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-right ui-icon-arrow-r">Details</button></a>
+	</div> 
+<div data-role="collapsible" data-theme="a" data-content-theme="a">
+			<h2>Choose a Location</h2>
+    		<ul data-role="listview">
+        		<li><a href="index.html">Boston</a>
+       			<li><a href="index.html">Chelsea</a>
+        		<li><a href="index.html">Dorchester</a></li>
+        		<li><a href="index.html">Jamaica Plain</a></li>
+        		<li><a href="index.html">Roxbury</a></li>
+    </ul>
+</div>
+<div><form class="ui-filterable">
+    <input id="autocomplete-input" data-type="search" placeholder="Age">
+</form>
+<ul data-role="listview" data-filter="true" data-filter-reveal="true" data-input="#autocomplete-input" data-inset="true">
+    <li><a href="#">12</a></li>
+    <li><a href="#">13</a></li>
+    <li><a href="#">14</a></li>
+    <li><a href="#">15</a></li>
+    <li><a href="#">16</a></li>
+    <li><a href="#">17</a></li>
+	<li><a href="#">18</a></li>
+	<li><a href="#">19</a></li>
+	<li><a href="#">20</a></li>
+	<li><a href="#">21</a></li>
+	<li><a href="#">22</a></li>
+	<li><a href="#">23</a></li>
+	<li><a href="#">24</a></li>
+</ul>
+</div>
+<div><form>
+    <fieldset data-role="controlgroup">
+        <h3>Category</h3>
+        <input type="checkbox" name="checkbox-v-2a" id="checkbox-v-2a">
+        <label for="checkbox-v-2a">Job Opportunties/Training</label>
+        <input type="checkbox" name="checkbox-v-2b" id="checkbox-v-2b">
+        <label for="checkbox-v-2b">Community Outreach</label>
+        <input type="checkbox" name="checkbox-v-2c" id="checkbox-v-2c">
+        <label for="checkbox-v-2c">Counseling</label>
+		<input type="checkbox" name="checkbox-v-2d" id="checkbox-v-2d">
+        <label for="checkbox-v-2d">Health Services</label>
+		<input type="checkbox" name="checkbox-v-2e" id="checkbox-v-2e">
+        <label for="checkbox-v-2e">High Risk</label>
+		<input type="checkbox" name="checkbox-v-2f" id="checkbox-v-2f">
+        <label for="checkbox-v-2f">Multi-Service</label>
+    </fieldset>
+</form>
+</div>
+<form>
+<fieldset data-role="controlgroup" data-type="horizontal">
+    <input type="radio" name="radio-choice-h-2" id="radio-choice-h-2a" value="on" checked="checked">
+    <label for="radio-choice-h-2a">List</label>
+    <input type="radio" name="radio-choice-h-2" id="radio-choice-h-2b" value="off">
+    <label for="radio-choice-h-2b">Map</label><a href="#map" data-transition="slide"></a>
+</fieldset>
+</form>
+
+<button class="ui-btn ui-shadow">Find</button>
+</div>
+
+<div data-role="page" id="list">
+	<div data-role="header"> 
+		<h1>List of Resources</h1>
+		<a href="#filter" data-transition="slide" data-direction="reverse" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-arrow-l">Back</button></a>
+	</div> 
+<div data-role="navbar" class="ui-state-persist">
+	<ul>
+		<li><a href="#map">Map</a></li>
+	</ul>
+</div><!-- /navbar -->
+
+</div>
+
+<div data-role="page" id="map">
+	<div data-role="header"> 
+		<h1>Map</h1> 
+		<a href="#filter" data-transition="slide" data-direction="reverse" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-arrow-l">Back</button></a>
+	</div> 
+
+<div data-role="navbar" class="ui-state-persist">
+	<ul>
+		<li><a href="#list">List</a></li>
+	</ul>
+</div><!-- /navbar -->
+</div>
+
+<div data-role="page" id="details">
+	<div data-role="header"> 
+		<h1>Details</h1>
+		<a href="#filter" data-transition="slide" data-direction="reverse" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-arrow-l">Back</button></a>
+	</div> 
+<div data-role="navbar" class="ui-state-persist">
+	<ul>
+		<li><a href="#list">List</a></li>
+		<li><a href="#map">Map</a></li>
+	</ul>
+</div><!-- /navbar -->
+	<a href="#about" class="ui-btn ui-icon-info ui-btn-icon-notext ui-corner-all ui-btn-right" data-transition="slide"></a>
+
+</div>
+
+
+<div data-role="page" id="about">
+	<div data-role="header"> 
+		<h1>About</h1> 
+		<a href="#details" data-transition="slide" data-direction="reverse" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-arrow-l">Back</button></a>
+	</div> 
+</div>
