@@ -90,7 +90,7 @@
 <div data-role="page" id="details">
 	<div data-role="header"> 
 		<h1>Details</h1> 
-		<a href="#results" onCLick="$( '#results' ).enhanceWithin();" data-transition="slide" data-direction="reverse" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-arrow-l">Back</a>
+		<a href="#results" data-transition="slide" data-direction="reverse" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-arrow-l">Back</a>
 		<a href="#about" class="ui-btn ui-icon-info ui-btn-icon-notext ui-corner-all ui-btn-right" data-transition="slide"></a>
 	</div>
 	<div data-role="content" class="content">
@@ -110,7 +110,7 @@
 <div data-role="page" id="results">
 	<div data-role="header"> 
 		<h1>Results</h1>
-		<a href="#filter" onClick="$( '#details' ).enhanceWithin();" data-transition="slide" data-direction="reverse" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-arrow-l">Back</a>
+		<a href="#filter" data-transition="slide" data-direction="reverse" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-arrow-l">Back</a>
 		<a href="#about" class="ui-btn ui-icon-info ui-btn-icon-notext ui-corner-all ui-btn-right" data-transition="slide"></a>
 		<div data-role="navbar">
 			<ul>
@@ -161,7 +161,6 @@
         <script type="text/javascript" src="https://unpkg.com/vue"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.16.2/axios.min.js"></script>
   
-    
 		<script type="text/javascript">
 		
 		function load_api_data(target) {
@@ -216,11 +215,11 @@
 			
 			$('#town_name').html($('#town').find(":selected").text());
             		          
-            load_api_data('#results',$.mobile.changePage($('#results'), { transition: 'slide'})  ); 
+            load_api_data('#results',$('#results').enhanceWithin()); 
              
-            $('#results').enhanceWithin();         
-            //$.mobile.changePage($('#results'), { transition: 'slide'});
-            return true;
+            //$('#results').enhanceWithin();         
+            $.mobile.changePage($('#results'), { transition: 'slide'});
+            //return true;
         }
             
         function details_page(id) {
@@ -229,13 +228,13 @@
         	$("#detail").attr("v-for", "item in items");
         	$("#detail").attr("v-if", "item['fields']['Name'] == '"+id+"'");
         	$("#detail").html("<h3>{{ item['fields']['Name'] }}</h3>					<h4>{{ item['fields']['Category'] }}</h4>                    <p><b>Age Range:</b> {{ item['fields']['Minimum Age'] }} - {{ item['fields']['Maximum Age'] }}</p>                    <p><b>Gender:</b> {{ item['fields']['Gender'] }}</p>                    <p><b>Address:</b> {{ item['fields']['Address'] }}</p>                    <p><b>Description:</b> {{ item['fields']['Description'] }}</p>                    <p><b>Website:</b> {{ item['fields']['Website'] }}</p>                    <p><b>Contact:</b> {{ item['fields']['Contact'] }}</p>");
- 			load_api_data('#details');
+ 			load_api_data('#details',$( '#details' ).enhanceWithin());
  			$.mobile.changePage($('#details'), { transition: 'slide'})
 			
             //$('#details').listview('refresh');
-            $( '#details' ).enhanceWithin();
+            
             //$.mobile.changePage($('#details'), { transition: 'slide'});
-            return true;
+            //return true;
         }
             
             //$( '#details' ).enhanceWithin();
