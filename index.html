@@ -90,7 +90,7 @@
 <div data-role="page" id="details">
 	<div data-role="header"> 
 		<h1>Details</h1> 
-		<a href="#results" data-transition="slide" data-direction="reverse" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-arrow-l">Back</a>
+		<a href="#results" onCLick="$( '#results' ).enhanceWithin();" data-transition="slide" data-direction="reverse" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-arrow-l">Back</a>
 		<a href="#about" class="ui-btn ui-icon-info ui-btn-icon-notext ui-corner-all ui-btn-right" data-transition="slide"></a>
 	</div>
 	<div data-role="content" class="content">
@@ -110,12 +110,12 @@
 <div data-role="page" id="results">
 	<div data-role="header"> 
 		<h1>Results</h1>
-		<a href="#filter" data-transition="slide" data-direction="reverse" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-arrow-l">Back</a>
+		<a href="#filter" onClick="$( '#details' ).enhanceWithin();" data-transition="slide" data-direction="reverse" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-arrow-l">Back</a>
 		<a href="#about" class="ui-btn ui-icon-info ui-btn-icon-notext ui-corner-all ui-btn-right" data-transition="slide"></a>
 		<div data-role="navbar">
 			<ul>
 				<li><a href="#results">List</a></li>
-				<li><a href="#map-page" style="color:#ccc">Map</a></li>
+				<li><a href="#map-page" style="color:#ccc" onClick="size_map();">Map</a></li>
 			</ul>
 		</div>
 	</div>
@@ -123,15 +123,15 @@
 			<h1 id="town_name">Boston</h1>
 				<ul data-role="listview" data-inset="true">
 					<li data-role="list-divider">Community Outreach</li>
-					<li v-for="item in items" v-if="item['fields']['Category'] == 'Community Outreach'"><a href="javascript:void('')" onClick="details_page(this.innerHTML);">{{ item['fields']['Name'] }}</a></li>
+					<li id="outreach" v-for="item in items" v-if="item['fields']['Category'] == 'Community Outreach'"><a href="javascript:void('')" onClick="details_page(this.innerHTML);">{{ item['fields']['Name'] }}</a></li>
 					<li data-role="list-divider">Counseling</li>
-					<li v-for="item in items" v-if="item['fields']['Category'] == 'Counseling'"><a href="javascript:void('')" onClick="details_page(this.innerHTML);">{{ item['fields']['Name'] }}</a></li>
+					<li id="counseling" v-for="item in items" v-if="item['fields']['Category'] == 'Counseling'"><a href="javascript:void('')" onClick="details_page(this.innerHTML);">{{ item['fields']['Name'] }}</a></li>
 					<li data-role="list-divider">High Risk</li>
-					<li v-for="item in items" v-if="item['fields']['Category'] == 'High Risk'"><a href="javascript:void('')" onClick="details_page(this.innerHTML);">{{ item['fields']['Name'] }}</a></li>
+					<li id="risk" v-for="item in items" v-if="item['fields']['Category'] == 'High Risk'"><a href="javascript:void('')" onClick="details_page(this.innerHTML);">{{ item['fields']['Name'] }}</a></li>
 					<li data-role="list-divider">Job Opportunities/Training</li>
-					<li v-for="item in items" v-if="item['fields']['Category'] == 'Job Opportunities/Training'"><a href="javascript:void('')" onClick="details_page(this.innerHTML);">{{ item['fields']['Name'] }}</a></li>
+					<li id="training" v-for="item in items" v-if="item['fields']['Category'] == 'Job Opportunities/Training'"><a href="javascript:void('')" onClick="details_page(this.innerHTML);">{{ item['fields']['Name'] }}</a></li>
 					<li data-role="list-divider">Multi-Service</li>
-					<li v-for="item in items" v-if="item['fields']['Category'] == 'Multi-Service'"><a href="javascript:void('')" onClick="details_page(this.innerHTML);">{{ item['fields']['Name'] }}</a></li>
+					<li id="service" v-for="item in items" v-if="item['fields']['Category'] == 'Multi-Service'"><a href="javascript:void('')" onClick="details_page(this.innerHTML);">{{ item['fields']['Name'] }}</a></li>
 				</ul>
 		</div>
 		
@@ -141,13 +141,13 @@
 <div data-role="page" id="map-page">
 	<div data-role="header"> 
 		<h1>Results</h1>
-		<a href="#filter" data-transition="slide" data-direction="reverse" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-arrow-l">Back</a>
+		<a href="#filter" onClick="$( '#details' ).enhanceWithin();"  data-transition="slide" data-direction="reverse" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-arrow-l">Back</a>
 		<a href="#about" class="ui-btn ui-icon-info ui-btn-icon-notext ui-corner-all ui-btn-right" data-transition="slide"></a>
 	</div>
 		<div data-role="navbar">
 			<ul>
 				<li><a href="#results" style="color:#ccc">List</a></li>
-				<li><a href="#map-page" >Map</a></li>
+				<li><a href="#map-page">Map</a></li>
 			</ul>
 		</div>
 		<div>
@@ -164,9 +164,9 @@
     
 		<script type="text/javascript">
 		
-		function list_page() {
-            var app = new Vue({
-                el: '#results',
+		function load_api_data(target) {
+			var app = new Vue({
+                el: target,
                 data: {
                     items: []
                 },
@@ -193,55 +193,54 @@
                         })
                     }
                 }
-            })
-            $('#town_name').html($('#town').find(":selected").text());
-            $.mobile.changePage($('#results'), { transition: 'slide'});
+            });
+		}
+		
+		
+		function list_page() {
+			$("#outreach").attr("v-for", "item in items");
+        	$("#outreach").attr("v-if", "item['fields']['Category'] == 'Community Outreach'");
+        	$("#outreach").html("<a href=\"javascript:void('')\" onClick=\"details_page(this.innerHTML);\">{{ item['fields']['Name'] }}</a>");
+			$("#counseling").attr("v-for", "item in items");
+        	$("#counseling").attr("v-if", "item['fields']['Category'] == 'Counseling'");
+        	$("#counseling").html("<a href=\"javascript:void('')\" onClick=\"details_page(this.innerHTML);\">{{ item['fields']['Name'] }}</a>");
+			$("#risk").attr("v-for", "item in items");
+        	$("#risk").attr("v-if", "item['fields']['Category'] == 'High Risk'");
+        	$("#risk").html("<a href=\"javascript:void('')\" onClick=\"details_page(this.innerHTML);\">{{ item['fields']['Name'] }}</a>");
+			$("#training").attr("v-for", "item in items");
+        	$("#training").attr("v-if", "item['fields']['Category'] == 'Job Opportunities/Training'");
+        	$("#training").html("<a href=\"javascript:void('')\" onClick=\"details_page(this.innerHTML);\">{{ item['fields']['Name'] }}</a>");
+			$("#service").attr("v-for", "item in items");
+        	$("#service").attr("v-if", "item['fields']['Category'] == 'Multi-Service'");
+        	$("#service").html("<a href=\"javascript:void('')\" onClick=\"details_page(this.innerHTML);\">{{ item['fields']['Name'] }}</a>");
+			
+			$('#town_name').html($('#town').find(":selected").text());
+            		          
+            load_api_data('#results',$.mobile.changePage($('#results'), { transition: 'slide'})  ); 
+             
+            $('#results').enhanceWithin();         
+            //$.mobile.changePage($('#results'), { transition: 'slide'});
+            return true;
         }
             
         function details_page(id) {
+	        $( '#details' ).enhanceWithin();
+        
         	$("#detail").attr("v-for", "item in items");
         	$("#detail").attr("v-if", "item['fields']['Name'] == '"+id+"'");
-        	$("#detail").html("<h3>{{ item['fields']['Name'] }}</h3>					<h4>{{ item['fields']['Category'] }}</h4>                    <p><b>Age Range:</b> {{ item['fields']['Minimum Age'] }} - {{ item['fields']['Maximum Age'] }}</p>                    <p><b>Gender:</b> {{ item['fields']['Gender'] }}</p>                    <p><b>Address:</b> {{ item['fields']['Address'] }}</p>                    <p><b>Description:</b> {{ item['fields']['Description'] }}</p>                    <p><b>Website:</b> {{ item['fields']['Website'] }}</p>                    <p><b>Contact:</b> {{ item['fields']['Contact'] }}</p>")
-            
-            var app_2 = new Vue({
-                el: '#details',
-                data: {
-                    items: []
-                },
-                mounted: function(){
-                   this.loadItems(); 
-                },
-                methods: {
-                    loadItems: function(){
-                        
-                        // Init variables
-                        var self = this
-                        var app_id = "appHUknSmoIogemD5";
-                        var app_key = "keyHtA4JdvolTnmFV";
-                        this.items = []
-						axios.get(
-                            "https://api.airtable.com/v0/"+app_id+"/" + $('#town').find(":selected").text(),
-                            { 
-                                headers: { Authorization: "Bearer "+ app_key } 
-                            }
-                        ).then(function(response){
-                            self.items = response.data.records
-                        }).catch(function(error){
-                            console.log(error)
-                        })
-                    }
-                }
-            })
-            
+        	$("#detail").html("<h3>{{ item['fields']['Name'] }}</h3>					<h4>{{ item['fields']['Category'] }}</h4>                    <p><b>Age Range:</b> {{ item['fields']['Minimum Age'] }} - {{ item['fields']['Maximum Age'] }}</p>                    <p><b>Gender:</b> {{ item['fields']['Gender'] }}</p>                    <p><b>Address:</b> {{ item['fields']['Address'] }}</p>                    <p><b>Description:</b> {{ item['fields']['Description'] }}</p>                    <p><b>Website:</b> {{ item['fields']['Website'] }}</p>                    <p><b>Contact:</b> {{ item['fields']['Contact'] }}</p>");
+ 			load_api_data('#details');
+ 			$.mobile.changePage($('#details'), { transition: 'slide'})
+			
             //$('#details').listview('refresh');
-            $.mobile.changePage($('#details'), { transition: 'slide'});
+            $( '#details' ).enhanceWithin();
+            //$.mobile.changePage($('#details'), { transition: 'slide'});
             return true;
         }
             
             //$( '#details' ).enhanceWithin();
             
-            $('#').listview('refresh');
-            //$( "#list" ).enhanceWithin();
+            //$('#').listview('refresh');
             
             
         </script>
@@ -263,7 +262,9 @@ https://developers.google.com/maps/documentation/javascript/adding-a-google-map
         });
       }
       
-    $('#map').height( $(window).height() - 81 +  'px');
+	function size_map() {
+		$('#map').height( $(window).height() - 81 +  'px');
+	}
 </script>
 
 
