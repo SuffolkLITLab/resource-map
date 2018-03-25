@@ -1,138 +1,274 @@
-<!DOCTYPE html>
 <html>
 <head>
-	<title>Resource Finder</title>
-	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+	<meta http-equiv="Content-type" content="text/html;charset=UTF-8"/>
+	<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
+	<meta name="apple-mobile-web-app-capable" content="no" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <title>Geo Finder</title>
+    
+    <meta property="og:image" content="https://www.qnamarkup.org/images/QnA_300.png"/>
+    <link rel="apple-touch-icon" href="https://www.qnamarkup.org/images/QnA_300.png"/> 
+    	
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
 	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script>
+    	$(document).on("mobileinit", function () {
+        	$.mobile.hashListeningEnabled = false;
+        	$.mobile.pushStateEnabled = false;
+    	});
+	</script>
 	<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
-	<base src="http://www.publiccounsel.net">
 	<style>
-		
-		
+		.content {
+			text-align:left;
+			max-width:700px;
+			margin:0 auto 0 auto;
+			padding:0 15px 25px 15px
+		}
 	</style>
 </head>
 <body>
-<!-- Start of first page -->
-<div data-role="page" id="p1">
+
+
+<div data-role="page" id="filter">
 	<div data-role="header">
-		<h1 style="color:DodgerBlue;">List of Resources</h1>
-<div><a href="#p4" data-transition="slide">Map</a>
-	</div><!-- /header -->
-		<div data-role="collapsible" data-theme="a" data-content-theme="a">
-			<h2>Choose a Location</h2>
-    		<ul data-role="listview">
-        		<li><a href="index.html">Boston</a><a href="#p2" data-transition="slide">Boston</a></li>
-       			<li><a href="index.html">Chelsea</a><a href="#p3" data-transition="slide">Chelsea</a></li>
-        		<li><a href="index.html">Dorchester</a></li>
-        		<li><a href="index.html">Jamaica Plain</a></li>
-        		<li><a href="index.html">Roxbury</a></li>
-    </ul>
-</div>
-<div><form class="ui-filterable">
-    <input id="autocomplete-input" data-type="search" placeholder="Age">
-</form>
-<ul data-role="listview" data-filter="true" data-filter-reveal="true" data-input="#autocomplete-input" data-inset="true">
-    <li><a href="#">12</a></li>
-    <li><a href="#">13</a></li>
-    <li><a href="#">14</a></li>
-    <li><a href="#">15</a></li>
-    <li><a href="#">16</a></li>
-    <li><a href="#">17</a></li>
-	<li><a href="#">18</a></li>
-	<li><a href="#">19</a></li>
-	<li><a href="#">20</a></li>
-	<li><a href="#">21</a></li>
-	<li><a href="#">22</a></li>
-	<li><a href="#">23</a></li>
-	<li><a href="#">24</a></li>
-</ul>
-</div>
-<div><form>
-    <fieldset data-role="controlgroup">
-        <legend>Category</legend>
-        <input type="checkbox" name="checkbox-v-2a" id="checkbox-v-2a">
-        <label for="checkbox-v-2a">Job Opportunties/Training</label>
-        <input type="checkbox" name="checkbox-v-2b" id="checkbox-v-2b">
-        <label for="checkbox-v-2b">Community Outreach</label>
-        <input type="checkbox" name="checkbox-v-2c" id="checkbox-v-2c">
-        <label for="checkbox-v-2c">Counseling</label>
-		<input type="checkbox" name="checkbox-v-2d" id="checkbox-v-2d">
-        <label for="checkbox-v-2d">Health Services</label>
-		<input type="checkbox" name="checkbox-v-2e" id="checkbox-v-2e">
-        <label for="checkbox-v-2e">High Risk</label>
-		<input type="checkbox" name="checkbox-v-2f" id="checkbox-v-2f">
-        <label for="checkbox-v-2f">Multi-Service</label>
-    </fieldset>
-</form>
+		<h1>Juvenile Resource Finder</h1>
+		<a href="#about" class="ui-btn ui-icon-info ui-btn-icon-notext ui-corner-all ui-btn-right" data-transition="slide"></a>
+	</div> 
+	<div data-role="content" class="content">
+		<div class="ui-field-contain">Use the following selections to find programs & services near you.
+			<select id="town" name="select-native-1" id="select-native-1" style="width:100%">
+        		<option value="0">Choose a Location</option>
+        		<option value="Boston">Boston</option>
+        		<option value="Chelsea">Chelsea</option>
+        		<option value="Dorchester">Dorchester</option>
+        		<option value="Jamaica%20Plain">Jamaica Plain</option>
+				<option value="Roxbury">Roxbury</option>
+    		</select>
+		</div>
+
+		<input id="autocomplete-input" data-type="number" placeholder="Input Age of Juvenile Seeking Services">
+
+		<fieldset data-role="controlgroup">
+			<h3 style="margin-top:15px;">Check All That Apply:</h3>
+				<input type="checkbox" name="checkbox-v-2a" id="checkbox-v-2a">
+				<label for="checkbox-v-2a">Job Opportunties/Training</label>
+				<input type="checkbox" name="checkbox-v-2b" id="checkbox-v-2b">
+				<label for="checkbox-v-2b">Community Outreach</label>
+				<input type="checkbox" name="checkbox-v-2c" id="checkbox-v-2c">
+				<label for="checkbox-v-2c">Counseling</label>
+				<input type="checkbox" name="checkbox-v-2d" id="checkbox-v-2d">
+				<label for="checkbox-v-2d">Health Services</label>
+				<input type="checkbox" name="checkbox-v-2e" id="checkbox-v-2e">
+				<label for="checkbox-v-2e">High Risk</label>
+				<input type="checkbox" name="checkbox-v-2f" id="checkbox-v-2f">
+				<label for="checkbox-v-2f">Multi-Service</label>
+		</fieldset>
+
+		<fieldset data-role="controlgroup" data-type="horizontal">
+    		<input type="radio" name="radio-choice-h-2" id="radio-choice-h-2a" value="on" checked="checked">
+    		<label for="radio-choice-h-2a">List View</label>
+    		<input type="radio" name="radio-choice-h-2" id="radio-choice-h-2b" value="off">
+    		<label for="radio-choice-h-2b">Map View</label>
+		</fieldset>
+		
+		<a href="javascript:void('');" data-role="button" onClick="list_page();">Find Resources</a>
+		
+	</div>
 </div>
 
-	</div><!-- /content -->
-<a href="#" class="ui-btn ui-btn-inline">Submit</a>
-</div>
-<!-- Start of second page -->
-<div data-role="page" id="p2">
-	<div data-role="header">
-		<h1 style="color:DodgerBlue;">Boston</h1>
-		    <a href="#p1" data-transition="slide" data-direction="reverse" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-arrow-l">Back</button></a>
-	</div><!-- /header -->
-		<ul data-role="listview" data-filter="true">
-			<a href="#p4" data-transition="slide">Map</a></li>
-			<li data-role="list-divider">Community Outreach</li>
-			<li><a href="#">Big Brothers, Big Sisters of Massachusetts Bay</a>
-			<li><a href="#">Partners for Youth with Disabilities</a></li>
-			<li><a href="#">Big Sisters Association of Greater Boston</a></li>
-			<li data-role="list-divider">Counseling</li>
-			<li><a href="#">SMART Clinical Service Team</a></li>
-			<li><a href="#">Youth Connect- Boys & Girls Club</a></li>
-			<li data-role="list-divider">Health Services</li>
-			<li><a href="#">Sidney Borum Jr. Health Clinic</a></li>
-			<li data-role="list-divider">High Risk</li>
-   			<li><a href="#">ROCA-High Risk Young Men</a></li>
-			<li><a href="#">RFK- High Risk Youth Network</a></li>
-			<li><a href="#">Bridge Over Troubled Water</a></li>
-			<li data-role="list-divider">Job Opportunities/Training </li>
-			<li><a href="#">More Than Words</a></li>
-			<li><a href="#">NECAT- Culinary Arts Job Training</a></li>
-			<li><a href="#">Boston Career Link</a></li>
-			<li><a href="#">Building Pathways- Pre-Apprentice Program</a></li>
-			<li><a href="#">Inner City Weight Lifting</a></li>
-			<li><a href="#">The People's Academy</a></li>
-			<li><a href="#">Boston Area Health Education Center</a></li>
-			<li><a href="#">Youth Engagement & Employment- Mayors Youth Council</a></li>
-			<li><a href="#">SuccessLink- Summer Job Program</a></li>
-			<li><a href="#">Future Protectors Initiative</a></li>
-			<li><a href="#">Artists for Humanity</a></li>
-			<li data-role="list-divider">Multi-Service</li>
-			<li><a href="#">RFK- Detention Diversion Advocacy Program</a></li>
-			<li><a href="#">RFK- Children of Alcoholism and Substance Abuse</a></li>
-			<li><a href="#">Home for Little Wanderers</a></li>
-			<li><a href="#">Boston GLASS</a></li>
-	</div><!-- /content -->
-</div>
-<!-- Start of third page -->
-<div data-role="page" id="p3">
-	<div data-role="header">
-		<h1 style="color:DodgerBlue;">Chelsea</h1>
-		    <a href="#p1" data-transition="slide" data-direction="reverse" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-arrow-l">Back</button></a>
-	</div><!-- /header -->
-		<ul data-role="listview" data-filter="true">
-			<a href="#p4" data-transition="slide">Map</a></li>
-			<li data-role="list-divider">Alternative Education</li>
-			<li><a href="#">ROCA- High Risk Young Mothers</a>
-			<li data-role="list-divider">High Risk</li>
-			<li><a href="#">ROCA- High Risk Young Men</a></li>
-	</div><!-- /content -->
-<!-- Start of fourth page -->
-<div data-role="page" id="p4">
-	<div data-role="header">
-		<h1 style="color:DodgerBlue;">Map</h1>
-		    <a href="#p1" data-transition="slide" data-direction="reverse" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-arrow-l">Back</button></a>
-	</div><!-- /header -->
-	<div role="main" class="ui-content" style="padding:0">
-		<iframe src="map.html" width="100%" height="300px" frameborder="0"></iframe>
-	</div><!-- /content -->
+<div data-role="page" id="about">
+	<div data-role="header"> 
+		<h1>About</h1> 
+		<a href="#" data-transition="slide" data-direction="reverse" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-arrow-l" data-rel="back">Back</a>
+	</div> 
+	<div data-role="content" class="content">
 	
+	</div>	
 </div>
-</body>
-</html>
 
+<div data-role="page" id="details">
+	<div data-role="header"> 
+		<h1>Details</h1> 
+		<a href="#results" data-transition="slide" data-direction="reverse" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-arrow-l">Back</a>
+		<a href="#about" class="ui-btn ui-icon-info ui-btn-icon-notext ui-corner-all ui-btn-right" data-transition="slide"></a>
+	</div>
+	<div data-role="content" class="content">
+		<div id="detail" v-for="" v-if="">
+					<h3>{{ item['fields']['Name'] }}</h3>
+					<h4>{{ item['fields']['Category'] }}</h4>
+                    <p><b>Age Range:</b> {{ item['fields']['Minimum Age'] }} - {{ item['fields']['Maximum Age'] }}</p>
+                    <p><b>Gender:</b> {{ item['fields']['Gender'] }}</p>
+                    <p><b>Address:</b> {{ item['fields']['Address'] }}</p>
+                    <p><b>Description:</b> {{ item['fields']['Description'] }}</p>
+                    <p><b>Website:</b> {{ item['fields']['Website'] }}</p>
+                    <p><b>Contact:</b> {{ item['fields']['Contact'] }}</p>
+		</div>
+	</div>
+</div>
+
+<div data-role="page" id="results">
+	<div data-role="header"> 
+		<h1>Results</h1>
+		<a href="#filter" data-transition="slide" data-direction="reverse" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-arrow-l">Back</a>
+		<a href="#about" class="ui-btn ui-icon-info ui-btn-icon-notext ui-corner-all ui-btn-right" data-transition="slide"></a>
+		<div data-role="navbar">
+			<ul>
+				<li><a href="#results">List</a></li>
+				<li><a href="#map-page" style="color:#ccc">Map</a></li>
+			</ul>
+		</div>
+	</div>
+		<div data-role="content" class="content">
+			<h1 id="town_name">Boston</h1>
+				<ul data-role="listview" data-inset="true">
+					<li data-role="list-divider">Community Outreach</li>
+					<li v-for="item in items" v-if="item['fields']['Category'] == 'Community Outreach'"><a href="javascript:void('')" onClick="details_page(this.innerHTML);">{{ item['fields']['Name'] }}</a></li>
+					<li data-role="list-divider">Counseling</li>
+					<li v-for="item in items" v-if="item['fields']['Category'] == 'Counseling'"><a href="javascript:void('')" onClick="details_page(this.innerHTML);">{{ item['fields']['Name'] }}</a></li>
+					<li data-role="list-divider">High Risk</li>
+					<li v-for="item in items" v-if="item['fields']['Category'] == 'High Risk'"><a href="javascript:void('')" onClick="details_page(this.innerHTML);">{{ item['fields']['Name'] }}</a></li>
+					<li data-role="list-divider">Job Opportunities/Training</li>
+					<li v-for="item in items" v-if="item['fields']['Category'] == 'Job Opportunities/Training'"><a href="javascript:void('')" onClick="details_page(this.innerHTML);">{{ item['fields']['Name'] }}</a></li>
+					<li data-role="list-divider">Multi-Service</li>
+					<li v-for="item in items" v-if="item['fields']['Category'] == 'Multi-Service'"><a href="javascript:void('')" onClick="details_page(this.innerHTML);">{{ item['fields']['Name'] }}</a></li>
+				</ul>
+		</div>
+		
+</div>
+
+
+<div data-role="page" id="map-page">
+	<div data-role="header"> 
+		<h1>Results</h1>
+		<a href="#filter" data-transition="slide" data-direction="reverse" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-arrow-l">Back</a>
+		<a href="#about" class="ui-btn ui-icon-info ui-btn-icon-notext ui-corner-all ui-btn-right" data-transition="slide"></a>
+	</div>
+		<div data-role="navbar">
+			<ul>
+				<li><a href="#results" style="color:#ccc">List</a></li>
+				<li><a href="#map-page" >Map</a></li>
+			</ul>
+		</div>
+		<div>
+			<div id="map" style="width:100%;height:100px;"></div>
+		</div>
+		
+</div>
+
+
+		<!-- Include Dependancy Scripts -->
+        <script type="text/javascript" src="https://unpkg.com/vue"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.16.2/axios.min.js"></script>
+  
+    
+		<script type="text/javascript">
+		
+		function list_page() {
+            var app = new Vue({
+                el: '#results',
+                data: {
+                    items: []
+                },
+                mounted: function(){
+                   this.loadItems(); 
+                },
+                methods: {
+                    loadItems: function(){
+                        
+                        // Init variables
+                        var self = this
+                        var app_id = "appHUknSmoIogemD5";
+                        var app_key = "keyHtA4JdvolTnmFV";
+                        this.items = []
+						axios.get(
+                            "https://api.airtable.com/v0/"+app_id+"/" + $('#town').find(":selected").text(),
+                            { 
+                                headers: { Authorization: "Bearer "+ app_key } 
+                            }
+                        ).then(function(response){
+                            self.items = response.data.records
+                        }).catch(function(error){
+                            console.log(error)
+                        })
+                    }
+                }
+            })
+            $('#town_name').html($('#town').find(":selected").text());
+            $.mobile.changePage($('#results'), { transition: 'slide'});
+        }
+            
+        function details_page(id) {
+        	$("#detail").attr("v-for", "item in items");
+        	$("#detail").attr("v-if", "item['fields']['Name'] == '"+id+"'");
+        	$("#detail").html("<h3>{{ item['fields']['Name'] }}</h3>					<h4>{{ item['fields']['Category'] }}</h4>                    <p><b>Age Range:</b> {{ item['fields']['Minimum Age'] }} - {{ item['fields']['Maximum Age'] }}</p>                    <p><b>Gender:</b> {{ item['fields']['Gender'] }}</p>                    <p><b>Address:</b> {{ item['fields']['Address'] }}</p>                    <p><b>Description:</b> {{ item['fields']['Description'] }}</p>                    <p><b>Website:</b> {{ item['fields']['Website'] }}</p>                    <p><b>Contact:</b> {{ item['fields']['Contact'] }}</p>")
+            
+            var app_2 = new Vue({
+                el: '#details',
+                data: {
+                    items: []
+                },
+                mounted: function(){
+                   this.loadItems(); 
+                },
+                methods: {
+                    loadItems: function(){
+                        
+                        // Init variables
+                        var self = this
+                        var app_id = "appHUknSmoIogemD5";
+                        var app_key = "keyHtA4JdvolTnmFV";
+                        this.items = []
+						axios.get(
+                            "https://api.airtable.com/v0/"+app_id+"/" + $('#town').find(":selected").text(),
+                            { 
+                                headers: { Authorization: "Bearer "+ app_key } 
+                            }
+                        ).then(function(response){
+                            self.items = response.data.records
+                        }).catch(function(error){
+                            console.log(error)
+                        })
+                    }
+                }
+            })
+            
+            //$('#details').listview('refresh');
+            $.mobile.changePage($('#details'), { transition: 'slide'});
+            return true;
+        }
+            
+            //$( '#details' ).enhanceWithin();
+            
+            $('#').listview('refresh');
+            //$( "#list" ).enhanceWithin();
+            
+            
+        </script>
+
+<script>
+/*
+https://developers.google.com/maps/documentation/javascript/adding-a-google-map
+ */  
+
+      function initMap() {
+        var uluru = {lat: -25.363, lng: 131.044};
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 4,
+          center: uluru
+        });
+        var marker = new google.maps.Marker({
+          position: uluru,
+          map: map
+        });
+      }
+      
+    $('#map').height( $(window).height() - 81 +  'px');
+</script>
+
+
+<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBCDs-cJfxydB2mKizGvtEt5tGMhcxMjmk&callback=initMap">
+</script>    
+
+</body>
