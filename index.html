@@ -29,7 +29,6 @@
 </head>
 <body>
 
-
 <div data-role="page" id="filter">
 	<div data-role="header">
 		<h1>Juvenile Resource Finder</h1>
@@ -37,7 +36,7 @@
 	</div> 
 	<div data-role="content" class="content">
 		<div class="ui-field-contain">Use the following selections to find programs & services near you.
-			<select id="town" name="select-native-1" id="select-native-1" style="width:100%">
+			<select id="town" name="select-native-1" id="select-native-1" style="width:100%" onChange="list_page();">
         		<option value="0">Choose a Location</option>
         		<option value="Boston">Boston</option>
         		<option value="Chelsea">Chelsea</option>
@@ -51,47 +50,50 @@
 
 		<fieldset data-role="controlgroup">
 			<h3 style="margin-top:15px;">Check All That Apply:</h3>
-				<input type="checkbox" name="checkbox-v-2a" id="checkbox-v-2a">
-				<label for="checkbox-v-2a">Job Opportunties/Training</label>
-				<input type="checkbox" name="checkbox-v-2b" id="checkbox-v-2b">
-				<label for="checkbox-v-2b">Community Outreach</label>
-				<input type="checkbox" name="checkbox-v-2c" id="checkbox-v-2c">
-				<label for="checkbox-v-2c">Counseling</label>
-				<input type="checkbox" name="checkbox-v-2d" id="checkbox-v-2d">
-				<label for="checkbox-v-2d">Health Services</label>
-				<input type="checkbox" name="checkbox-v-2e" id="checkbox-v-2e">
-				<label for="checkbox-v-2e">High Risk</label>
-				<input type="checkbox" name="checkbox-v-2f" id="checkbox-v-2f">
-				<label for="checkbox-v-2f">Multi-Service</label>
+				<input type="checkbox" name="checkbox-v-Training" id="checkbox-v-Training" onChange="list_page();">
+				<label for="checkbox-v-Training">Job Opportunties/Training</label>
+				<input type="checkbox" name="checkbox-v-Outreach" id="checkbox-v-Outreach" onChange="list_page();">
+				<label for="checkbox-v-Outreach">Community Outreach</label>
+				<input type="checkbox" name="checkbox-v-Counseling" id="checkbox-v-Counseling" onChange="list_page();">
+				<label for="checkbox-v-Counseling">Counseling</label>
+				<input type="checkbox" name="checkbox-v-Health" id="checkbox-v-Health" onChange="list_page();">
+				<label for="checkbox-v-Health">Health Services</label>
+				<input type="checkbox" name="checkbox-v-Risk" id="checkbox-v-Risk" onChange="list_page();">
+				<label for="checkbox-v-Risk">High Risk</label>
+				<input type="checkbox" name="checkbox-v-Multi" id="checkbox-v-Multi" onChange="list_page();">
+				<label for="checkbox-v-Multi">Multi-Service</label>
 		</fieldset>
 
 		<fieldset data-role="controlgroup" data-type="horizontal">
-    		<input type="radio" name="radio-choice-h-2" id="radio-choice-h-2a" value="on" checked="checked">
+    		<input type="radio" name="radio-choice-h-2" id="radio-choice-h-2a" value="list" checked="checked">
     		<label for="radio-choice-h-2a">List View</label>
-    		<input type="radio" name="radio-choice-h-2" id="radio-choice-h-2b" value="off">
+    		<input type="radio" name="radio-choice-h-2" id="radio-choice-h-2b" value="map">
     		<label for="radio-choice-h-2b">Map View</label>
 		</fieldset>
 		
-		<a href="javascript:void('');" data-role="button" onClick="list_page();">Find Resources</a>
+		<a href="javascript:results_page();" data-role="button">Find Resources</a>
 		
 	</div>
 </div>
 
+
+
 <div data-role="page" id="about">
 	<div data-role="header"> 
 		<h1>About</h1> 
-		<a href="#" data-transition="slide" data-direction="reverse" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-arrow-l" data-rel="back">Back</a>
+		<a href="#filter" data-transition="slide" data-direction="reverse" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-arrow-l">Back</a>
 	</div> 
 	<div data-role="content" class="content">
 	
 	</div>	
 </div>
 
+
+
 <div data-role="page" id="details">
 	<div data-role="header"> 
 		<h1>Details</h1> 
 		<a href="#results" data-transition="slide" data-direction="reverse" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-arrow-l">Back</a>
-		<a href="#about" class="ui-btn ui-icon-info ui-btn-icon-notext ui-corner-all ui-btn-right" data-transition="slide"></a>
 	</div>
 	<div data-role="content" class="content">
 		<div id="detail" v-for="" v-if="">
@@ -107,61 +109,52 @@
 	</div>
 </div>
 
+
+
 <div data-role="page" id="results">
 	<div data-role="header"> 
 		<h1>Results</h1>
 		<a href="#filter" data-transition="slide" data-direction="reverse" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-arrow-l">Back</a>
-		<a href="#about" class="ui-btn ui-icon-info ui-btn-icon-notext ui-corner-all ui-btn-right" data-transition="slide"></a>
 		<div data-role="navbar">
 			<ul>
 				<li><a href="#results">List</a></li>
-				<li><a href="#map-page" style="color:#ccc" onClick="size_map();">Map</a></li>
+				<li><a href="javascript:void('');" style="color:#ccc" onClick="size_map();$.mobile.changePage($('#map-page'), { transition: 'none'});">Map</a></li>
 			</ul>
 		</div>
 	</div>
 		<div data-role="content" class="content">
-			<h1 id="town_name">Boston</h1>
-				<ul data-role="listview" data-inset="true">
-					<li data-role="list-divider">Community Outreach</li>
-					<li id="outreach" v-for="item in items" v-if="item['fields']['Category'] == 'Community Outreach'"><a href="javascript:void('')" onClick="details_page(this.innerHTML);">{{ item['fields']['Name'] }}</a></li>
-					<li data-role="list-divider">Counseling</li>
-					<li id="counseling" v-for="item in items" v-if="item['fields']['Category'] == 'Counseling'"><a href="javascript:void('')" onClick="details_page(this.innerHTML);">{{ item['fields']['Name'] }}</a></li>
-					<li data-role="list-divider">High Risk</li>
-					<li id="risk" v-for="item in items" v-if="item['fields']['Category'] == 'High Risk'"><a href="javascript:void('')" onClick="details_page(this.innerHTML);">{{ item['fields']['Name'] }}</a></li>
-					<li data-role="list-divider">Job Opportunities/Training</li>
-					<li id="training" v-for="item in items" v-if="item['fields']['Category'] == 'Job Opportunities/Training'"><a href="javascript:void('')" onClick="details_page(this.innerHTML);">{{ item['fields']['Name'] }}</a></li>
-					<li data-role="list-divider">Multi-Service</li>
-					<li id="service" v-for="item in items" v-if="item['fields']['Category'] == 'Multi-Service'"><a href="javascript:void('')" onClick="details_page(this.innerHTML);">{{ item['fields']['Name'] }}</a></li>
+			<h1 id="town_name"></h1>
+				<ul id="org_list" data-role="listview" data-inset="true">
 				</ul>
 		</div>
-		
 </div>
+
 
 
 <div data-role="page" id="map-page">
 	<div data-role="header"> 
 		<h1>Results</h1>
-		<a href="#filter" onClick="$( '#details' ).enhanceWithin();"  data-transition="slide" data-direction="reverse" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-arrow-l">Back</a>
-		<a href="#about" class="ui-btn ui-icon-info ui-btn-icon-notext ui-corner-all ui-btn-right" data-transition="slide"></a>
+		<a href="#filter" data-transition="slide" data-direction="reverse" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-arrow-l">Back</a>
 	</div>
 		<div data-role="navbar">
 			<ul>
-				<li><a href="#results" style="color:#ccc">List</a></li>
+				<li><a href="javascript:void('');" style="color:#ccc" onClick="$.mobile.changePage($('#results'), { transition: 'none'})">List</a></li>
 				<li><a href="#map-page">Map</a></li>
 			</ul>
 		</div>
 		<div>
 			<div id="map" style="width:100%;height:100px;"></div>
 		</div>
-		
 </div>
 
 
-		<!-- Include Dependancy Scripts -->
-        <script type="text/javascript" src="https://unpkg.com/vue"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.16.2/axios.min.js"></script>
-  
-		<script type="text/javascript">
+
+<!-- Include Dependancy Scripts -->
+<script type="text/javascript" src="https://unpkg.com/vue"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.16.2/axios.min.js"></script>  
+<script type="text/javascript">
+		
+    	//$.mobile.page.prototype.options.domCache = false;
 		
 		function load_api_data(target) {
 			var app = new Vue({
@@ -195,40 +188,86 @@
             });
 		}
 		
+		function results_page() {
+		
+			if ($('#town').find(":selected").text() == "Choose a Location") {
+				alert('You must choose a location.')
+			} else if ($('#checkbox-v-Outreach').is(":checked") || $('#checkbox-v-Counseling').is(":checked") || $('#checkbox-v-Risk').is(":checked") || $('#checkbox-v-Training').is(":checked") || $('#checkbox-v-Health').is(":checked") || $('#checkbox-v-Multi').is(":checked")) {
+				if ($('input[name=radio-choice-h-2]:checked', '#filter').val() == "map") {
+            		size_map();
+	            	$.mobile.changePage($('#map-page'), { transition: 'slide'}); 
+            	} else {
+	            	$.mobile.changePage($('#results'), { transition: 'slide'});       
+            	}
+            } else {
+				alert('You must choose at least one type of service.')
+			}
+		}
 		
 		function list_page() {
-			$("#outreach").attr("v-for", "item in items");
-        	$("#outreach").attr("v-if", "item['fields']['Category'] == 'Community Outreach'");
-        	$("#outreach").html("<a href=\"javascript:void('')\" onClick=\"details_page(this.innerHTML);\">{{ item['fields']['Name'] }}</a>");
-			$("#counseling").attr("v-for", "item in items");
-        	$("#counseling").attr("v-if", "item['fields']['Category'] == 'Counseling'");
-        	$("#counseling").html("<a href=\"javascript:void('')\" onClick=\"details_page(this.innerHTML);\">{{ item['fields']['Name'] }}</a>");
-			$("#risk").attr("v-for", "item in items");
-        	$("#risk").attr("v-if", "item['fields']['Category'] == 'High Risk'");
-        	$("#risk").html("<a href=\"javascript:void('')\" onClick=\"details_page(this.innerHTML);\">{{ item['fields']['Name'] }}</a>");
-			$("#training").attr("v-for", "item in items");
-        	$("#training").attr("v-if", "item['fields']['Category'] == 'Job Opportunities/Training'");
-        	$("#training").html("<a href=\"javascript:void('')\" onClick=\"details_page(this.innerHTML);\">{{ item['fields']['Name'] }}</a>");
-			$("#service").attr("v-for", "item in items");
-        	$("#service").attr("v-if", "item['fields']['Category'] == 'Multi-Service'");
-        	$("#service").html("<a href=\"javascript:void('')\" onClick=\"details_page(this.innerHTML);\">{{ item['fields']['Name'] }}</a>");
+		
+		if ($('#town').find(":selected").text() != "Choose a Location") {
+			$("#org_list").html("")
+			
+			if ($('#checkbox-v-Outreach').is(":checked")){ 
+				$("#org_list").html( $("#org_list").html() + "<li data-role=\"list-divider\">Community Outreach</li>")
+				$("#org_list").html( $("#org_list").html() + "<li id=\"outreach\" v-for=\"item in items\" v-if=\"item['fields']['Category'] == 'Community Outreach'\"><a href=\"javascript:void('')\" onClick=\"details_page(this.innerHTML);\">{{ item['fields']['Name'] }}</a></li>")
+			} 
+			if ($('#checkbox-v-Counseling').is(":checked")){ 
+				$("#org_list").html( $("#org_list").html() + "<li data-role=\"list-divider\">Counseling</li>")
+				$("#org_list").html( $("#org_list").html() + "<li id=\"counseling\" v-for=\"item in items\" v-if=\"item['fields']['Category'] == 'Counseling'\"><a href=\"javascript:void('')\" onClick=\"details_page(this.innerHTML);\">{{ item['fields']['Name'] }}</a></li>")
+			} 
+			if ($('#checkbox-v-Risk').is(":checked")){ 
+				$("#org_list").html( $("#org_list").html() + "<li data-role=\"list-divider\">High Risk</li>")
+				$("#org_list").html( $("#org_list").html() + "<li id=\"risk\" v-for=\"item in items\" v-if=\"item['fields']['Category'] == 'High Risk'\"><a href=\"javascript:void('')\" onClick=\"details_page(this.innerHTML);\">{{ item['fields']['Name'] }}</a></li>")
+			} 
+			if ($('#checkbox-v-Training').is(":checked")){ 
+				$("#org_list").html( $("#org_list").html() + "<li data-role=\"list-divider\">Job Opportunities/Training</li>")
+				$("#org_list").html( $("#org_list").html() + "<li id=\"training\" v-for=\"item in items\" v-if=\"item['fields']['Category'] == 'Job Opportunities/Training'\"><a href=\"javascript:void('')\" onClick=\"details_page(this.innerHTML);\">{{ item['fields']['Name'] }}</a></li>")
+			} 
+			if ($('#checkbox-v-Health').is(":checked")){ 
+				$("#org_list").html( $("#org_list").html() + "<li data-role=\"list-divider\">Health Services</li>")
+				$("#org_list").html( $("#org_list").html() + "<li id=\"training\" v-for=\"item in items\" v-if=\"item['fields']['Category'] == 'Health Services'\"><a href=\"javascript:void('')\" onClick=\"details_page(this.innerHTML);\">{{ item['fields']['Name'] }}</a></li>")
+			} 
+			if ($('#checkbox-v-Multi').is(":checked")){ 
+				$("#org_list").html( $("#org_list").html() + "<li data-role=\"list-divider\">Multi-Service</li>")
+				$("#org_list").html( $("#org_list").html() + "<li id=\"service\" v-for=\"item in items\" v-if=\"item['fields']['Category'] == 'Multi-Service'\"><a href=\"javascript:void('')\" onClick=\"details_page(this.innerHTML);\">{{ item['fields']['Name'] }}</a></li>")
+			} 
 			
 			$('#town_name').html($('#town').find(":selected").text());
-            		          
-            load_api_data('#results',$('#results').enhanceWithin()); 
-             
+            
+            //if ($('input[name=radio-choice-h-2]:checked', '#filter').val() == "map") {
+            //	size_map();
+	        //    load_api_data('#results',refresh_page('#map-page')); 
+            //} else {
+	        //    load_api_data('#results',refresh_page('#results'));             
+            //}
             //$('#results').enhanceWithin();         
-            $.mobile.changePage($('#results'), { transition: 'slide'});
+            //$.mobile.changePage($('#results'), { transition: 'slide'});
             //return true;
+            
+            load_api_data('#results');
+        }
+            
         }
             
         function details_page(id) {
-	        $( '#details' ).enhanceWithin();
+	        //$( '#details' ).enhanceWithin();
         
         	$("#detail").attr("v-for", "item in items");
         	$("#detail").attr("v-if", "item['fields']['Name'] == '"+id+"'");
-        	$("#detail").html("<h3>{{ item['fields']['Name'] }}</h3>					<h4>{{ item['fields']['Category'] }}</h4>                    <p><b>Age Range:</b> {{ item['fields']['Minimum Age'] }} - {{ item['fields']['Maximum Age'] }}</p>                    <p><b>Gender:</b> {{ item['fields']['Gender'] }}</p>                    <p><b>Address:</b> {{ item['fields']['Address'] }}</p>                    <p><b>Description:</b> {{ item['fields']['Description'] }}</p>                    <p><b>Website:</b> {{ item['fields']['Website'] }}</p>                    <p><b>Contact:</b> {{ item['fields']['Contact'] }}</p>");
- 			load_api_data('#details',$( '#details' ).enhanceWithin());
+        	$("#detail").html("");
+        	$("#detail").html($("#detail").html() + "<h3>{{ item['fields']['Name'] }}</h3>")
+        	$("#detail").html($("#detail").html() + "<h4>{{ item['fields']['Category'] }}</h4>");
+        	$("#detail").html($("#detail").html() + "<p><b>Age Range:</b> {{ item['fields']['Minimum Age'] }} - {{ item['fields']['Maximum Age'] }}</p>");
+        	$("#detail").html($("#detail").html() + "<p><b>Gender:</b> {{ item['fields']['Gender'] }}</p>");
+        	$("#detail").html($("#detail").html() + "<p><b>Address:</b> {{ item['fields']['Address'] }}</p>");
+        	$("#detail").html($("#detail").html() + "<p><b>Description:</b> {{ item['fields']['Description'] }}</p>");
+        	$("#detail").html($("#detail").html() + "<p><b>Website:</b> {{ item['fields']['Website'] }}</p>");
+        	$("#detail").html($("#detail").html() + "<p><b>Contact:</b> {{ item['fields']['Contact'] }}</p>");
+ 			
+ 			load_api_data('#details');
+ 			
  			$.mobile.changePage($('#details'), { transition: 'slide'})
 			
             //$('#details').listview('refresh');
@@ -237,21 +276,14 @@
             //return true;
         }
             
-            //$( '#details' ).enhanceWithin();
-            
-            //$('#').listview('refresh');
-            
-            
-        </script>
+    list_page(); 
 
-<script>
-/*
-https://developers.google.com/maps/documentation/javascript/adding-a-google-map
- */  
-
-      function initMap() {
-        var uluru = {lat: -25.363, lng: 131.044};
-        var map = new google.maps.Map(document.getElementById('map'), {
+	/*
+	https://developers.google.com/maps/documentation/javascript/adding-a-google-map
+ 	*/  
+	function initMap() {
+		var uluru = {lat: -25.363, lng: 131.044};
+		var map = new google.maps.Map(document.getElementById('map'), {
           zoom: 4,
           center: uluru
         });
@@ -259,16 +291,16 @@ https://developers.google.com/maps/documentation/javascript/adding-a-google-map
           position: uluru,
           map: map
         });
-      }
+	}
       
 	function size_map() {
 		$('#map').height( $(window).height() - 81 +  'px');
 	}
 </script>
 
-
 <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBCDs-cJfxydB2mKizGvtEt5tGMhcxMjmk&callback=initMap">
 </script>    
 
 </body>
+</html>
