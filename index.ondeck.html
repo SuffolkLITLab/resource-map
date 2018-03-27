@@ -6,8 +6,8 @@
 	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <title>Geo Finder</title>
 
-    <meta property="og:image" content="https://www.qnamarkup.org/images/QnA_300.png"/>
-    <link rel="apple-touch-icon" href="https://www.qnamarkup.org/images/QnA_300.png"/>
+    <meta property="og:image" content="images/icon_300.png"/>
+    <link rel="apple-touch-icon" href="images/icon_300.png"/>
 
     <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
 	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
@@ -85,6 +85,8 @@
 	</div>
 	<div data-role="content" class="content">
 
+	<p style="text-align:center"><a href="http://suffolklitlab.org/" target="_blank"><img src="images/LIT_logo.png" width="200px"/ border="0"></a></p>
+
 	</div>
 </div>
 
@@ -93,7 +95,7 @@
 <div data-role="page" id="details">
 	<div data-role="header">
 		<h1>Details</h1>
-		<a href="#results" data-rel="back" data-transition="slide" data-direction="reverse" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-arrow-l">Back</a>
+		<a href="#" data-rel="back" data-transition="slide" data-direction="reverse" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-arrow-l">Back</a>
 	</div>
 	<div data-role="content" class="content">
 		<div id="detail" v-for="" v-if="">
@@ -114,7 +116,7 @@
 <div data-role="page" id="results">
 	<div data-role="header">
 		<h1>Results</h1>
-		<a href="#" data-rel="back" data-transition="slide" data-direction="reverse" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-home ui-btn-icon-notext"></a>
+		<a href="#filter" data-transition="slide" data-direction="reverse" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-home ui-btn-icon-notext"></a>
 		<div data-role="navbar">
 			<ul>
 				<li><a href="#results">List</a></li>
@@ -137,11 +139,11 @@
 <div data-role="page" id="map-page">
 	<div data-role="header">
 		<h1>Results</h1>
-		<a href="#" data-rel="back" data-transition="slide" data-direction="reverse" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-home ui-btn-icon-notext"></a>
+		<a href="#filter" data-transition="slide" data-direction="reverse" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-home ui-btn-icon-notext"></a>
 	</div>
 		<div data-role="navbar">
 			<ul>
-				<li><a href="javascript:void('');" style="color:#ccc" onClick="$.mobile.changePage($('#results'), { transition: 'none'})">List</a></li>
+				<li><a href="#results" data-transition="none" style="color:#ccc">List</a></li>
 				<li><a href="#map-page">Map</a></li>
 			</ul>
 		</div>
@@ -159,9 +161,6 @@
 <script type="text/javascript">
 
 	var categories = "";
-	var lat = 0;
-	var lon = 0;
-	var zoomin = 4;
 
 	function load_api_data(target) {
 		var app = new Vue({
@@ -320,7 +319,7 @@
 			*/
 
 		var markers = [];
-			
+
 		function initMap(lat,lon,zoomin) {
 			var uluru = {lat: lat, lng: lon};
 			var map = new google.maps.Map(document.getElementById('map'), {
@@ -374,6 +373,11 @@
 			$('#map').height( $(window).height() - 79 +  'px');
 
 		}
+
+		$("div[data-role=page]").bind("pagebeforeshow", function (e, data) {
+		  $.mobile.silentScroll(0);
+		  $.mobile.changePage.defaults.transition = 'slide'; // reset default here
+		})
 
 </script>
 
