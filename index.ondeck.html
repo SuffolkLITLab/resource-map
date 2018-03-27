@@ -1,7 +1,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-type" content="text/html;charset=UTF-8"/>
-	<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
 	<meta name="apple-mobile-web-app-capable" content="no" />
 	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <title>Geo Finder</title>
@@ -38,11 +38,11 @@
 		<div class="ui-field-contain">Use the following selections to find programs & services near you.
 			<select id="town" name="select-native-1" id="select-native-1" style="width:100%" onChange="list_page();">
         		<option value="0">Choose a Location</option>
-        		<option value="Boston">Boston</option>
-        		<option value="Chelsea">Chelsea</option>
-        		<option value="Dorchester">Dorchester</option>
-        		<option value="Jamaica%20Plain">Jamaica Plain</option>
-				<option value="Roxbury">Roxbury</option>
+        		<option value="42.3601,-71.0589,13">Boston</option>
+        		<option value="42.3990213,-71.0498456,14">Chelsea</option>
+        		<option value="42.3018056,-71.0913154,13">Dorchester</option>
+        		<option value="42.3138779,-71.1363335,14">Jamaica Plain</option>
+						<option value="42.3138719,-71.1041378,14">Roxbury</option>
     		</select>
 		</div>
 
@@ -93,7 +93,7 @@
 <div data-role="page" id="details">
 	<div data-role="header">
 		<h1>Details</h1>
-		<a href="#results" data-transition="slide" data-direction="reverse" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-arrow-l">Back</a>
+		<a href="#results" data-rel="back" data-transition="slide" data-direction="reverse" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-arrow-l">Back</a>
 	</div>
 	<div data-role="content" class="content">
 		<div id="detail" v-for="" v-if="">
@@ -114,7 +114,7 @@
 <div data-role="page" id="results">
 	<div data-role="header">
 		<h1>Results</h1>
-		<a href="#filter" data-transition="slide" data-direction="reverse" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-arrow-l">Back</a>
+		<a href="#" data-rel="back" data-transition="slide" data-direction="reverse" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-home ui-btn-icon-notext"></a>
 		<div data-role="navbar">
 			<ul>
 				<li><a href="#results">List</a></li>
@@ -123,10 +123,13 @@
 		</div>
 	</div>
 		<div data-role="content" class="content">
-			<h1 id="town_name"></h1>
+				<h1 id="town_name"></h1>
 				<ul id="org_list" data-role="listview" data-inset="true">
 				</ul>
 		</div>
+
+		<ul id="org_geo_list" style="display:none;"></ul>
+
 </div>
 
 
@@ -134,7 +137,7 @@
 <div data-role="page" id="map-page">
 	<div data-role="header">
 		<h1>Results</h1>
-		<a href="#filter" data-transition="slide" data-direction="reverse" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-arrow-l">Back</a>
+		<a href="#" data-rel="back" data-transition="slide" data-direction="reverse" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-home ui-btn-icon-notext"></a>
 	</div>
 		<div data-role="navbar">
 			<ul>
@@ -150,11 +153,15 @@
 
 
 <!-- Include Dependency Scripts -->
-<script type="text/javascript" src="https://unpkg.com/vue"></script>
+<!--<script type="text/javascript" src="https://unpkg.com/vue"></script>-->
+<script type="text/javascript" src="js/vue.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.16.2/axios.min.js"></script>
 <script type="text/javascript">
 
 	var categories = "";
+	var lat = 0;
+	var lon = 0;
+	var zoomin = 4;
 
 	function load_api_data(target) {
 		var app = new Vue({
@@ -198,12 +205,12 @@
 			alert('You must enter a numeric age in years.')
 		} else if ($('#checkbox-v-Outreach').is(":checked") || $('#checkbox-v-Counseling').is(":checked") || $('#checkbox-v-Risk').is(":checked") || $('#checkbox-v-Training').is(":checked") || $('#checkbox-v-Health').is(":checked") || $('#checkbox-v-Multi').is(":checked")) {
 			if ($('input[name=radio-choice-h-2]:checked', '#filter').val() == "map") {
-          		size_map();
-            	$.mobile.changePage($('#map-page'), { transition: 'slide'});
-          	} else {
-            	$.mobile.changePage($('#results'), { transition: 'slide'});
-          	}
-          } else {
+      		size_map();
+        	$.mobile.changePage($('#map-page'), { transition: 'slide'});
+      } else {
+        	$.mobile.changePage($('#results'), { transition: 'slide'});
+      }
+    } else {
 			alert('You must choose at least one type of service.')
 		}
 	}
@@ -211,7 +218,8 @@
 	function list_page() {
 
 		if ($('#town').find(":selected").text() != "Choose a Location" && (!isNaN(Number($('#age').val())) && Number($('#age').val()) != 0)) {
-				$("#org_list").html("")
+				$("#org_list").html("");
+				$("#org_geo_list").html("<li id=\"ge0_points\" v-for=\"item in items\">{{ item['fields']['Name'] }},{{ item['fields']['Latitude'] }},{{ item['fields']['Longitude'] }}</li>");
 
 				categories = "";
 
@@ -268,6 +276,13 @@
 
 		    load_api_data('#results');
 
+				geo_data = $('#town').find(":selected").val().split(',').map(Number);
+				//console.log(geo_data)
+
+				lat = geo_data[0];
+				lon = geo_data[1];
+				zoomin = geo_data[2];
+
 	  	} else {
 				return false;
 			}
@@ -303,26 +318,48 @@
 		/*
 		https://developers.google.com/maps/documentation/javascript/adding-a-google-map
 			*/
-		function initMap() {
-			var uluru = {lat: -25.363, lng: 131.044};
+		function initMap(lat,lon,zoomin) {
+			var uluru = {lat: lat, lng: lon};
 			var map = new google.maps.Map(document.getElementById('map'), {
-		        zoom: 4,
+		        zoom: zoomin,
 		        center: uluru
 		      });
-		      var marker = new google.maps.Marker({
-		        position: uluru,
-		        map: map
-		      });
+
+			i = 0;
+			$('#org_geo_list li').each(function(){
+				//alert($(this).text());
+				pin_data = $(this).text().split(',');
+				marker = new google.maps.Marker({
+					position: {lat: Number(pin_data[1]), lng: Number(pin_data[2])},
+					map: map
+				});
+				var infowindow = new google.maps.InfoWindow({
+					content: "<div style=\"width:250px;\"><b>"+pin_data[0]+"</b><br/><div style=\"width:250px;text-align:right;padding-top:3px;\"><a href=\"javascript:details_page(\'"+pin_data[0]+"\')\">view details</a></span></div>"
+				});
+
+				//creates an infowindow 'key' in the marker.
+				marker.infowindow = infowindow;
+
+				//finally call the explicit infowindow object
+				marker.addListener('click', function() {
+					return this.infowindow.open(map, this);
+				})
+
+				++i;
+			});
+
 		}
 
 		function size_map() {
+			initMap(lat,lon,zoomin);
 			$('#map').height( $(window).height() - 79 +  'px');
+
 		}
 
 </script>
 
 <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBCDs-cJfxydB2mKizGvtEt5tGMhcxMjmk&callback=initMap">
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBCDs-cJfxydB2mKizGvtEt5tGMhcxMjmk">
 </script>
 
 </body>
