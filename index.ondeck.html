@@ -246,7 +246,7 @@
 
 				if ($('#checkbox-v-Outreach').is(":checked")){
 					$("#org_list").html( $("#org_list").html() + "<li data-role=\"list-divider\">Community Outreach</li>")
-					$("#org_list").html( $("#org_list").html() + "<li id=\"outreach\" v-for=\"item in items\" v-if=\"item['fields']['Category'] == 'Community Outreach'\"><a href=\"javascript:void('')\" v-bind:id=\"item['id']\" onClick=\"details_page(this.id);\">{{ item['fields']['Name'] }}</a></li>")
+					$("#org_list").html( $("#org_list").html() + "<li id=\"outreach\" v-for=\"item in items\" v-if=\"item['fields']['Category'] == 'Community Outreach'\"><a href=\"javascript:void('')\" v-bind:id=\"item['id']\" onClick=\"details_page(this.id);\">{{ item['fields']['Name'] }}</a></li><li v-if=\"items.length == 0\">No matches.</li>")
 					if (categories != "") {
 						categories = categories+",";
 					}
@@ -381,7 +381,6 @@
 			        infowindow.close();
 			    }
 			});
-
 
 		}
 
