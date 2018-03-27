@@ -318,6 +318,9 @@
 		/*
 		https://developers.google.com/maps/documentation/javascript/adding-a-google-map
 			*/
+
+		var markers = [];
+			
 		function initMap(lat,lon,zoomin) {
 			var uluru = {lat: lat, lng: lon};
 			var map = new google.maps.Map(document.getElementById('map'), {
@@ -342,12 +345,28 @@
 
 				//finally call the explicit infowindow object
 				marker.addListener('click', function() {
+					hideAllInfoWindows(map);
 					return this.infowindow.open(map, this);
-				})
+				});
+
+				markers.push(marker);
 
 				++i;
 			});
 
+			google.maps.event.addListener(map, 'click', function() {
+			    if (infowindow) {
+			        infowindow.close();
+			    }
+			});
+
+
+		}
+
+		function hideAllInfoWindows(map) {
+		   markers.forEach(function(marker) {
+		     marker.infowindow.close(map, marker);
+		  });
 		}
 
 		function size_map() {
