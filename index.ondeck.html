@@ -136,7 +136,7 @@
 
 
 
-<div data-role="page" id="map-page">
+<div data-role="page" id="map-page" style="background:#798e9e;">
 	<div data-role="header">
 		<h1>Results</h1>
 		<a href="#filter" data-transition="slide" data-direction="reverse" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-home ui-btn-icon-notext"></a>
@@ -393,7 +393,7 @@
 
 		function size_map() {
 			initMap(lat,lon,zoomin);
-			$('#map').height( $(window).height() - 79 +  'px');
+			$('#map').height( window.innerHeight - 79 +  'px');
 
 		}
 
