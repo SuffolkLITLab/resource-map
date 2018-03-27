@@ -46,7 +46,7 @@
     		</select>
 		</div>
 
-		<input name="age" id="age" data-type="number" placeholder="Input Age of Juvenile Seeking Services" onkeypress="list_page();">
+		<input name="age" id="age" data-type="number" placeholder="Input Age of Juvenile Seeking Services" onChange="list_page();">
 
 		<fieldset data-role="controlgroup">
 			<h3 style="margin-top:15px;">Check All That Apply:</h3>
@@ -152,17 +152,25 @@
 		</div>
 </div>
 
-
-
 <!-- Include Dependency Scripts -->
 <!--<script type="text/javascript" src="https://unpkg.com/vue"></script>-->
-<script type="text/javascript" src="js/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.16.2/axios.min.js"></script>
 <script type="text/javascript">
 
 	var categories = "";
+	var work = 0;
+	function load_api_data(target,mode = 0,id='') {
+		work = 1;
+		var app_id = "appHUknSmoIogemD5";
+		var app_key = "keyHtA4JdvolTnmFV";
+		//https://api.airtable.com/v0/appHUknSmoIogemD5/Boston/?filterByFormula=AND(20<={Maximum Age},20>={Minimum Age},OR((FIND("Community Outreach",{Category})),(FIND("Counseling",{Category}))))
+		if (mode == 1) {
+			apicall = "https://api.airtable.com/v0/"+app_id+"/" + $('#town').find(":selected").text() + "/?filterByFormula=(RECORD_ID()=\""+id+"\")";
+		} else {
+			apicall = "https://api.airtable.com/v0/"+app_id+"/" + $('#town').find(":selected").text() + "/?filterByFormula=AND("+Number($('#age').val())+"<={Maximum Age},"+Number($('#age').val())+">={Minimum Age},OR("+categories+"))";
+		}
 
-	function load_api_data(target) {
 		var app = new Vue({
               el: target,
               data: {
@@ -176,18 +184,15 @@
 
                       // Init variables
                       var self = this
-                      var app_id = "appHUknSmoIogemD5";
-                      var app_key = "keyHtA4JdvolTnmFV";
                       this.items = []
 					axios.get(
-													//https://api.airtable.com/v0/appHUknSmoIogemD5/Boston/?filterByFormula=AND(20<={Maximum Age},20>={Minimum Age},OR((FIND("Community Outreach",{Category})),(FIND("Counseling",{Category}))))
-
-                          "https://api.airtable.com/v0/"+app_id+"/" + $('#town').find(":selected").text() + "/?filterByFormula=AND("+Number($('#age').val())+"<={Maximum Age},"+Number($('#age').val())+">={Minimum Age},OR("+categories+"))",
+													 apicall,
                           {
                               headers: { Authorization: "Bearer "+ app_key }
                           }
                       ).then(function(response){
-                          self.items = response.data.records
+                          self.items = response.data.records;
+													work = 0;
                       }).catch(function(error){
                           console.log(error)
                       })
@@ -203,14 +208,31 @@
 		} else if ( isNaN(Number($('#age').val())) || Number($('#age').val()) == 0 ) {
 			alert('You must enter a numeric age in years.')
 		} else if ($('#checkbox-v-Outreach').is(":checked") || $('#checkbox-v-Counseling').is(":checked") || $('#checkbox-v-Risk').is(":checked") || $('#checkbox-v-Training').is(":checked") || $('#checkbox-v-Health').is(":checked") || $('#checkbox-v-Multi').is(":checked")) {
-			if ($('input[name=radio-choice-h-2]:checked', '#filter').val() == "map") {
-      		size_map();
-        	$.mobile.changePage($('#map-page'), { transition: 'slide'});
-      } else {
-        	$.mobile.changePage($('#results'), { transition: 'slide'});
-      }
+			console.log(work)
+			next_page()
     } else {
 			alert('You must choose at least one type of service.')
+		}
+	}
+
+	function next_page() {
+		if (work == 0) {
+			if ($('input[name=radio-choice-h-2]:checked', '#filter').val() == "map") {
+					size_map();
+					$.mobile.changePage($('#map-page'), { transition: 'slide'});
+			} else {
+					$.mobile.changePage($('#results'), { transition: 'slide'});
+			}
+		} else {
+			$.mobile.loading( 'show', {
+				text: 'foo',
+				textVisible: true,
+				theme: 'z',
+				html: ""
+			});
+			setTimeout(function () {
+        next_page()
+    	}, 100);
 		}
 	}
 
@@ -218,13 +240,13 @@
 
 		if ($('#town').find(":selected").text() != "Choose a Location" && (!isNaN(Number($('#age').val())) && Number($('#age').val()) != 0)) {
 				$("#org_list").html("");
-				$("#org_geo_list").html("<li id=\"ge0_points\" v-for=\"item in items\">{{ item['fields']['Name'] }},{{ item['fields']['Latitude'] }},{{ item['fields']['Longitude'] }}</li>");
+				$("#org_geo_list").html("<li id=\"ge0_points\" v-for=\"item in items\">{{ item['id'] }},{{ item['fields']['Name'] }},{{ item['fields']['Latitude'] }},{{ item['fields']['Longitude'] }}</li>");
 
 				categories = "";
 
 				if ($('#checkbox-v-Outreach').is(":checked")){
 					$("#org_list").html( $("#org_list").html() + "<li data-role=\"list-divider\">Community Outreach</li>")
-					$("#org_list").html( $("#org_list").html() + "<li id=\"outreach\" v-for=\"item in items\" v-if=\"item['fields']['Category'] == 'Community Outreach'\"><a href=\"javascript:void('')\" onClick=\"details_page(this.innerHTML);\">{{ item['fields']['Name'] }}</a></li>")
+					$("#org_list").html( $("#org_list").html() + "<li id=\"outreach\" v-for=\"item in items\" v-if=\"item['fields']['Category'] == 'Community Outreach'\"><a href=\"javascript:void('')\" v-bind:id=\"item['id']\" onClick=\"details_page(this.id);\">{{ item['fields']['Name'] }}</a></li>")
 					if (categories != "") {
 						categories = categories+",";
 					}
@@ -232,7 +254,7 @@
 				}
 				if ($('#checkbox-v-Counseling').is(":checked")){
 					$("#org_list").html( $("#org_list").html() + "<li data-role=\"list-divider\">Counseling</li>")
-					$("#org_list").html( $("#org_list").html() + "<li id=\"counseling\" v-for=\"item in items\" v-if=\"item['fields']['Category'] == 'Counseling'\"><a href=\"javascript:void('')\" onClick=\"details_page(this.innerHTML);\">{{ item['fields']['Name'] }}</a></li>")
+					$("#org_list").html( $("#org_list").html() + "<li id=\"counseling\" v-for=\"item in items\" v-if=\"item['fields']['Category'] == 'Counseling'\"><a href=\"javascript:void('')\" v-bind:id=\"item['id']\" onClick=\"details_page(this.id);\">{{ item['fields']['Name'] }}</a></li>")
 					if (categories != "") {
 						categories = categories+",";
 					}
@@ -240,7 +262,7 @@
 				}
 				if ($('#checkbox-v-Risk').is(":checked")){
 					$("#org_list").html( $("#org_list").html() + "<li data-role=\"list-divider\">High Risk</li>")
-					$("#org_list").html( $("#org_list").html() + "<li id=\"risk\" v-for=\"item in items\" v-if=\"item['fields']['Category'] == 'High Risk'\"><a href=\"javascript:void('')\" onClick=\"details_page(this.innerHTML);\">{{ item['fields']['Name'] }}</a></li>")
+					$("#org_list").html( $("#org_list").html() + "<li id=\"risk\" v-for=\"item in items\" v-if=\"item['fields']['Category'] == 'High Risk'\"><a href=\"javascript:void('')\" v-bind:id=\"item['id']\" onClick=\"details_page(this.id);\">{{ item['fields']['Name'] }}</a></li>")
 					if (categories != "") {
 						categories = categories+",";
 					}
@@ -248,7 +270,7 @@
 				}
 				if ($('#checkbox-v-Training').is(":checked")){
 					$("#org_list").html( $("#org_list").html() + "<li data-role=\"list-divider\">Job Opportunities/Training</li>")
-					$("#org_list").html( $("#org_list").html() + "<li id=\"training\" v-for=\"item in items\" v-if=\"item['fields']['Category'] == 'Job Opportunities/Training'\"><a href=\"javascript:void('')\" onClick=\"details_page(this.innerHTML);\">{{ item['fields']['Name'] }}</a></li>")
+					$("#org_list").html( $("#org_list").html() + "<li id=\"training\" v-for=\"item in items\" v-if=\"item['fields']['Category'] == 'Job Opportunities/Training'\"><a href=\"javascript:void('')\" v-bind:id=\"item['id']\" onClick=\"details_page(this.id);\">{{ item['fields']['Name'] }}</a></li>")
 					if (categories != "") {
 						categories = categories+",";
 					}
@@ -256,7 +278,7 @@
 				}
 				if ($('#checkbox-v-Health').is(":checked")){
 					$("#org_list").html( $("#org_list").html() + "<li data-role=\"list-divider\">Health Services</li>")
-					$("#org_list").html( $("#org_list").html() + "<li id=\"training\" v-for=\"item in items\" v-if=\"item['fields']['Category'] == 'Health Services'\"><a href=\"javascript:void('')\" onClick=\"details_page(this.innerHTML);\">{{ item['fields']['Name'] }}</a></li>")
+					$("#org_list").html( $("#org_list").html() + "<li id=\"training\" v-for=\"item in items\" v-if=\"item['fields']['Category'] == 'Health Services'\"><a href=\"javascript:void('')\" v-bind:id=\"item['id']\" onClick=\"details_page(this.id);\">{{ item['fields']['Name'] }}</a></li>")
 					if (categories != "") {
 						categories = categories+",";
 					}
@@ -264,7 +286,7 @@
 				}
 				if ($('#checkbox-v-Multi').is(":checked")){
 					$("#org_list").html( $("#org_list").html() + "<li data-role=\"list-divider\">Multi-Service</li>")
-					$("#org_list").html( $("#org_list").html() + "<li id=\"service\" v-for=\"item in items\" v-if=\"item['fields']['Category'] == 'Multi-Service'\"><a href=\"javascript:void('')\" onClick=\"details_page(this.innerHTML);\">{{ item['fields']['Name'] }}</a></li>")
+					$("#org_list").html( $("#org_list").html() + "<li id=\"service\" v-for=\"item in items\" v-if=\"item['fields']['Category'] == 'Multi-Service'\"><a href=\"javascript:void('')\" v-bind:id=\"item['id']\" onClick=\"details_page(this.id);\">{{ item['fields']['Name'] }}</a></li>")
 					if (categories != "") {
 						categories = categories+",";
 					}
@@ -273,7 +295,7 @@
 
 				$('#town_name').html($('#town').find(":selected").text());
 
-		    load_api_data('#results');
+		    load_api_data('#results',0);
 
 				geo_data = $('#town').find(":selected").val().split(',').map(Number);
 				//console.log(geo_data)
@@ -291,7 +313,7 @@
 		function details_page(id) {
 
       	$("#detail").attr("v-for", "item in items");
-      	$("#detail").attr("v-if", "item['fields']['Name'] == '"+id+"'");
+      	//$("#detail").attr("v-if", "item['id'] == '"+id+"'");
       	$("#detail").html("");
       	$("#detail").html($("#detail").html() + "<h3>{{ item['fields']['Name'] }}</h3>")
       	$("#detail").html($("#detail").html() + "<h4>{{ item['fields']['Category'] }}</h4>");
@@ -302,7 +324,8 @@
       	$("#detail").html($("#detail").html() + "<p><b>Website:</b> {{ item['fields']['Website'] }}</p>");
       	$("#detail").html($("#detail").html() + "<p><b>Contact:</b> {{ item['fields']['Contact'] }}</p>");
 
-			load_api_data('#details');
+			load_api_data('#details',1,id);
+
 
 			$.mobile.changePage($('#details'), { transition: 'slide'})
 
@@ -332,11 +355,11 @@
 				//alert($(this).text());
 				pin_data = $(this).text().split(',');
 				marker = new google.maps.Marker({
-					position: {lat: Number(pin_data[1]), lng: Number(pin_data[2])},
+					position: {lat: Number(pin_data[2]), lng: Number(pin_data[3])},
 					map: map
 				});
 				var infowindow = new google.maps.InfoWindow({
-					content: "<div style=\"width:250px;\"><b>"+pin_data[0]+"</b><br/><div style=\"width:250px;text-align:right;padding-top:3px;\"><a href=\"javascript:details_page(\'"+pin_data[0]+"\')\">view details</a></span></div>"
+					content: "<div style=\"width:250px;text-align:center;\"><h2>"+pin_data[1]+"</h2><div style=\"width:250px;text-align:center;padding-bottom:10px;\"><a href=\"javascript:details_page(\'"+pin_data[0]+"\')\">view details</a></span></div>"
 				});
 
 				//creates an infowindow 'key' in the marker.
