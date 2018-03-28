@@ -38,31 +38,16 @@
 		<div class="ui-field-contain">Use the following selections to find social, community based programs & services in Suffolk County.
 			<select id="town" name="select-native-1" id="select-native-1" style="width:100%" onChange="list_page();">
         		<option value="0">Choose a Location</option>
-        		<option value="42.3601,-71.0589,13">Boston</option>
-        		<option value="42.3990213,-71.0498456,14">Chelsea</option>
-        		<option value="42.3018056,-71.0913154,13">Dorchester</option>
-        		<option value="42.3138779,-71.1363335,14">Jamaica Plain</option>
-						<option value="42.3138719,-71.1041378,14">Roxbury</option>
+						<option id="loading_selection">Loading Locations (de-select, re-select)</option>
+						<option v-for="item in items" v-bind:value="item['fields']['Latitude, Longitude, Zoom']">{{ item['fields']['Name'] }}</option>
     		</select>
 		</div>
 
 		<p> Enter age of the juvenile seeking services.</p>
 		<input name="age" id="age" data-type="number" placeholder="Input Age of Juvenile Seeking Services" onChange="list_page();">
 
-		<fieldset data-role="controlgroup">
+		<fieldset id="categories" data-role="controlgroup">
 			<h3 style="margin-top:15px;">Check All That Apply:</h3>
-				<input type="checkbox" name="checkbox-v-Training" id="checkbox-v-Training" onChange="list_page();" checked="checked">
-				<label for="checkbox-v-Training">Job Opportunties/Training</label>
-				<input type="checkbox" name="checkbox-v-Outreach" id="checkbox-v-Outreach" onChange="list_page();" checked="checked">
-				<label for="checkbox-v-Outreach">Community Outreach</label>
-				<input type="checkbox" name="checkbox-v-Counseling" id="checkbox-v-Counseling" onChange="list_page();" checked="checked">
-				<label for="checkbox-v-Counseling">Counseling</label>
-				<input type="checkbox" name="checkbox-v-Health" id="checkbox-v-Health" onChange="list_page();" checked="checked">
-				<label for="checkbox-v-Health">Health Services</label>
-				<input type="checkbox" name="checkbox-v-Risk" id="checkbox-v-Risk" onChange="list_page();" checked="checked">
-				<label for="checkbox-v-Risk">High Risk</label>
-				<input type="checkbox" name="checkbox-v-Multi" id="checkbox-v-Multi" onChange="list_page();" checked="checked">
-				<label for="checkbox-v-Multi">Multi-Service</label>
 		</fieldset>
 
 		<fieldset data-role="controlgroup" data-type="horizontal">
@@ -150,20 +135,41 @@
 <!--<script type="text/javascript" src="https://unpkg.com/vue"></script>-->
 <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.16.2/axios.min.js"></script>
+
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBCDs-cJfxydB2mKizGvtEt5tGMhcxMjmk"></script>
+
 <script type="text/javascript">
+
+	var app_id = "appHUknSmoIogemD5";
+	var app_key = "keyHtA4JdvolTnmFV";
+	var cat_names = [["Outreach","Community Outreach"],["Counseling","Counseling"],["Training","Job Opportunties/Training"],["Health","Health Services"],["Risk","High Risk"],["Multi","Multi-Service"]];
 
 	var categories = "";
 	var ages = "";
 	var work = 0;
-	function load_api_data(target,mode = 0,id='') {
+
+	function load_first() {
+			cat_names.forEach((cat, index) => {
+					$("#categories").html( $("#categories").html() + "<input type=\"checkbox\" name=\"checkbox-v-"+cat[0]+"\" id=\"checkbox-v-"+cat[0]+"\" onChange=\"list_page();\" checked=\"checked\">");
+					$("#categories").html( $("#categories").html() + "<label for=\"checkbox-v-"+cat[0]+"\">"+cat[1]+"</label>");
+			});
+			$( '#categories' ).enhanceWithin();
+			load_api_data('#filter',0);
+	}
+
+	load_first();
+
+	function load_api_data(target,mode=3,id='') {
 		work = 1;
-		var app_id = "appHUknSmoIogemD5";
-		var app_key = "keyHtA4JdvolTnmFV";
 		//https://api.airtable.com/v0/appHUknSmoIogemD5/Boston/?filterByFormula=AND(20<={Maximum Age},20>={Minimum Age},OR((FIND("Community Outreach",{Category})),(FIND("Counseling",{Category}))))
-		if (mode == 1) {
+		if (mode == 0) {
+			apicall = "https://api.airtable.com/v0/"+app_id+"/Locations/?sort[0][field]=Name&sort[0][direction]=asc";
+		} else if (mode == 1) {
+			apicall = "https://api.airtable.com/v0/"+app_id+"/Categories/?sort[0][field]=Name&sort[0][direction]=asc";
+		} else if (mode == 2) {
+			apicall = "https://api.airtable.com/v0/"+app_id+"/" + $('#town').find(":selected").text() + "/?filterByFormula=AND("+ages+"OR("+categories+"))&sort[0][field]=Name&sort[0][direction]=asc";
+		} else if (mode == 3) {
 			apicall = "https://api.airtable.com/v0/"+app_id+"/" + $('#town').find(":selected").text() + "/?filterByFormula=(RECORD_ID()=\""+id+"\")";
-		} else {
-			apicall = "https://api.airtable.com/v0/"+app_id+"/" + $('#town').find(":selected").text() + "/?filterByFormula=AND("+ages+"OR("+categories+"))";
 		}
 
 		var app = new Vue({
@@ -188,6 +194,7 @@
                       ).then(function(response){
                           self.items = response.data.records;
 													work = 0;
+													if (mode == 0) {	$('#loading_selection').remove() }
                       }).catch(function(error){
                           console.log(error)
                       })
@@ -235,55 +242,16 @@
 
 				categories = "";
 
-
-				if ($('#checkbox-v-Outreach').is(":checked")){
-					$("#org_list").html( $("#org_list").html() + "<li data-role=\"list-divider\">Community Outreach</li>")
-					$("#org_list").html( $("#org_list").html() + "<li id=\"outreach\" v-for=\"item in items\" v-if=\"item['fields']['Category'] == 'Community Outreach'\"><a href=\"javascript:void('')\" v-bind:id=\"item['id']\" onClick=\"details_page(this.id);\">{{ item['fields']['Name'] }}</a></li>")
-					if (categories != "") {
-						categories = categories+",";
+				cat_names.forEach((cat, index) => {
+					if ($('#checkbox-v-'+cat[0]).is(":checked")){
+						$("#org_list").html( $("#org_list").html() + "<li data-role=\"list-divider\">"+cat[1]+"</li>")
+						$("#org_list").html( $("#org_list").html() + "<li v-for=\"item in items\" v-if=\"item['fields']['Category'] == '"+cat[1]+"'\"><a href=\"javascript:void('')\" v-bind:id=\"item['id']\" onClick=\"details_page(this.id);\">{{ item['fields']['Name'] }}<p>Ages: {{ item['fields']['Minimum Age'] }}-{{ item['fields']['Maximum Age'] }}; Gender(s): {{ item['fields']['Gender'] }}</p></a></li>")
+						if (categories != "") {
+							categories = categories+",";
+						}
+						categories = categories+"FIND(\""+cat[1]+"\",{Category})";
 					}
-					categories = categories+"FIND(\"Community Outreach\",{Category})";
-				}
-				if ($('#checkbox-v-Counseling').is(":checked")){
-					$("#org_list").html( $("#org_list").html() + "<li data-role=\"list-divider\">Counseling</li>")
-					$("#org_list").html( $("#org_list").html() + "<li id=\"counseling\" v-for=\"item in items\" v-if=\"item['fields']['Category'] == 'Counseling'\"><a href=\"javascript:void('')\" v-bind:id=\"item['id']\" onClick=\"details_page(this.id);\">{{ item['fields']['Name'] }}</a></li>")
-					if (categories != "") {
-						categories = categories+",";
-					}
-					categories = categories+"FIND(\"Counseling\",{Category})";
-				}
-				if ($('#checkbox-v-Risk').is(":checked")){
-					$("#org_list").html( $("#org_list").html() + "<li data-role=\"list-divider\">High Risk</li>")
-					$("#org_list").html( $("#org_list").html() + "<li id=\"risk\" v-for=\"item in items\" v-if=\"item['fields']['Category'] == 'High Risk'\"><a href=\"javascript:void('')\" v-bind:id=\"item['id']\" onClick=\"details_page(this.id);\">{{ item['fields']['Name'] }}</a></li>")
-					if (categories != "") {
-						categories = categories+",";
-					}
-					categories = categories+"FIND(\"High Risk\",{Category})";
-				}
-				if ($('#checkbox-v-Training').is(":checked")){
-					$("#org_list").html( $("#org_list").html() + "<li data-role=\"list-divider\">Job Opportunities/Training</li>")
-					$("#org_list").html( $("#org_list").html() + "<li id=\"training\" v-for=\"item in items\" v-if=\"item['fields']['Category'] == 'Job Opportunities/Training'\"><a href=\"javascript:void('')\" v-bind:id=\"item['id']\" onClick=\"details_page(this.id);\">{{ item['fields']['Name'] }}</a></li>")
-					if (categories != "") {
-						categories = categories+",";
-					}
-					categories = categories+"FIND(\"Job Opportunities/Training\",{Category})";
-				}
-				if ($('#checkbox-v-Health').is(":checked")){
-					$("#org_list").html( $("#org_list").html() + "<li data-role=\"list-divider\">Health Services</li>")
-					$("#org_list").html( $("#org_list").html() + "<li id=\"training\" v-for=\"item in items\" v-if=\"item['fields']['Category'] == 'Health Services'\"><a href=\"javascript:void('')\" v-bind:id=\"item['id']\" onClick=\"details_page(this.id);\">{{ item['fields']['Name'] }}</a></li>")
-					if (categories != "") {
-						categories = categories+",";
-					}
-					categories = categories+"FIND(\"Health Services\",{Category})";
-				}
-				if ($('#checkbox-v-Multi').is(":checked")){
-					$("#org_list").html( $("#org_list").html() + "<li data-role=\"list-divider\">Multi-Service</li>")
-					$("#org_list").html( $("#org_list").html() + "<li id=\"service\" v-for=\"item in items\" v-if=\"item['fields']['Category'] == 'Multi-Service'\"><a href=\"javascript:void('')\" v-bind:id=\"item['id']\" onClick=\"details_page(this.id);\">{{ item['fields']['Name'] }}</a></li>")
-					if (categories != "") {
-						categories = categories+",";
-					}
-					categories = categories+"FIND(\"Multi-Service\",{Category})";
-				}
+				});
 
 				if ($('#age').val()=="") {
 					ages = "";
@@ -293,7 +261,7 @@
 
 				$('#town_name').html($('#town').find(":selected").text());
 
-		    load_api_data('#results',0);
+		    load_api_data('#results',2);
 
 				geo_data = $('#town').find(":selected").val().split(',').map(Number);
 				//console.log(geo_data)
@@ -323,7 +291,7 @@
       	$("#detail").html($("#detail").html() + "<p><b>Description:</b> {{ item['fields']['Description'] }}</p>");
 				$("#detail").html($("#detail").html() + "<p><b>Valid As Of:</b> {{ item['fields']['Valid As Of'] }}</p>");
 
-			load_api_data('#details',1,id);
+			load_api_data('#details',3,id);
 
 
 			//$.mobile.changePage($('#details'), { transition: 'slide'})
@@ -416,9 +384,7 @@
 
 </script>
 
-<script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBCDs-cJfxydB2mKizGvtEt5tGMhcxMjmk">
-</script>
+
 
 </body>
 </html>
