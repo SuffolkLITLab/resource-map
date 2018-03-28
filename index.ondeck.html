@@ -246,7 +246,7 @@
 
 				if ($('#checkbox-v-Outreach').is(":checked")){
 					$("#org_list").html( $("#org_list").html() + "<li data-role=\"list-divider\">Community Outreach</li>")
-					$("#org_list").html( $("#org_list").html() + "<li id=\"outreach\" v-for=\"item in items\" v-if=\"item['fields']['Category'] == 'Community Outreach'\"><a href=\"javascript:void('')\" v-bind:id=\"item['id']\" onClick=\"details_page(this.id);\">{{ item['fields']['Name'] }}</a></li><li v-if=\"items.length == 0\">No matches.</li>")
+					$("#org_list").html( $("#org_list").html() + "<li id=\"outreach\" v-for=\"item in items\" v-if=\"item['fields']['Category'] == 'Community Outreach'\"><a href=\"javascript:void('')\" v-bind:id=\"item['id']\" onClick=\"details_page(this.id);\">{{ item['fields']['Name'] }}</a></li>")
 					if (categories != "") {
 						categories = categories+",";
 					}
@@ -359,7 +359,7 @@
 					map: map
 				});
 				var infowindow = new google.maps.InfoWindow({
-					content: "<div style=\"width:250px;text-align:center;\"><h2>"+pin_data[1]+"</h2><div style=\"width:250px;text-align:center;padding-bottom:10px;\"><a href=\"javascript:details_page(\'"+pin_data[0]+"\')\">view details</a></span></div>"
+					content: "<div style=\"width:225px;text-align:center;\"><h2>"+pin_data[1]+"</h2><div style=\"width:100%;text-align:center;padding-bottom:10px;\"><a href=\"javascript:details_page(\'"+pin_data[0]+"\')\">view details</a></span></div>"
 				});
 
 				//creates an infowindow 'key' in the marker.
@@ -392,7 +392,7 @@
 
 		function size_map() {
 			initMap(lat,lon,zoomin);
-			$('#map').height( window.innerHeight - 79 +  'px');
+			$('#map').height( window.innerHeight - 81 +  'px');
 
 		}
 
