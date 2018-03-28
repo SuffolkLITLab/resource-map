@@ -1,13 +1,13 @@
 <html>
 <head>
 	<meta http-equiv="Content-type" content="text/html;charset=UTF-8"/>
-	<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
 	<meta name="apple-mobile-web-app-capable" content="no" />
 	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <title>Geo Finder</title>
 
-    <meta property="og:image" content="https://www.qnamarkup.org/images/QnA_300.png"/>
-    <link rel="apple-touch-icon" href="https://www.qnamarkup.org/images/QnA_300.png"/>
+    <meta property="og:image" content="images/icon_300.png"/>
+    <link rel="apple-touch-icon" href="images/icon_300.png"/>
 
     <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
 	<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
@@ -35,32 +35,33 @@
 		<a href="#about" class="ui-btn ui-icon-info ui-btn-icon-notext ui-corner-all ui-btn-right" data-transition="slide"></a>
 	</div>
 	<div data-role="content" class="content">
-		<div class="ui-field-contain">Use the following selections to find programs & services near you.
+		<div class="ui-field-contain">Use the following selections to find social, community based programs & services in Suffolk County.
 			<select id="town" name="select-native-1" id="select-native-1" style="width:100%" onChange="list_page();">
         		<option value="0">Choose a Location</option>
-        		<option value="Boston">Boston</option>
-        		<option value="Chelsea">Chelsea</option>
-        		<option value="Dorchester">Dorchester</option>
-        		<option value="Jamaica%20Plain">Jamaica Plain</option>
-				<option value="Roxbury">Roxbury</option>
+        		<option value="42.3601,-71.0589,13">Boston</option>
+        		<option value="42.3990213,-71.0498456,14">Chelsea</option>
+        		<option value="42.3018056,-71.0913154,13">Dorchester</option>
+        		<option value="42.3138779,-71.1363335,14">Jamaica Plain</option>
+						<option value="42.3138719,-71.1041378,14">Roxbury</option>
     		</select>
 		</div>
 
-		<input name="age" id="age" data-type="number" placeholder="Input Age of Juvenile Seeking Services" onkeypress="list_page();">
+		<p> Enter age of the juvenile seeking services.</p>
+		<input name="age" id="age" data-type="number" placeholder="Input Age of Juvenile Seeking Services" onChange="list_page();">
 
 		<fieldset data-role="controlgroup">
 			<h3 style="margin-top:15px;">Check All That Apply:</h3>
-				<input type="checkbox" name="checkbox-v-Training" id="checkbox-v-Training" onChange="list_page();">
+				<input type="checkbox" name="checkbox-v-Training" id="checkbox-v-Training" onChange="list_page();" checked="checked">
 				<label for="checkbox-v-Training">Job Opportunties/Training</label>
-				<input type="checkbox" name="checkbox-v-Outreach" id="checkbox-v-Outreach" onChange="list_page();">
+				<input type="checkbox" name="checkbox-v-Outreach" id="checkbox-v-Outreach" onChange="list_page();" checked="checked">
 				<label for="checkbox-v-Outreach">Community Outreach</label>
-				<input type="checkbox" name="checkbox-v-Counseling" id="checkbox-v-Counseling" onChange="list_page();">
+				<input type="checkbox" name="checkbox-v-Counseling" id="checkbox-v-Counseling" onChange="list_page();" checked="checked">
 				<label for="checkbox-v-Counseling">Counseling</label>
-				<input type="checkbox" name="checkbox-v-Health" id="checkbox-v-Health" onChange="list_page();">
+				<input type="checkbox" name="checkbox-v-Health" id="checkbox-v-Health" onChange="list_page();" checked="checked">
 				<label for="checkbox-v-Health">Health Services</label>
-				<input type="checkbox" name="checkbox-v-Risk" id="checkbox-v-Risk" onChange="list_page();">
+				<input type="checkbox" name="checkbox-v-Risk" id="checkbox-v-Risk" onChange="list_page();" checked="checked">
 				<label for="checkbox-v-Risk">High Risk</label>
-				<input type="checkbox" name="checkbox-v-Multi" id="checkbox-v-Multi" onChange="list_page();">
+				<input type="checkbox" name="checkbox-v-Multi" id="checkbox-v-Multi" onChange="list_page();" checked="checked">
 				<label for="checkbox-v-Multi">Multi-Service</label>
 		</fieldset>
 
@@ -84,6 +85,9 @@
 		<a href="#filter" data-transition="slide" data-direction="reverse" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-arrow-l">Back</a>
 	</div>
 	<div data-role="content" class="content">
+		<p> Nicole Siino is the Legal Innovation and Technology Fellow in the Juvenile Defender Clinic at Suffolk University Law School. In addition to representing juveniles in juvenile delinquency matters, Nicole created this Juvenile Resource Finder after discovering there was no comprehensive list of resources that juveniles can benefit from. Nicole is in her last year of law school and hopes to pursue a career in public interest law. In addition to being a Student Attorney and a Legal Innovation and Technology Fellow, she is a Content Editor on the Journal of High Technology Law.</p>
+		<p> You can check out the <a href="https://www.suffolklitlab.org">Suffolk Lit Lab's</a> website to see other LIT projects!<p>
+		<p style="text-align:center"><a href="http://suffolklitlab.org/" target="_blank"><img src="images/LIT_logo.png" width="200px"/ border="0"></a></p>
 
 	</div>
 </div>
@@ -93,18 +97,10 @@
 <div data-role="page" id="details">
 	<div data-role="header">
 		<h1>Details</h1>
-		<a href="#results" data-transition="slide" data-direction="reverse" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-arrow-l">Back</a>
+		<a href="#" data-rel="back" data-transition="slide" data-direction="reverse" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-arrow-l">Back</a>
 	</div>
 	<div data-role="content" class="content">
 		<div id="detail" v-for="" v-if="">
-					<h3>{{ item['fields']['Name'] }}</h3>
-					<h4>{{ item['fields']['Category'] }}</h4>
-                    <p><b>Age Range:</b> {{ item['fields']['Minimum Age'] }} - {{ item['fields']['Maximum Age'] }}</p>
-                    <p><b>Gender:</b> {{ item['fields']['Gender'] }}</p>
-                    <p><b>Address:</b> {{ item['fields']['Address'] }}</p>
-                    <p><b>Description:</b> {{ item['fields']['Description'] }}</p>
-                    <p><b>Website:</b> {{ item['fields']['Website'] }}</p>
-                    <p><b>Contact:</b> {{ item['fields']['Contact'] }}</p>
 		</div>
 	</div>
 </div>
@@ -114,7 +110,7 @@
 <div data-role="page" id="results">
 	<div data-role="header">
 		<h1>Results</h1>
-		<a href="#filter" data-transition="slide" data-direction="reverse" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-arrow-l">Back</a>
+		<a href="#filter" data-transition="slide" data-direction="reverse" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-home ui-btn-icon-notext"></a>
 		<div data-role="navbar">
 			<ul>
 				<li><a href="#results">List</a></li>
@@ -123,22 +119,25 @@
 		</div>
 	</div>
 		<div data-role="content" class="content">
-			<h1 id="town_name"></h1>
+				<h1 id="town_name"></h1>
 				<ul id="org_list" data-role="listview" data-inset="true">
 				</ul>
 		</div>
+
+		<ul id="org_geo_list" style="display:none;"></ul>
+
 </div>
 
 
 
-<div data-role="page" id="map-page">
+<div data-role="page" id="map-page" style="background:#798e9e;">
 	<div data-role="header">
 		<h1>Results</h1>
-		<a href="#filter" data-transition="slide" data-direction="reverse" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-arrow-l">Back</a>
+		<a href="#filter" data-transition="slide" data-direction="reverse" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-home ui-btn-icon-notext"></a>
 	</div>
 		<div data-role="navbar">
 			<ul>
-				<li><a href="javascript:void('');" style="color:#ccc" onClick="$.mobile.changePage($('#results'), { transition: 'none'})">List</a></li>
+				<li><a href="#results" data-transition="none" style="color:#ccc">List</a></li>
 				<li><a href="#map-page">Map</a></li>
 			</ul>
 		</div>
@@ -147,16 +146,26 @@
 		</div>
 </div>
 
-
-
 <!-- Include Dependency Scripts -->
-<script type="text/javascript" src="https://unpkg.com/vue"></script>
+<!--<script type="text/javascript" src="https://unpkg.com/vue"></script>-->
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.16.2/axios.min.js"></script>
 <script type="text/javascript">
 
 	var categories = "";
+	var ages = "";
+	var work = 0;
+	function load_api_data(target,mode = 0,id='') {
+		work = 1;
+		var app_id = "appHUknSmoIogemD5";
+		var app_key = "keyHtA4JdvolTnmFV";
+		//https://api.airtable.com/v0/appHUknSmoIogemD5/Boston/?filterByFormula=AND(20<={Maximum Age},20>={Minimum Age},OR((FIND("Community Outreach",{Category})),(FIND("Counseling",{Category}))))
+		if (mode == 1) {
+			apicall = "https://api.airtable.com/v0/"+app_id+"/" + $('#town').find(":selected").text() + "/?filterByFormula=(RECORD_ID()=\""+id+"\")";
+		} else {
+			apicall = "https://api.airtable.com/v0/"+app_id+"/" + $('#town').find(":selected").text() + "/?filterByFormula=AND("+ages+"OR("+categories+"))";
+		}
 
-	function load_api_data(target) {
 		var app = new Vue({
               el: target,
               data: {
@@ -170,18 +179,15 @@
 
                       // Init variables
                       var self = this
-                      var app_id = "appHUknSmoIogemD5";
-                      var app_key = "keyHtA4JdvolTnmFV";
                       this.items = []
 					axios.get(
-													//https://api.airtable.com/v0/appHUknSmoIogemD5/Boston/?filterByFormula=AND(20<={Maximum Age},20>={Minimum Age},OR((FIND("Community Outreach",{Category})),(FIND("Counseling",{Category}))))
-
-                          "https://api.airtable.com/v0/"+app_id+"/" + $('#town').find(":selected").text() + "/?filterByFormula=AND("+Number($('#age').val())+"<={Maximum Age},"+Number($('#age').val())+">={Minimum Age},OR("+categories+"))",
+													 apicall,
                           {
                               headers: { Authorization: "Bearer "+ app_key }
                           }
                       ).then(function(response){
-                          self.items = response.data.records
+                          self.items = response.data.records;
+													work = 0;
                       }).catch(function(error){
                           console.log(error)
                       })
@@ -194,30 +200,49 @@
 
 		if ($('#town').find(":selected").text() == "Choose a Location") {
 			alert('You must choose a location.');
-		} else if ( isNaN(Number($('#age').val())) || Number($('#age').val()) == 0 ) {
-			alert('You must enter a numeric age in years.')
+		} else if ( isNaN(Number($('#age').val())) ) {
+			alert('You must enter a numeric age (in years) or leave blank.')
 		} else if ($('#checkbox-v-Outreach').is(":checked") || $('#checkbox-v-Counseling').is(":checked") || $('#checkbox-v-Risk').is(":checked") || $('#checkbox-v-Training').is(":checked") || $('#checkbox-v-Health').is(":checked") || $('#checkbox-v-Multi').is(":checked")) {
-			if ($('input[name=radio-choice-h-2]:checked', '#filter').val() == "map") {
-          		size_map();
-            	$.mobile.changePage($('#map-page'), { transition: 'slide'});
-          	} else {
-            	$.mobile.changePage($('#results'), { transition: 'slide'});
-          	}
-          } else {
+			console.log(work)
+			next_page_1()
+    } else {
 			alert('You must choose at least one type of service.')
+		}
+	}
+
+	function next_page_1() {
+		if (work == 0) {
+			if ($('input[name=radio-choice-h-2]:checked', '#filter').val() == "map") {
+					size_map();
+					$.mobile.changePage($('#map-page'), { transition: 'slide'});
+			} else {
+					$.mobile.changePage($('#results'), { transition: 'slide'});
+			}
+		} else {
+			$.mobile.loading( 'show', {
+				text: 'foo',
+				textVisible: true,
+				theme: 'z',
+				html: ""
+			});
+			setTimeout(function () {
+        next_page_1()
+    	}, 100);
 		}
 	}
 
 	function list_page() {
 
-		if ($('#town').find(":selected").text() != "Choose a Location" && (!isNaN(Number($('#age').val())) && Number($('#age').val()) != 0)) {
-				$("#org_list").html("")
+		if ($('#town').find(":selected").text() != "Choose a Location" && !isNaN(Number($('#age').val())) ) {
+				$("#org_list").html("");
+				$("#org_geo_list").html("<li id=\"ge0_points\" v-for=\"item in items\">{{ item['id'] }},{{ item['fields']['Name'] }},{{ item['fields']['Latitude'] }},{{ item['fields']['Longitude'] }}</li>");
 
 				categories = "";
 
+
 				if ($('#checkbox-v-Outreach').is(":checked")){
 					$("#org_list").html( $("#org_list").html() + "<li data-role=\"list-divider\">Community Outreach</li>")
-					$("#org_list").html( $("#org_list").html() + "<li id=\"outreach\" v-for=\"item in items\" v-if=\"item['fields']['Category'] == 'Community Outreach'\"><a href=\"javascript:void('')\" onClick=\"details_page(this.innerHTML);\">{{ item['fields']['Name'] }}</a></li>")
+					$("#org_list").html( $("#org_list").html() + "<li id=\"outreach\" v-for=\"item in items\" v-if=\"item['fields']['Category'] == 'Community Outreach'\"><a href=\"javascript:void('')\" v-bind:id=\"item['id']\" onClick=\"details_page(this.id);\">{{ item['fields']['Name'] }}</a></li>")
 					if (categories != "") {
 						categories = categories+",";
 					}
@@ -225,7 +250,7 @@
 				}
 				if ($('#checkbox-v-Counseling').is(":checked")){
 					$("#org_list").html( $("#org_list").html() + "<li data-role=\"list-divider\">Counseling</li>")
-					$("#org_list").html( $("#org_list").html() + "<li id=\"counseling\" v-for=\"item in items\" v-if=\"item['fields']['Category'] == 'Counseling'\"><a href=\"javascript:void('')\" onClick=\"details_page(this.innerHTML);\">{{ item['fields']['Name'] }}</a></li>")
+					$("#org_list").html( $("#org_list").html() + "<li id=\"counseling\" v-for=\"item in items\" v-if=\"item['fields']['Category'] == 'Counseling'\"><a href=\"javascript:void('')\" v-bind:id=\"item['id']\" onClick=\"details_page(this.id);\">{{ item['fields']['Name'] }}</a></li>")
 					if (categories != "") {
 						categories = categories+",";
 					}
@@ -233,7 +258,7 @@
 				}
 				if ($('#checkbox-v-Risk').is(":checked")){
 					$("#org_list").html( $("#org_list").html() + "<li data-role=\"list-divider\">High Risk</li>")
-					$("#org_list").html( $("#org_list").html() + "<li id=\"risk\" v-for=\"item in items\" v-if=\"item['fields']['Category'] == 'High Risk'\"><a href=\"javascript:void('')\" onClick=\"details_page(this.innerHTML);\">{{ item['fields']['Name'] }}</a></li>")
+					$("#org_list").html( $("#org_list").html() + "<li id=\"risk\" v-for=\"item in items\" v-if=\"item['fields']['Category'] == 'High Risk'\"><a href=\"javascript:void('')\" v-bind:id=\"item['id']\" onClick=\"details_page(this.id);\">{{ item['fields']['Name'] }}</a></li>")
 					if (categories != "") {
 						categories = categories+",";
 					}
@@ -241,7 +266,7 @@
 				}
 				if ($('#checkbox-v-Training').is(":checked")){
 					$("#org_list").html( $("#org_list").html() + "<li data-role=\"list-divider\">Job Opportunities/Training</li>")
-					$("#org_list").html( $("#org_list").html() + "<li id=\"training\" v-for=\"item in items\" v-if=\"item['fields']['Category'] == 'Job Opportunities/Training'\"><a href=\"javascript:void('')\" onClick=\"details_page(this.innerHTML);\">{{ item['fields']['Name'] }}</a></li>")
+					$("#org_list").html( $("#org_list").html() + "<li id=\"training\" v-for=\"item in items\" v-if=\"item['fields']['Category'] == 'Job Opportunities/Training'\"><a href=\"javascript:void('')\" v-bind:id=\"item['id']\" onClick=\"details_page(this.id);\">{{ item['fields']['Name'] }}</a></li>")
 					if (categories != "") {
 						categories = categories+",";
 					}
@@ -249,7 +274,7 @@
 				}
 				if ($('#checkbox-v-Health').is(":checked")){
 					$("#org_list").html( $("#org_list").html() + "<li data-role=\"list-divider\">Health Services</li>")
-					$("#org_list").html( $("#org_list").html() + "<li id=\"training\" v-for=\"item in items\" v-if=\"item['fields']['Category'] == 'Health Services'\"><a href=\"javascript:void('')\" onClick=\"details_page(this.innerHTML);\">{{ item['fields']['Name'] }}</a></li>")
+					$("#org_list").html( $("#org_list").html() + "<li id=\"training\" v-for=\"item in items\" v-if=\"item['fields']['Category'] == 'Health Services'\"><a href=\"javascript:void('')\" v-bind:id=\"item['id']\" onClick=\"details_page(this.id);\">{{ item['fields']['Name'] }}</a></li>")
 					if (categories != "") {
 						categories = categories+",";
 					}
@@ -257,16 +282,29 @@
 				}
 				if ($('#checkbox-v-Multi').is(":checked")){
 					$("#org_list").html( $("#org_list").html() + "<li data-role=\"list-divider\">Multi-Service</li>")
-					$("#org_list").html( $("#org_list").html() + "<li id=\"service\" v-for=\"item in items\" v-if=\"item['fields']['Category'] == 'Multi-Service'\"><a href=\"javascript:void('')\" onClick=\"details_page(this.innerHTML);\">{{ item['fields']['Name'] }}</a></li>")
+					$("#org_list").html( $("#org_list").html() + "<li id=\"service\" v-for=\"item in items\" v-if=\"item['fields']['Category'] == 'Multi-Service'\"><a href=\"javascript:void('')\" v-bind:id=\"item['id']\" onClick=\"details_page(this.id);\">{{ item['fields']['Name'] }}</a></li>")
 					if (categories != "") {
 						categories = categories+",";
 					}
 					categories = categories+"FIND(\"Multi-Service\",{Category})";
 				}
 
+				if ($('#age').val()=="") {
+					ages = "";
+				} else {
+					ages = Number($('#age').val())+"<={Maximum Age},"+Number($('#age').val())+">={Minimum Age},";
+				}
+
 				$('#town_name').html($('#town').find(":selected").text());
 
-		    load_api_data('#results');
+		    load_api_data('#results',0);
+
+				geo_data = $('#town').find(":selected").val().split(',').map(Number);
+				//console.log(geo_data)
+
+				lat = geo_data[0];
+				lon = geo_data[1];
+				zoomin = geo_data[2];
 
 	  	} else {
 				return false;
@@ -277,20 +315,23 @@
 		function details_page(id) {
 
       	$("#detail").attr("v-for", "item in items");
-      	$("#detail").attr("v-if", "item['fields']['Name'] == '"+id+"'");
+      	//$("#detail").attr("v-if", "item['id'] == '"+id+"'");
       	$("#detail").html("");
       	$("#detail").html($("#detail").html() + "<h3>{{ item['fields']['Name'] }}</h3>")
       	$("#detail").html($("#detail").html() + "<h4>{{ item['fields']['Category'] }}</h4>");
+				$("#detail").html($("#detail").html() + "<p><b>Contact:</b> {{ item['fields']['Contact'] }}</p>");
+      	$("#detail").html($("#detail").html() + "<p><b>Website:</b> {{ item['fields']['Website'] }}</p>");
       	$("#detail").html($("#detail").html() + "<p><b>Age Range:</b> {{ item['fields']['Minimum Age'] }} - {{ item['fields']['Maximum Age'] }}</p>");
       	$("#detail").html($("#detail").html() + "<p><b>Gender:</b> {{ item['fields']['Gender'] }}</p>");
       	$("#detail").html($("#detail").html() + "<p><b>Address:</b> {{ item['fields']['Address'] }}</p>");
       	$("#detail").html($("#detail").html() + "<p><b>Description:</b> {{ item['fields']['Description'] }}</p>");
-      	$("#detail").html($("#detail").html() + "<p><b>Website:</b> {{ item['fields']['Website'] }}</p>");
-      	$("#detail").html($("#detail").html() + "<p><b>Contact:</b> {{ item['fields']['Contact'] }}</p>");
+				$("#detail").html($("#detail").html() + "<p><b>Valid As Of:</b> {{ item['fields']['Valid As Of'] }}</p>");
 
-			load_api_data('#details');
+			load_api_data('#details',1,id);
 
-			$.mobile.changePage($('#details'), { transition: 'slide'})
+
+			//$.mobile.changePage($('#details'), { transition: 'slide'})
+			next_page_2();
 
       //$('#details').listview('refresh');
 		  //$( '#details' ).enhanceWithin();
@@ -298,31 +339,92 @@
       //return true;
     }
 
-		list_page();
+		function next_page_2() {
+			if (work == 0) {
+				$.mobile.changePage($('#details'), { transition: 'slide'})
+			} else {
+				$.mobile.loading( 'show', {
+					text: 'foo',
+					textVisible: true,
+					theme: 'z',
+					html: ""
+				});
+				setTimeout(function () {
+					next_page_2()
+				}, 100);
+			}
+		}
+
+		//list_page();
 
 		/*
 		https://developers.google.com/maps/documentation/javascript/adding-a-google-map
 			*/
-		function initMap() {
-			var uluru = {lat: -25.363, lng: 131.044};
+
+		var markers = [];
+
+		function initMap(lat,lon,zoomin) {
+			var uluru = {lat: lat, lng: lon};
 			var map = new google.maps.Map(document.getElementById('map'), {
-		        zoom: 4,
+		        zoom: zoomin,
 		        center: uluru
 		      });
-		      var marker = new google.maps.Marker({
-		        position: uluru,
-		        map: map
-		      });
+
+			i = 0;
+			$('#org_geo_list li').each(function(){
+				//alert($(this).text());
+				pin_data = $(this).text().split(',');
+				marker = new google.maps.Marker({
+					position: {lat: Number(pin_data[2]), lng: Number(pin_data[3])},
+					map: map
+				});
+				var infowindow = new google.maps.InfoWindow({
+					content: "<div style=\"width:225px;text-align:center;\"><h2>"+pin_data[1]+"</h2><div style=\"width:100%;text-align:center;padding-bottom:10px;\"><a href=\"javascript:details_page(\'"+pin_data[0]+"\')\">view details</a></span></div>"
+				});
+
+				//creates an infowindow 'key' in the marker.
+				marker.infowindow = infowindow;
+
+				//finally call the explicit infowindow object
+				marker.addListener('click', function() {
+					hideAllInfoWindows(map);
+					return this.infowindow.open(map, this);
+				});
+
+				markers.push(marker);
+
+				++i;
+			});
+
+			google.maps.event.addListener(map, 'click', function() {
+			    if (infowindow) {
+			        infowindow.close();
+			    }
+			});
+
+		}
+
+		function hideAllInfoWindows(map) {
+		   markers.forEach(function(marker) {
+		     marker.infowindow.close(map, marker);
+		  });
 		}
 
 		function size_map() {
-			$('#map').height( $(window).height() - 79 +  'px');
+			initMap(lat,lon,zoomin);
+			$('#map').height( window.innerHeight - 81 +  'px');
+
 		}
+
+		$("div[data-role=page]").bind("pagebeforeshow", function (e, data) {
+		  $.mobile.silentScroll(0);
+		  $.mobile.changePage.defaults.transition = 'slide'; // reset default here
+		})
 
 </script>
 
 <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBCDs-cJfxydB2mKizGvtEt5tGMhcxMjmk&callback=initMap">
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBCDs-cJfxydB2mKizGvtEt5tGMhcxMjmk">
 </script>
 
 </body>
