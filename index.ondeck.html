@@ -38,7 +38,7 @@
 		<div class="ui-field-contain">Use the following selections to find social, community based programs & services in Suffolk County.
 			<select id="town" name="select-native-1" id="select-native-1" style="width:100%" onChange="list_page();">
         		<option value="0">Choose a Location</option>
-						<option id="loading_selection">Loading Locations (de-select, re-select)</option>
+						<option id="loading_selection">Loading Locations...</option>
 						<option v-for="item in items" v-bind:value="item['fields']['Latitude, Longitude, Zoom']">{{ item['fields']['Name'] }}</option>
     		</select>
 		</div>
