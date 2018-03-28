@@ -38,7 +38,7 @@
 		<div class="ui-field-contain">Use the following selections to find social, community based programs & services in Suffolk County.
 			<select id="town" name="select-native-1" id="select-native-1" style="width:100%" onChange="list_page();">
         		<option value="0">Choose a Location</option>
-						<option id="loading_selection">Loading Locations...</option>
+						<option id="loading_selection" value="0">Loading Locations...</option>
 						<option v-for="item in items" v-bind:value="item['fields']['Latitude, Longitude, Zoom']">{{ item['fields']['Name'] }}</option>
     		</select>
 		</div>
@@ -205,7 +205,7 @@
 
 	function results_page() {
 
-		if ($('#town').find(":selected").text() == "Choose a Location") {
+		if ($('#town').find(":selected").val() == 0) {
 			alert('You must choose a location.');
 		} else if ( isNaN(Number($('#age').val())) ) {
 			alert('You must enter a numeric age (in years) or leave blank.')
@@ -236,7 +236,7 @@
 
 	function list_page() {
 
-		if ($('#town').find(":selected").text() != "Choose a Location" && !isNaN(Number($('#age').val())) ) {
+		if ($('#town').find(":selected").val() != 0 && !isNaN(Number($('#age').val())) ) {
 				$("#org_list").html("");
 				$("#org_geo_list").html("<li id=\"ge0_points\" v-for=\"item in items\">{{ item['id'] }},{{ item['fields']['Name'] }},{{ item['fields']['Latitude'] }},{{ item['fields']['Longitude'] }}</li>");
 
