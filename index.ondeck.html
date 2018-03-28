@@ -218,12 +218,9 @@
 					$.mobile.changePage($('#results'), { transition: 'slide'});
 			}
 		} else {
-			$.mobile.loading( 'show', {
-				text: 'foo',
-				textVisible: true,
-				theme: 'z',
-				html: ""
-			});
+			if ($.mobile.loading().is(':hidden')) {
+				$.mobile.loading("show");
+			}
 			setTimeout(function () {
         next_page_1()
     	}, 100);
@@ -342,12 +339,9 @@
 			if (work == 0) {
 				$.mobile.changePage($('#details'), { transition: 'slide'})
 			} else {
-				$.mobile.loading( 'show', {
-					text: 'foo',
-					textVisible: true,
-					theme: 'z',
-					html: ""
-				});
+				if ($.mobile.loading().is(':hidden')) {
+					$.mobile.loading("show");
+				}
 				setTimeout(function () {
 					next_page_2()
 				}, 100);
