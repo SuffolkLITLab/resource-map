@@ -2,13 +2,17 @@
 geo-based resource finder
 # How-To Create Your Own Geo-Locator App
 Here are the steps to create your own geo-locator website application:
-<p> 1. 
-<p> 2. Click fork on the top right hand corner.
-<p> ![Image of 1] 
-<p> 3. 
-<p> 4. Create an Airtable account.
+<p> 1. Head to https://github.com/SuffolkLITLab/resource-map.
+<p> 2. Click on the index.html file.
+<p> 3. Copy the all the code from index.html. 
+<p> 4. Click fork on the top right hand corner.
+<p> ![Image of 1] (https://github.com/SuffolkLITLab/resource-map/blob/master/HowTo%20Images/HowTo%20Images/1.png) 
+<p> 5. Paste the index.html code into your own GitHub repo or another text editor such as Text Wrangler.
+<p> Commit the changes on the bottom of the page.
+<p> ![Image of Commit] (https://github.com/SuffolkLITLab/resource-map/blob/master/HowTo%20Images/HowTo%20Images/Commit.png)  
+<p> 6. Create an Airtable account.
 <p> ![Image of Airtable sign in]
-<p> 5. Choose a base template that suits your needs.
+<p> 7. Choose a base template that suits your needs.
 <p> ![Image of Templates]
 <p> 6. Add tabs for all the different locations (i.e. Boston, Roxbury etc...) desired and add a "locations" tab.
 <p> ![Image of Locations] 
