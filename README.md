@@ -15,6 +15,10 @@ Here are the steps to create your own geo-locator website application:
 <p> 8. Use the following headings for the different sections on the Airtable: Name, Category, Minimum age, Maximum age, Address, Description, Wesbite, Phone, Email, Valid As Of, Latitude, and Longitude. 
 <p> 9. Under the Category heading, create your own set of categories (i.e. community outreach, job opportunities/training, health services etc...).
 <p> 9. Conduct research on the programs you want to include. Begin inputting your own data into the Airtable.
-<p> 10. Turn to the code. Update line 156 to input your own Category names. 
+<p> 10. Turn to the code. Update line 43 to create your own title.
+<p> Update line 47 to include your own description. 
+<p> Update line 55 to describe age filter.
+<p> Now turn to line 82 to update your own About page. 
+<p> Update line 156 to input your own Category names. 
 <p> 11. Update line 175 to do the same.
 <p> 33. Now turn to line 82 and update your own About page. 
