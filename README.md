@@ -29,7 +29,7 @@ Here are the steps to create your own geo-locator website application:
 <p> 18. Now turn to line 82 to update your own About page. 
 <p> 19. Update line 156 to input your own Category names. 
 <p> 20. Update line 175 to do the same.
-<p> 21. Go back to your Airtable. Find your account. 
+<p> 21. Go back to your Airtable. Find your account in the upper right hand corner. 
 <p> ![Image to Account] (https://github.com/SuffolkLITLab/resource-map/blob/master/HowTo%20Images/HowTo%20Images/Account.png)
 <p> ![Image to Account 2] (https://github.com/SuffolkLITLab/resource-map/blob/master/HowTo%20Images/HowTo%20Images/Account%202.png)  
 <p> 22. Find your API key. You can follow the steps below or go to https://medium.com/row-and-table/an-basic-intro-to-the-airtable-api-9ef978bb0729. 
