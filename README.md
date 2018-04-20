@@ -38,3 +38,4 @@ Here are the steps to create your own geo-locator website application:
 <p> 24. Find your API documentation.
 <p> ![Image of API Documenation] (https://github.com/SuffolkLITLab/resource-map/blob/master/HowTo%20Images/HowTo%20Images/API%20Documentation.png)
 <p> ![Image of API Documentation 2] (https://github.com/SuffolkLITLab/resource-map/blob/master/HowTo%20Images/HowTo%20Images/API%20Documentation%202.png)  
+<p> ![Image of API Documentation 3] (https://github.com/SuffolkLITLab/resource-map/blob/master/HowTo%20Images/HowTo%20Images/API%20Doumentation%203.png) 
