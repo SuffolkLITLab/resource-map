@@ -8,6 +8,8 @@ Here are the steps to create your own geo-locator website application:
 <p> 4. Create an Airtable account.
 <p> 5. Choose a base template that suits your needs.
 <p> 6. Add tabs for all the different locations (i.e. Boston, Roxbury etc...) desired and add a "locations" tab.
+<p> ![Image of Airtable] 
+
 <p> 7. Under the "locations" tab, include the name, latitude & longitude coordinates, and zoom for each location. To add the zoom, add a comma then a number (i.e. ,13 ,14 ,15) to the end of coordinates. 
 <p> 8. Use the following headings for the different sections on the Airtable: Name, Category, Minimum age, Maximum age, Address, Description, Wesbite, Phone, Email, Valid As Of, Latitude, and Longitude. 
 <p> 9. Under the Category heading, create your own set of categories (i.e. community outreach, job opportunities/training, health services etc...).
