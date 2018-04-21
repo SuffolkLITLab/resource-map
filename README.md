@@ -10,7 +10,7 @@ Here are the steps to create your own geo-locator website application:
 <p> ![Image of 1](https://github.com/SuffolkLITLab/resource-map/blob/master/HowTo%20Images/HowTo%20Images/1.png)
 <p> 6. Paste the index.html code into your own GitHub repo. 
 <p> 7. Commit the changes on the bottom of the page.
- ![Image of Commit](HowTo%20Images/HowTo%20Images/Commit.png)  
+ ![Image of Commit](HowTo Images/HowTo Images/Commit.png)  
 <p> ![Image of Commit] (https://github.com/SuffolkLITLab/resource-map/blob/master/HowTo%20Images/HowTo%20Images/Commit.png)  
 <p> 8. Create an Airtable account.
 <p> ![Image of Airtable sign in] (https://github.com/SuffolkLITLab/resource-map/blob/master/HowTo%20Images/HowTo%20Images/Airtable%20sign%20in.png)
