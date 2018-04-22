@@ -1,4 +1,5 @@
 ![Image of Commit](http://suffolklitlab.org/resource-map/HowTo%20Images/HowTo%20Images/Commit.png)
+![Image of 1](http://suffolklitlab.org/resource-map/HowTo%20Images/HowTo%20Images/1.png)
 # resource-map
 geo-based resource finder
 # How-To Create Your Own Geo-Locator App
@@ -8,12 +9,15 @@ Here are the steps to create your own geo-locator website application:
 <p> 3. Click on the index.html file.
 <p> 4. Copy the all the code from index.html. 
 <p> 5. Click fork on the top right hand corner. 
- ![Image of 1](http://suffolklitlab.org/resource-map/master/HowTo%20Images/HowTo%20Images/1.png)
+ 
+ ![Image of 1](http://suffolklitlab.org/resource-map/master/HowTo Images/HowTo Images/1.png)
 <p> 6. Paste the index.html code into your own GitHub repo. 
 <p> 7. Commit the changes on the bottom of the page.
-<p> ![Image of Commit](http://suffolklitlab.org/resource-map/HowTo%20Images/HowTo%20Images/Commit.png)
+ 
+![Image of Commit](http://suffolklitlab.org/resource-map/HowTo%20Images/HowTo%20Images/Commit.png)
 <p> 8. Create an Airtable account.
-<p> ![Image of Airtable sign in](http://suffolklitlab.org/resource-map/HowTo%20Images/HowTo%20Images/Airtable%20sign%20in.png)
+ 
+![Image of Airtable sign in](http://suffolklitlab.org/resource-map/HowTo%20Images/HowTo%20Images/Airtable%20sign%20in.png)
 <p> 9. Choose a base template that suits your needs.
 <p> ![Image of Templates](http://suffolklitlab.org/resource-map/HowTo%20Images/HowTo%20Images/Templates.png)
 <p> 10. Add tabs for all the different locations desired (i.e. Boston, Roxbury etc...) and add a "locations" tab.
