@@ -36,18 +36,21 @@ Here are the steps to create your own geo-locator website application:
 **<p> 18. Now turn to line 82 to update your own About page.**
 **<p> 19. Update line 156 to input your own Category names.** 
 **<p> 20. Update line 175 to do the same.**
-**<p> 21. Go back to your Airtable. Find your account in the upper right hand corner.** 
+**<p> 21. Go back to your Airtable. Find your API key. You can follow the steps below or go to this [website](https://medium.com/row-and-table/an-basic-intro-to-the-airtable-api-9ef978bb0729).** 
  
 ![Image to Account](http://suffolklitlab.org/resource-map/HowTo%20Images/HowTo%20Images/Account.png)
+
 ![Image to Account 2](http://suffolklitlab.org/resource-map/HowTo%20Images/HowTo%20Images/Account%202.png)  
-**<p> 22. Find your API key. You can follow the steps below or go to this [website](https://medium.com/row-and-table/an-basic-intro-to-the-airtable-api-9ef978bb0729).**
 
 ![Image to API Key](http://suffolklitlab.org/resource-map/HowTo%20Images/HowTo%20Images/API%20Key.png)
-**<p> 23. Copy and paste your API key in line 155 of the code.**
-**<p> 24. Find your API documentation.**
+**<p> 22. Copy and paste your API key in line 155 of the code.**
+**<p> 23. Find your API documentation.**
  
 ![Image of API Documenation](http://suffolklitlab.org/resource-map/HowTo%20Images/HowTo%20Images/API%20Documentation.png)
-![Image of API Documentation 2](http://suffolklitlab.org/resource-map/HowTo%20Images/HowTo%20Images/API%20Documentation%202.png)  
-![Image of API Documentation 3](http://suffolklitlab.org/resource-map/HowTo%20Images/HowTo%20Images/API%20Doumentation%203.png) 
-**<p> 25. You can follow the steps above or go to this [website](https://medium.com/row-and-table/an-basic-intro-to-the-airtable-api-9ef978bb0729) to find your API Key and API Documentation.**
-**<p> 26. Copy and paste your API documentation in line 154 of the code.**
+
+![Image of API Documentation 2](http://suffolklitlab.org/resource-map/HowTo%20Images/HowTo%20Images/API%20Documentation%202.png)
+
+![Image of API Documentation 3](http://suffolklitlab.org/resource-map/HowTo%20Images/HowTo%20Images/API%20Doumentation%203.png)
+
+**<p> 24. You can follow the steps above or go to this [website](https://medium.com/row-and-table/an-basic-intro-to-the-airtable-api-9ef978bb0729) to find your API Key and API Documentation.**
+**<p> 25. Copy and paste your API documentation in line 154 of the code.**
