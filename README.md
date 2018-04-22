@@ -8,7 +8,7 @@ Here are the steps to create your own geo-locator website application:
 <p> 4. Copy the all the code from index.html. 
 <p> 5. Click fork on the top right hand corner. 
  
- ![Image of 1](http://suffolklitlab.org/resource-map/master/HowTo%20Images/HowTo%20Images/1.png)
+ ![Image of 1](http://suffolklitlab.org/resource-map/HowTo%20Images/HowTo%20Images/1.png)
 <p> 6. Paste the index.html code into your own GitHub repo. 
 <p> 7. Commit the changes on the bottom of the page.
  
