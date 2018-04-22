@@ -32,6 +32,8 @@ Here are the steps to create your own geo-locator website application:
 **<p> 14. Conduct research on the programs you want to include. Begin inputting your own data into the Airtable.**
 **<p> 15. Turn to the code. Update line 43 to create your own title.**
 **<p> 16. Update line 47 to include your own description.**
+
+![Image Line 43 47](http://suffolklitlab.org/resource-map/HowTo%20Images/HowTo%20Images/Line%2043%2047.png)
 **<p> 17. Update line 55 to describe age filter.**
 **<p> 18. Now turn to line 82 to update your own About page.**
 **<p> 19. Update line 156 to input your own Category names.** 
