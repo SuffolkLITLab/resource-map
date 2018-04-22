@@ -35,6 +35,8 @@ Here are the steps to create your own geo-locator website application:
 
 ![Image Line 43 47](http://suffolklitlab.org/resource-map/HowTo%20Images/HowTo%20Images/Line%2043%2047.png)
 **<p> 17. Update line 55 to describe age filter.**
+
+![Image Line 55](http://suffolklitlab.org/resource-map/HowTo%20Images/HowTo%20Images/Line%2055.png)
 **<p> 18. Now turn to line 82 to update your own About page.**
 **<p> 19. Update line 156 to input your own Category names.** 
 **<p> 20. Update line 175 to do the same.**
