@@ -22,7 +22,7 @@ Here are the steps to create your own geo-locator website application:
 **<p> 10. Add tabs for all the different locations desired (i.e. Boston, Roxbury etc...) and add a "locations" tab.**
  
 ![Image of Locations](http://suffolklitlab.org/resource-map/HowTo%20Images/HowTo%20Images/Locations.png) 
-**<p> 11. Under the "locations" tab, include the name, latitude & longitude coordinates, and zoom for each location. To find the latitude & longitude, you can use this website :https://www.latlong.net. To add the zoom, add a comma then a number (i.e. ,13 ,14 ,15) to the end of coordinates.**
+**<p> 11. Under the "locations" tab, include the name, latitude & longitude coordinates, and zoom for each location. To find the latitude & longitude, you can use this [website](https://www.latlong.net). To add the zoom, add a comma then a number (i.e. ,13 ,14 ,15) to the end of coordinates.**
  
 ![Image of Locations tab](http://suffolklitlab.org/resource-map/HowTo%20Images/HowTo%20Images/Location%20tab.png) 
 **<p> 12. Use the following headings for the different sections on the Airtable: Name, Category, Minimum age, Maximum age, Address, Description, Wesbite, Phone, Email, Valid As Of, Latitude, and Longitude.**
