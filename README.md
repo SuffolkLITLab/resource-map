@@ -52,6 +52,8 @@ Here are the steps to create your own geo-locator website application:
 
 ![Image to API Key](http://suffolklitlab.org/resource-map/HowTo%20Images/HowTo%20Images/API%20Key.png)
 **<p> 22. Copy and paste your API key in line 155 of the code.**
+ 
+![Image Line 155](http://suffolklitlab.org/resource-map/HowTo%20Images/HowTo%20Images/Line%20155.png)
 **<p> 23. Find your API documentation.**
  
 ![Image of API Documenation](http://suffolklitlab.org/resource-map/HowTo%20Images/HowTo%20Images/API%20Documentation.png)
@@ -62,3 +64,5 @@ Here are the steps to create your own geo-locator website application:
 
 **<p> 24. You can follow the steps above or go to this [website](https://medium.com/row-and-table/an-basic-intro-to-the-airtable-api-9ef978bb0729) to find your API Key and API Documentation.**
 **<p> 25. Copy and paste your API documentation in line 154 of the code.**
+
+![Image Line 154](http://suffolklitlab.org/resource-map/HowTo%20Images/HowTo%20Images/Line%20154.png)
