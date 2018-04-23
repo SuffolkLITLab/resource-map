@@ -1,5 +1,6 @@
 # resource-map
 geo-based resource finder
+You can find the how-to instructions [here](http://suffolklitlab.org/resource-maphowto/readme.md)
 # How-To Create Your Own Geo-Locator App
 Here are the steps to create your own geo-locator website application:
 **<p> 1. Head to https://github.com/ and create your own account.**
