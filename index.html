@@ -38,21 +38,63 @@
 </head>
 <body>
 
-<div data-role="page" id="filter">
+<div data-role="page" id="region">
 	<div data-role="header" data-position="fixed">
-		<h1>Juvenile Resource Finder</h1>
-		<a href="#about" class="ui-btn ui-icon-info ui-btn-icon-notext ui-corner-all ui-btn-right" data-transition="slide"></a>
+		<h1>Resource Finder</h1>
 	</div>
 	<div data-role="content" class="content">
-		<div class="ui-field-contain">Use the following selections to find juvenile social, community based programs & services in and around Boston.
+	<div class="ui-field-contain"> <p> Choose the type of resource needed in the area desired or choose to see all resources.</p>
+	
+		<div data-role="collapsible" data-collapsed="false">
+    		<h4>Choose you state.</h4>
+    			<ul data-role="listview">
+        			<li><a href="#">Massachusetts</a></li>
+        			<li><a href="#">New York</a></li>
+        			<li><a href="#">New Hampshire</a></li>
+    			</ul>
+		</div>
+	 </div>
+ 	<div data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u">
+    	<h2>Juvenile Resources</h2>
+    		<ul data-role="listview">
+        		<li><a href="#filter">Western Massachusetts</a></li>
+        		<li><a href="#filter">Central Massachusetts</a></li>
+        		<li><a href="#filter">Eastern Massachusetts</a></li>
+        		<li><a href="#filter">Southeastern Massachusetts</a></li>
+        		<li><a href="#filter">Northeastern Massachusetts</a></li>
+    		</ul>
+  	</div>
+  		
+	<div data-role="collapsible" data-collapsed-icon="carat-d" data-expanded-icon="carat-u" data-theme="b" data-content-theme="b" id="adult">
+    	<h2>Adult Resources</h2>
+    		<ul data-role="listview">
+        		<li><a href="#">Western Massachusetts</a></li>
+        		<li><a href="#">Central Massachusetts</a></li>
+        		<li><a href="#">Eastern Massachusetts</a></li>
+        		<li><a href="#">Southeastern Massachusetts</a></li>
+        		<li><a href="#">Northeastern Massachusetts</a></li>
+    		</ul>
+  		</div>
+  		
+  	<div> <a href="#" class="ui-btn ui-shadow">View Full List of Resources</a> </div>
+</div>
+
+<div data-role="page" id="filter">
+	<div data-role="header" data-position="fixed">
+		<h1>Adult Resource Finder</h1>
+		<a href="#about" class="ui-btn ui-icon-info ui-btn-icon-notext ui-corner-all ui-btn-right" data-transition="slide"</> 
+		<a href="#region" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-gear" data-transition="slideup">
+	</div>
+	<div data-role="content" class="content">
+		<div class="ui-field-contain">Use the following selections to find social, community based programs & services.
 			<select id="town" name="select-native-1" id="select-native-1" style="width:100%" onChange="list_page();">
-        		<option value="0">Choose a Location</option>
-						<option id="loading_selection" value="0">Loading Locations...</option>
-						<option v-for="item in items" v-bind:value="item['fields']['Latitude, Longitude, Zoom']">{{ item['fields']['Name'] }}</option>
+				<option value="0">Choose a Location</option>
+					<option id="loading_selection" value="0">Loading Locations...</option>
+					<option v-for="item in items" v-bind:value="item['fields']['Latitude, Longitude, Zoom']">{{ item['fields']['Name'] }}</option>
     		</select>
 		</div>
 
-		<p> Enter age of the juvenile seeking services. Leave age blank to view all services.</p>
+		<p> Enter age of the client seeking services. Leave age blank to view all services.</p>
 		<input name="age" id="age" data-type="number" placeholder="Input Age" onChange="list_page();">
 
 		<fieldset id="categories" data-role="controlgroup">
@@ -153,7 +195,7 @@
 
 	var app_id = "app7wMIC4y73E1Mfq";
 	var app_key = "keyHtA4JdvolTnmFV";
-	var cat_names = [["Outreach","Community Outreach"],["Counseling","Counseling"],["Training","Job Opportunities/Training"],["Health","Health Services"],["Risk","High Risk"],["Multi","Multi-Service"]];
+	var cat_names = [["Outreach","Community Outreach"],["Counseling","Counseling"],["Training","Job Opportunities/Training"],["Health","Health Services"],["Academic","Academic Support"],["Case","Case Management"],["Mentor","Mentoring"],["Shelter","Shelter"]];
 
 	var categories = "";
 	var ages = "";
@@ -178,10 +220,16 @@
 		} else if (mode == 1) {
 			apicall = "https://api.airtable.com/v0/"+app_id+"/Categories/?sort[0][field]=Name&sort[0][direction]=asc";
 		} else if (mode == 2) {
-			apicall = "https://api.airtable.com/v0/"+app_id+"/" + $('#town').find(":selected").text() + "/?filterByFormula=AND("+ages+"OR("+categories+"))&sort[0][field]=Name&sort[0][direction]=asc";
+			//apicall = "https://api.airtable.com/v0/"+app_id+"/" + $('#town').find(":selected").text() + "/?filterByFormula=AND("+ages+"OR("+categories+"))&sort[0][field]=Name&sort[0][direction]=asc";
+			apicall = "https://api.airtable.com/v0/"+app_id+"/Resources/?filterByFormula=AND("+(lat-1)+"<={Latitude},"+(lat+1)+">={Latitude},"+(lon-1)+"<={Longitude},"+(lon+1)+">={Longitude},"+ages+"OR("+categories+"))&sort[0][field]=Name&sort[0][direction]=asc";
+			console.log(apicall)
 		} else if (mode == 3) {
-			apicall = "https://api.airtable.com/v0/"+app_id+"/" + $('#town').find(":selected").text() + "/?filterByFormula=(RECORD_ID()=\""+id+"\")";
+			//apicall = "https://api.airtable.com/v0/"+app_id+"/" + $('#town').find(":selected").text() + "/?filterByFormula=(RECORD_ID()=\""+id+"\")";
+			apicall = "https://api.airtable.com/v0/"+app_id+"/Resources/?filterByFormula=(RECORD_ID()=\""+id+"\")";
 		}
+ 
+	
+	var column_names = 
 
 		var app = new Vue({
               el: target,
@@ -220,7 +268,7 @@
 			alert('You must choose a location.');
 		} else if ( isNaN(Number($('#age').val())) ) {
 			alert('You must enter a numeric age (in years) or leave blank.')
-		} else if ($('#checkbox-v-Outreach').is(":checked") || $('#checkbox-v-Counseling').is(":checked") || $('#checkbox-v-Risk').is(":checked") || $('#checkbox-v-Training').is(":checked") || $('#checkbox-v-Health').is(":checked") || $('#checkbox-v-Multi').is(":checked")) {
+		} else if ($('#checkbox-v-Outreach').is(":checked") || $('#checkbox-v-Counseling').is(":checked") || $('#checkbox-v-Training').is(":checked") || $('#checkbox-v-Health').is(":checked") || $('#checkbox-v-Academic').is(":checked")|| $('#checkbox-v-Case').is(":checked")|| $('#checkbox-v-Mentor').is(":checked")|| $('#checkbox-v-Shelter').is(":checked")) {
 			next_page_1()
     } else {
 			alert('You must choose at least one type of service.')
@@ -256,11 +304,14 @@
 				cat_names.forEach((cat, index) => {
 					if ($('#checkbox-v-'+cat[0]).is(":checked")){
 						$("#org_list").html( $("#org_list").html() + "<li data-role=\"list-divider\">"+cat[1]+"</li>")
-						$("#org_list").html( $("#org_list").html() + "<li v-for=\"item in items\" v-if=\"item['fields']['Category'] == '"+cat[1]+"'\"><a href=\"javascript:void('')\" v-bind:id=\"item['id']\" onClick=\"details_page(this.id);\">{{ item['fields']['Name'] }}<p>Ages: {{ item['fields']['Minimum Age'] }}-{{ item['fields']['Maximum Age'] }}; Gender(s): {{ item['fields']['Gender'] }}</p></a></li>")
+						//$("#org_list").html( $("#org_list").html() + "<li v-for=\"item in items\" v-if=\"item['fields']['Category'] == '"+cat[1]+"'\"><a href=\"javascript:void('')\" v-bind:id=\"item['id']\" onClick=\"details_page(this.id);\">{{ item['fields']['Name'] }}<p>Ages: {{ item['fields']['Minimum Age'] }}-{{ item['fields']['Maximum Age'] }}; Gender(s): {{ item['fields']['Gender'] }}</p></a></li>")
+						$("#org_list").html( $("#org_list").html() + "<li v-for=\"item in items\" v-if=\"item['fields']['"+cat[1]+"']==1\"><a href=\"javascript:void('')\" v-bind:id=\"item['id']\" onClick=\"details_page(this.id);\">{{ item['fields']['Name'] }}<p>Ages: {{ item['fields']['Minimum Age'] }}-{{ item['fields']['Maximum Age'] }}; Gender(s): {{ item['fields']['Gender'] }}</p></a></li>")
 						if (categories != "") {
 							categories = categories+",";
 						}
-						categories = categories+"FIND(\""+cat[1]+"\",{Category})";
+						categories = categories+"(1={"+cat[1]+"})";
+						console.log(categories)
+						//categories = ""
 					}
 				});
 
@@ -272,7 +323,6 @@
 
 				$('#town_name').html($('#town').find(":selected").text());
 
-		    load_api_data('#results',2);
 
 				geo_data = $('#town').find(":selected").val().split(',').map(Number);
 				//console.log(geo_data)
@@ -280,6 +330,8 @@
 				lat = geo_data[0];
 				lon = geo_data[1];
 				zoomin = geo_data[2];
+	
+			    load_api_data('#results',2);
 
 	  	} else {
 				return false;
@@ -292,8 +344,8 @@
       	$("#detail").attr("v-for", "item in items");
       	//$("#detail").attr("v-if", "item['id'] == '"+id+"'");
       	$("#detail").html("");
-      	$("#detail").html($("#detail").html() + "<h3>{{ item['fields']['Name'] }}</h3>")
-      	$("#detail").html($("#detail").html() + "<h4>{{ item['fields']['Category'] }}</h4>");
+      	$("#detail").html($("#detail").html() + "<h3>{{ item['fields']['Name'] }}</h3>");
+      	$("#detail").html($("#detail").html() + "<h4>Categories: <span if-v = 1 {{ item['fields'] ['Outreach'] }} </span></h4>");
       	$("#detail").html($("#detail").html() + "<p><b>Ages:</b> {{ item['fields']['Minimum Age'] }}-{{ item['fields']['Maximum Age'] }} &nbsp;&nbsp; <b>Gender(s):</b> {{ item['fields']['Gender'] }}</p>");
 		$("#detail").html($("#detail").html() + "<p><b>Phone:</b> <a v-bind:href=\"'tel:'+item['fields']['Phone']\" target=\"_blank\">{{ item['fields']['Phone'] }}</p>");
 		$("#detail").html($("#detail").html() + "<p><b>Email:</b> <a v-bind:href=\"'mailto:'+item['fields']['Email']\" target=\"_blank\">{{ item['fields']['Email'] }}</a></p>");
