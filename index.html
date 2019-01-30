@@ -45,17 +45,42 @@
 	</div>
 	
 	<div data-role="content" class="content" class="ui-field-contain">
-		<p> Choose the type of resource needed in the area desired or choose to see all resources.</p>
+		<p> Choose the region for desired program.</p>
 		
-		<a href="#filter"class="ui-btn ui-corner-all">Go to filter page</a>
+		<div data-role="collapsible" data-inset="false">
+    		<h3>Massachusetts</h3>
+    			<ul data-role="listview">
+        			<li><a href="#">Western Massachusetts</a></li>
+        			<li><a href="#">Central Massachusetts</a></li>
+        			<li><a href="#">Eastern Massachusetts</a></li>
+        			<li><a href="#">Northeastern Massachusetts</a></li>
+        			<li><a href="#">Southeastern Massachusetts</a></li>
+        			<li><a href="#">Cape Code & the Islands</a></li>
+    			</ul>
+		</div><!-- /collapsible -->
+
+		<div data-role="collapsible" data-inset="false">
+    		<h3>New York</h3>
+    			<ul data-role="listview">
+					<li><a href="#">Chicken</a></li>
+        			<li><a href="#">Cow</a></li>
+        			<li><a href="#">Duck</a></li>
+        			<li><a href="#">Horse</a></li>
+        			<li><a href="#">Pig</a></li>
+        			<li><a href="#">Sheep</a></li>
+    			</ul>
+		</div><!-- /collapsible -->
+
+		
+		<a href="#filter"class="ui-btn ui-corner-all">Go to Filter Page</a>
 	</div>
 </div>
 
 <div data-role="page" id="filter">
 	<div data-role="header" data-position="fixed">
-		<h1>Adult Resource Finder</h1>
+		<h1>Resource Finder</h1>
 		<a href="#about" class="ui-btn ui-icon-info ui-btn-icon-notext ui-corner-all ui-btn-right" data-transition="slide"></a> 
-		<a href="#region" class="ui-btn ui-icon-info ui-btn-icon-notext ui-corner-icon-left ui-icon-gear" data-transition="slideup"></a> 
+		<a href="#region" class="ui-btn ui-icon-info ui-btn-icon-notext ui-corner-all ui-btn-left ui-icon-gear" data-transition="slideup"></a> 
 	</div>
 	
 	<div data-role="content" class="content">
