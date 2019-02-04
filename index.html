@@ -45,7 +45,16 @@
 	</div>
 	
 	<div data-role="content" class="content" class="ui-field-contain">
-		<p> Choose the region for desired program.</p>
+		<div data-role="controlgroup" data-type="horizontal">
+    		<p><b>Choose Resource Type:</b></p>
+    			<input type="radio" name="radio-choice-h-2" id="radio-choice-h-2a" value="on" checked="checked">
+    			<label for="radio-choice-h-2a">Juvenile</label>
+				<input type="radio" name="radio-choice-h-2" id="radio-choice-h-2b" value="off">
+				<label for="radio-choice-h-2b">Adult</label>
+		</div>
+	
+	
+		<p><b>Choose the region for desired program.</b></p>
 		
 		<div data-role="collapsible" data-inset="false">
     		<h3>Massachusetts</h3>
@@ -62,16 +71,10 @@
 		<div data-role="collapsible" data-inset="false">
     		<h3>New York</h3>
     			<ul data-role="listview">
-					<li><a href="#">Chicken</a></li>
-        			<li><a href="#">Cow</a></li>
-        			<li><a href="#">Duck</a></li>
-        			<li><a href="#">Horse</a></li>
-        			<li><a href="#">Pig</a></li>
-        			<li><a href="#">Sheep</a></li>
+					<li><a href="#">Captial Region</a></li>
     			</ul>
 		</div><!-- /collapsible -->
 
-		
 		<a href="#filter"class="ui-btn ui-corner-all">Go to Filter Page</a>
 	</div>
 </div>
@@ -111,6 +114,10 @@
 	</div>
 </div>
 
+<div data-role="page" id="loading">
+	<div data-role="content" class="content">
+	</div>
+</div>
 
 
 <div data-role="page" id="about">
@@ -176,6 +183,11 @@
 			</ul>
 		</div>
 	</div>
+	
+	<div data-role="footer" style="overflow:hidden;">
+    <h4 style="text-align:center;">Undisclosed Location</h4>
+	</div><!-- /footer -->
+	
 		<div>
 			<div id="map" style="width:100%;height:100px;"></div>
 		</div>
