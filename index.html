@@ -70,7 +70,7 @@ function saveCookies() {
 		}
 	</style>
 </head>
-<body>
+<body onLoad="loadCookies();">
 
 <div data-role="page" id="filter">
 	<div data-role="header" data-position="fixed">
@@ -100,7 +100,7 @@ function saveCookies() {
     		<label for="radio-choice-h-2b">Map View</label>
 		</fieldset>
 
-		<a href="javascript:results_page();" data-role="button">Find Resources</a>
+		<a href="javascript:results_page();" onClick="saveCookies();" data-role="button">Find Resources</a>
 
 	</div>
 </div>
