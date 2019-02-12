@@ -49,11 +49,11 @@
 		}
 		function loadCookies() {
 		if (readCookie("age")) {
-			$("#age").val(readCookie("age"));
+			$("age").val(readCookie("age"));
 		}
 	}
 		function saveCookies() {
-			age = $("#age").val().trim();
+			age = $("age").val().trim();
 			createCookie("age",age,365*100);
 		}
 </script>
