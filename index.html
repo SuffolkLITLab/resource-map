@@ -28,14 +28,14 @@
 	</script>
 	<script>
 
-	function createCookie(name,value,days) {
-		if (days) {
-				var date = new Date();
-				date.setTime(date.getTime()+(days*24*60*60*1000));
-				var expires = "; expires="+date.toGMTString();
-		}
-		else var expires = "";
-		document.cookie = name+"="+value+expires+"; path=/";
+function createCookie(name,value,days) {
+	if (days) {
+			var date = new Date();
+			date.setTime(date.getTime()+(days*24*60*60*1000));
+			var expires = "; expires="+date.toGMTString();
+	}
+	else var expires = "";
+	document.cookie = name+"="+value+expires+"; path=/";
 }
 
 function readCookie(name) {
@@ -48,6 +48,17 @@ function readCookie(name) {
 		}
 		return null;
 }
+
+function loadCookies() {
+			 if (readCookie("age")) {
+					 $("#age").val(readCookie("age"));
+			 }
+}
+
+function saveCookies() {
+        key = $("#age").val().trim();
+        createCookie("age",age,365*100);
+    }
 </script>
 	<script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 	<style>
