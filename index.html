@@ -49,7 +49,7 @@
 		}
 		function loadCookies() {
 			if (readCookie("age")) {
-				$("#age").val(readCookie("age"));
+				$("#age").val(readCookie("age")).trim();
 			}
 		}
 		function saveCookies() {
