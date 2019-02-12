@@ -47,15 +47,15 @@
 			}
 			return null;
 		}
-		function loadCookies() {
-		if (readCookie("age")) {
-			$("age").val(readCookie("age"));
-		}
+	function loadCookies() {
+					if (readCookie("age")) {
+									$("age").val(readCookie("age"));
+					}
 	}
-		function saveCookies() {
-			age = $("age").val().trim();
-			createCookie("age",age,365*100);
-		}
+	function saveCookies() {
+					age = $("age").val().trim();
+					createCookie("age",age,365*100);
+	}
 </script>
 	<script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 	<style>
