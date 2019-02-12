@@ -99,6 +99,31 @@
 </head>
 <body>
 
+<div data-role="page" id="loading">
+	<div data-role="header" data-position="fixed">
+		<a href="#about" class="ui-btn ui-icon-info ui-btn-icon-notext ui-corner-all ui-btn-right" data-transition="slide"></a>
+		<h1>Resource Finder</h1>
+	</div>
+	
+	<script>
+		var check = function(){
+    		if(condition){
+        		// run when condition is met
+    		}
+    		else {
+        		setTimeout(check, 1000); // check again in a second
+    		}
+		}
+
+		check();
+	</script>
+	
+	<div data-role="content" class="content">
+	<p style="text-align:center" target="_blank"><img src="images/LIT_logo.png" width="200px"/ border="0"></p>
+	<a href="#region" data-transition="slide" data-role="button">Region</a>
+	</div>
+</div>
+
 <div data-role="page" id="region">
 	<div data-role="header" data-position="fixed">
 		<a href="#about" class="ui-btn ui-icon-info ui-btn-icon-notext ui-corner-all ui-btn-right" data-transition="slide"></a>
@@ -111,12 +136,12 @@
 		<div data-role="collapsible" data-inset="false">
     		<h3>Massachusetts</h3>
     			<ul data-role="listview">
-        			<li><a href="#">Western Massachusetts</a></li>
-        			<li><a href="#">Central Massachusetts</a></li>
-        			<li><a href="#">Eastern Massachusetts</a></li>
-        			<li><a href="#">Northeastern Massachusetts</a></li>
-        			<li><a href="#">Southeastern Massachusetts</a></li>
-        			<li><a href="#">Cape Code & the Islands</a></li>
+        			<li><a href="#filter">Western Massachusetts</a></li>
+        			<li><a href="#filter">Central Massachusetts</a></li>
+        			<li><a href="#filter">Eastern Massachusetts</a></li>
+        			<li><a href="#filter">Northeastern Massachusetts</a></li>
+        			<li><a href="#filter">Southeastern Massachusetts</a></li>
+        			<li><a href="#filter">Cape Code & the Islands</a></li>
     			</ul>
 		</div><!-- /collapsible -->
 
@@ -126,8 +151,6 @@
 					<li><a href="#">Captial Region</a></li>
     			</ul>
 		</div><!-- /collapsible -->
-
-		<a href="#filter"class="ui-btn ui-corner-all">Go to Filter Page</a>
 	</div>
 </div>
 
@@ -162,16 +185,11 @@
 		</fieldset>
 
 		<a href="#map-page" data-transition="slide" data-role="button">map</a>
+		<a href="#details" data-transition="slide" data-role="button">Details</a>
 		<a href="javascript:results_page();" data-role="button">Find Resources</a>
 
 	</div>
 </div>
-
-<div data-role="page" id="loading">
-	<div data-role="content" class="content">
-	</div>
-</div>
-
 
 <div data-role="page" id="about">
 	<div data-role="header" data-position="fixed">
@@ -196,6 +214,10 @@
 	</div>
 	<div data-role="content" class="content">
 		<div id="detail" v-for="" v-if="">
+			<a href="#edit" data-transition="slide" data-role="button">Claim This Program</a>
+		</div>
+		<div>
+			<a href="resource-map/pass.html">Reset</a>
 		</div>
 	</div>
 </div>
@@ -256,6 +278,37 @@
 	</script>
 	</div>
 </div>
+
+<div data-role="page" id="edit">
+	<div data-role="header" data-position="fixed">
+		<h1>Edit Entry</h1>
+		<a href="details" data-rel="back" data-transition="slide" data-direction="reverse" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-arrow-l ui-btn-icon-notext"></a>
+	</div>
+	<div data-role="content" class="content">
+		<form>
+			<label for="text-1"><b>Name of Program:</b></label>
+			<input type=text id=name">
+
+			<label for="text-2"><b>Phone Number:</b></label>
+			<input type=text id=phone">
+
+			<label for="email-1"><b>Email Address:</b></label>
+			<input type="email" data-clear-btn="false" name="email-1" id="email-1" value="">
+			
+			<label for="url-1"><b>Website:</b></label>
+			<input type="url" data-clear-btn="false" name="url-1" id="url-1" value="">
+			
+			<label for="text-3"><b>Address:</b></label>
+			<input type=text id=address">
+			
+			<label for="textarea-1"><b>Description:</b></label>
+			<textarea name="textarea-1" id="textarea-1"></textarea>
+			
+			<input type="submit" value="Submit">
+		</form>
+	</div>
+</div>
+
 
 <!-- Include Dependency Scripts -->
 <!--<script type="text/javascript" src="https://unpkg.com/vue"></script>-->
