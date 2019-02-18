@@ -25,6 +25,12 @@
         	$.mobile.hashListeningEnabled = false;
         	$.mobile.pushStateEnabled = false;
     	});
+ function page_load() {
+    	setTimeout(function(){
+       	$.mobile.changePage($('#region'), { transition: 'fade'});
+    	}, 1000);
+    }
+
 	</script>
 	<script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 	<style>
@@ -97,7 +103,7 @@
 </style>
 
 </head>
-<body>
+<body onLoad="page_load()">
 
 <div data-role="page" id="loading">
 	<div data-role="header" data-position="fixed">
@@ -105,23 +111,11 @@
 		<h1>Resource Finder</h1>
 	</div>
 	
-	<script>
-		var check = function(){
-    		if(condition){
-        		// run when condition is met
-    		}
-    		else {
-        		setTimeout(check, 1000); // check again in a second
-    		}
-		}
-
-		check();
-	</script>
-	
 	<div data-role="content" class="content">
 	<p style="text-align:center" target="_blank"><img src="images/LIT_logo.png" width="200px"/ border="0"></p>
 	<a href="#region" data-transition="slide" data-role="button">Region</a>
 	</div>
+
 </div>
 
 <div data-role="page" id="region">
@@ -136,12 +130,12 @@
 		<div data-role="collapsible" data-inset="false">
     		<h3>Massachusetts</h3>
     			<ul data-role="listview">
-        			<li><a href="#filter">Western Massachusetts</a></li>
-        			<li><a href="#filter">Central Massachusetts</a></li>
+    				<li><a href="#filter">Cape Code & the Islands</a></li>
+    				<li><a href="#filter">Central Massachusetts</a></li>
         			<li><a href="#filter">Eastern Massachusetts</a></li>
         			<li><a href="#filter">Northeastern Massachusetts</a></li>
         			<li><a href="#filter">Southeastern Massachusetts</a></li>
-        			<li><a href="#filter">Cape Code & the Islands</a></li>
+        			<li><a href="#filter">Western Massachusetts</a></li>
     			</ul>
 		</div><!-- /collapsible -->
 
@@ -153,6 +147,7 @@
 		</div><!-- /collapsible -->
 	</div>
 </div>
+
 
 <div data-role="page" id="filter">
 	<div data-role="header" data-position="fixed">
@@ -322,9 +317,15 @@
 
 <script type="text/javascript">
 
-	var app_id = "app7wMIC4y73E1Mfq";
-	var app_key = "keyHtA4JdvolTnmFV";
-	var cat_names = [["Outreach","Community Outreach"],["Counseling","Counseling"],["Training","Job Opportunities/Training"],["Health","Health Services"],["Academic","Academic Support"],["Case","Case Management"],["Mentor","Mentoring"],["Shelter","Shelter"]];
+	var app_id = "app91Hf1BF6Zx11lT";
+	var app_key = "keyMCwJmZpyayqYhY";
+	
+	function load_api_data(target,mode=3,id='') {
+		
+			apicall = "https://api.airtable.com/v0/"+app_id+"/Eastern;
+	}
+	
+	var cat_names = [["Outreach","Community Outreach"],["Counseling","Counseling"],["Training","Job Opportunities/Training"],["Health","Health Services"],["Academic","Academic Support"],["Case","Case Management"],["Mentor","Mentoring"],["Shelter","Shelter"],["LGBTQ","LGBTQ"],["Housing","Housing"]];
 
 	var categories = "";
 	var ages = "";
