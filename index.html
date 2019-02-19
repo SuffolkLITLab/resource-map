@@ -51,10 +51,25 @@
 					if (readCookie("age")) {
 									$("#age").val(readCookie("age"));
 					}
+					if (readCookie("town")) {
+									$("#town").val(readCookie("town"));
+					}
+					if (readCookie("radio-choice-h-2a")) {
+									$("#radio-choice-h-2a").val(readCookie("radio-choice-h-2a"));
+					}
+					if (readCookie("radio-choice-h-2b")) {
+									$("#radio-choice-h-2b").val(readCookie("radio-choice-h-2b"));
+					}
 	}
 	function saveCookies() {
 					age = $("#age").val();
+					town = $("#town").val();
+					radio-choice-h-2a = $("#radio-choice-h-2a").val();
+					radio-choice-h-2b = $("#radio-choice-h-2b").val();
 					createCookie("age",age,365*100);
+					createCookie("town",town,365*100);
+					createCookie("radio-choice-h-2a",radio-choice-h-2a,365*100);
+					createCookie("radio-choice-h-2b",radio-choice-h-2b,365*100);
 	}
 </script>
 	<script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
@@ -76,7 +91,7 @@
 	</div>
 	<div data-role="content" class="content">
 		<div class="ui-field-contain">Use the following selections to find juvenile social, community based programs & services in and around Boston.
-			<select id="town" name="select-native-1" id="select-native-1" style="width:100%" onChange="list_page();">
+			<select id="town" name="select-native-1" id="select-native-1" style="width:100%" onChange="list_page();saveCookies();">
         		<option value="0">Choose a Location</option>
 						<option id="loading_selection" value="0">Loading Locations...</option>
 						<option v-for="item in items" v-bind:value="item['fields']['Latitude, Longitude, Zoom']">{{ item['fields']['Name'] }}</option>
@@ -91,9 +106,9 @@
 		</fieldset>
 
 		<fieldset data-role="controlgroup" data-type="horizontal">
-    		<input type="radio" name="radio-choice-h-2" id="radio-choice-h-2a" value="list" checked="checked">
+    		<input type="radio" name="radio-choice-h-2" id="radio-choice-h-2a" value="list" checked="checked" onChange="saveCookies();">
     		<label for="radio-choice-h-2a">List View</label>
-    		<input type="radio" name="radio-choice-h-2" id="radio-choice-h-2b" value="map">
+    		<input type="radio" name="radio-choice-h-2" id="radio-choice-h-2b" value="map" onChange="saveCookies();">
     		<label for="radio-choice-h-2b">Map View</label>
 		</fieldset>
 
