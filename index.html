@@ -25,6 +25,12 @@
         	$.mobile.hashListeningEnabled = false;
         	$.mobile.pushStateEnabled = false;
     	});
+ function page_load() {
+    	setTimeout(function(){
+       	$.mobile.changePage($('#region'), { transition: 'fade'});
+    	}, 1000);
+    }
+
 	</script>
 	<script>
 
@@ -71,14 +77,130 @@
 			padding:0 15px 25px 15px
 		}
 	</style>
+	
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+/* Popup container - can be anything you want */
+.popup {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* The actual popup */
+.popup .popuptext {
+  visibility: hidden;
+  width: 160px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -80px;
+}
+
+/* Popup arrow */
+.popup .popuptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+/* Toggle this class - hide and show the popup */
+.popup .show {
+  visibility: visible;
+  -webkit-animation: fadeIn 1s;
+  animation: fadeIn 1s;
+}
+
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+  from {opacity: 0;} 
+  to {opacity: 1;}
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity:1 ;}
+}
+</style>
+
 </head>
+<<<<<<< HEAD
 <body onLoad="loadCookies()">
+=======
+<body onLoad="page_load()">
+
+<div data-role="page" id="loading">
+	<div data-role="header" data-position="fixed">
+		<a href="#about" class="ui-btn ui-icon-info ui-btn-icon-notext ui-corner-all ui-btn-right" data-transition="slide"></a>
+		<h1>Resource Finder</h1>
+	</div>
+	
+	<div data-role="content" class="content">
+	<p style="text-align:center" target="_blank"><img src="images/LIT_logo.png" width="200px"/ border="0"></p>
+	<a href="#region" data-transition="slide" data-role="button">Region</a>
+	</div>
+
+</div>
+
+<div data-role="page" id="region">
+	<div data-role="header" data-position="fixed">
+		<a href="#about" class="ui-btn ui-icon-info ui-btn-icon-notext ui-corner-all ui-btn-right" data-transition="slide"></a>
+		<h1>Resource Finder</h1>
+	</div>
+	
+	<div data-role="content" class="content">
+		<p>Choose the region for desired program.</p>
+		
+		<div data-role="collapsible" data-inset="false">
+    		<h3>Massachusetts</h3>
+    			<ul data-role="listview">
+    				<li><a href="#filter">Cape Code & the Islands</a></li>
+    				<li><a href="#filter">Central Massachusetts</a></li>
+        			<li><a href="#filter">Eastern Massachusetts</a></li>
+        			<li><a href="#filter">Northeastern Massachusetts</a></li>
+        			<li><a href="#filter">Southeastern Massachusetts</a></li>
+        			<li><a href="#filter">Western Massachusetts</a></li>
+    			</ul>
+		</div><!-- /collapsible -->
+
+		<div data-role="collapsible" data-inset="false">
+    		<h3>New York</h3>
+    			<ul data-role="listview">
+					<li><a href="#">Captial Region</a></li>
+    			</ul>
+		</div><!-- /collapsible -->
+	</div>
+</div>
+>>>>>>> test-ns
+
 
 <div data-role="page" id="filter">
 	<div data-role="header" data-position="fixed">
+<<<<<<< HEAD
 		<h1>Juvenile Resource Finder</h1>
 		<a href="#about" class="ui-btn ui-icon-info ui-btn-icon-notext ui-corner-all ui-btn-right" data-transition="slide"></a>
+=======
+		<h1>Resource Finder</h1>
+		<a href="#about" class="ui-btn ui-icon-info ui-btn-icon-notext ui-corner-all ui-btn-right" data-transition="slide"></a> 
+		<a href="#region" class="ui-btn ui-icon-info ui-btn-icon-notext ui-corner-all ui-btn-left ui-icon-gear" data-transition="slideup"></a> 
+>>>>>>> test-ns
 	</div>
+	
 	<div data-role="content" class="content">
 		<div class="ui-field-contain">Use the following selections to find juvenile social, community based programs & services in and around Boston.
 			<select id="town" name="select-native-1" id="select-native-1" style="width:100%" onChange="list_page();saveCookies();">
@@ -102,12 +224,16 @@
     		<label for="radio-choice-h-2b">Map View</label>
 		</fieldset>
 
+<<<<<<< HEAD
 		<a href="javascript:results_page();" onClick="saveCookies();i=0;" data-role="button">Find Resources</a>
+=======
+		<a href="#map-page" data-transition="slide" data-role="button">map</a>
+		<a href="#details" data-transition="slide" data-role="button">Details</a>
+		<a href="javascript:results_page();" data-role="button">Find Resources</a>
+>>>>>>> test-ns
 
 	</div>
 </div>
-
-
 
 <div data-role="page" id="about">
 	<div data-role="header" data-position="fixed">
@@ -124,7 +250,10 @@
 	</div>
 </div>
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> test-ns
 
 <div data-role="page" id="details">
 	<div data-role="header" data-position="fixed">
@@ -133,6 +262,10 @@
 	</div>
 	<div data-role="content" class="content">
 		<div id="detail" v-for="" v-if="">
+			<a href="#edit" data-transition="slide" data-role="button">Claim This Program</a>
+		</div>
+		<div>
+			<a href="pass.html" target="_blank" data-transition="slide" data-role="button">Reset Password</a>
 		</div>
 	</div>
 </div>
@@ -173,10 +306,60 @@
 			</ul>
 		</div>
 	</div>
-		<div>
-			<div id="map" style="width:100%;height:100px;"></div>
+
+	<div>
+		<div id="map" style="width:100%;height:100px;"></div>
+	</div>
+		
+	<div data-role="footer">
+		<body style="text-align:center">
+		<div class="popup" onclick="myFunction()"><h4>Undisclosed Locations</h4>
+  			<span class="popuptext" id="myPopup">List of undisclosed locations</span>
 		</div>
+
+	<script>
+	// When the user clicks on div, open the popup
+	function myFunction() {
+  		var popup = document.getElementById("myPopup");
+  		popup.classList.toggle("show");
+	}
+	</script>
+	</div>
 </div>
+
+<div data-role="page" id="edit">
+	<div data-role="header" data-position="fixed">
+		<h1>Edit Entry</h1>
+		<a href="details" data-rel="back" data-transition="slide" data-direction="reverse" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-arrow-l ui-btn-icon-notext"></a>
+	</div>
+	<div data-role="content" class="content">
+		<form>
+			<label for="text-1"><b>Name of Program:</b></label>
+			<input type=text id=name">
+			
+			<label for=number><b>Number of Beds Available:</b></label>
+			<input type="number" name="quantity" min="0" max="50">
+
+			<label for="text-2"><b>Phone Number:</b></label>
+			<input type=text id=phone">
+
+			<label for="email-1"><b>Email Address:</b></label>
+			<input type="email" data-clear-btn="false" name="email-1" id="email-1" value="">
+			
+			<label for="url-1"><b>Website:</b></label>
+			<input type="url" data-clear-btn="false" name="url-1" id="url-1" value="">
+			
+			<label for="text-3"><b>Address:</b></label>
+			<input type=text id=address">
+			
+			<label for="textarea-1"><b>Description:</b></label>
+			<textarea name="textarea-1" id="textarea-1"></textarea>
+			
+			<input type="submit" value="Submit">
+		</form>
+	</div>
+</div>
+
 
 <!-- Include Dependency Scripts -->
 <!--<script type="text/javascript" src="https://unpkg.com/vue"></script>-->
@@ -187,9 +370,21 @@
 
 <script type="text/javascript">
 
+<<<<<<< HEAD
 	var app_id = "appHUknSmoIogemD5";
 	var app_key = "keyHtA4JdvolTnmFV";
 	var cat_names = [["Outreach","Community Outreach"],["Counseling","Counseling"],["Training","Job Opportunities/Training"],["Health","Health Services"],["Risk","High Risk"],["Multi","Multi-Service"]];
+=======
+	var app_id = "app91Hf1BF6Zx11lT";
+	var app_key = "keyMCwJmZpyayqYhY";
+	
+	function load_api_data(target,mode=3,id='') {
+		
+			apicall = "https://api.airtable.com/v0/"+app_id+"/Eastern;
+	}
+	
+	var cat_names = [["Outreach","Community Outreach"],["Counseling","Counseling"],["Training","Job Opportunities/Training"],["Health","Health Services"],["Academic","Academic Support"],["Case","Case Management"],["Mentor","Mentoring"],["Shelter","Shelter"],["LGBTQ","LGBTQ"],["Housing","Housing"]];
+>>>>>>> test-ns
 
 	var categories = "";
 	var ages = "";
