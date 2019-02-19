@@ -60,12 +60,17 @@
 					if (readCookie("town")) {
 									$("#town").val(readCookie("town"));
 					}
+					if (readCookie("region")) {
+									$("#region").val(readCookie("region"));
+					}
 	}
 	function saveCookies() {
 					age = $("#age").val();
 					town = $("#town").val();
+					region = $("#region").val();
 					createCookie("age",age,365*100);
 					createCookie("town",town,365*100);
+					createCookie("region",region,365*100);
 	}
 </script>
 	<script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
