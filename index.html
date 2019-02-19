@@ -54,22 +54,12 @@
 					if (readCookie("town")) {
 									$("#town").val(readCookie("town"));
 					}
-					if (readCookie("radio-choice-h-2a")) {
-									$("#radio-choice-h-2a").val(readCookie("radio-choice-h-2a"));
-					}
-					if (readCookie("radio-choice-h-2b")) {
-									$("#radio-choice-h-2b").val(readCookie("radio-choice-h-2b"));
-					}
 	}
 	function saveCookies() {
 					age = $("#age").val();
 					town = $("#town").val();
-					radio-choice-h-2a = $("#radio-choice-h-2a").val();
-					radio-choice-h-2b = $("#radio-choice-h-2b").val();
 					createCookie("age",age,365*100);
 					createCookie("town",town,365*100);
-					createCookie("radio-choice-h-2a",radio-choice-h-2a,365*100);
-					createCookie("radio-choice-h-2b",radio-choice-h-2b,365*100);
 	}
 </script>
 	<script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
