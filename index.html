@@ -43,6 +43,7 @@
 			else var expires = "";
 			document.cookie = name+"="+value+expires+"; path=/";
 		}
+
 		function readCookie(name) {
 			var nameEQ = name + "=";
 			var ca = document.cookie.split(';');
@@ -53,6 +54,7 @@
 			}
 			return null;
 		}
+
 	function loadCookies() {
 					if (readCookie("age")) {
 									$("#age").val(readCookie("age"));
@@ -64,6 +66,7 @@
 									$("#region").val(readCookie("region"));
 					}
 	}
+
 	function saveCookies() {
 					age = $("#age").val();
 					town = $("#town").val();
@@ -72,6 +75,7 @@
 					createCookie("town",town,365*100);
 					createCookie("region",region,365*100);
 	}
+
 </script>
 	<script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 	<style>
@@ -144,7 +148,7 @@
 </style>
 
 </head>
-<body onLoad="page_load()">
+<body onLoad="page_load();loadCookies();">
 
 <div data-role="page" id="loading">
 	<div data-role="header" data-position="fixed">
@@ -222,7 +226,7 @@
 
 		<a href="#map-page" data-transition="slide" data-role="button">map</a>
 		<a href="#details" data-transition="slide" data-role="button">Details</a>
-		<a href="javascript:results_page();" data-role="button">Find Resources</a>
+		<a href="javascript:results_page();" data-role="button" onClick="saveCookies();">Find Resources</a>
 
 	</div>
 </div>
