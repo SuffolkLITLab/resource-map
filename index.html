@@ -32,6 +32,42 @@
     }
 
 	</script>
+	<script>
+
+	function createCookie(name,value,days) {
+			if (days) {
+				var date = new Date();
+				date.setTime(date.getTime()+(days*24*60*60*1000));
+				var expires = "; expires="+date.toGMTString();
+			}
+			else var expires = "";
+			document.cookie = name+"="+value+expires+"; path=/";
+		}
+		function readCookie(name) {
+			var nameEQ = name + "=";
+			var ca = document.cookie.split(';');
+			for(var i=0;i < ca.length;i++) {
+				var c = ca[i];
+				while (c.charAt(0)==' ') c = c.substring(1,c.length);
+				if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+			}
+			return null;
+		}
+	function loadCookies() {
+					if (readCookie("age")) {
+									$("#age").val(readCookie("age"));
+					}
+					if (readCookie("town")) {
+									$("#town").val(readCookie("town"));
+					}
+	}
+	function saveCookies() {
+					age = $("#age").val();
+					town = $("#town").val();
+					createCookie("age",age,365*100);
+					createCookie("town",town,365*100);
+	}
+</script>
 	<script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 	<style>
 		.content {
@@ -41,7 +77,7 @@
 			padding:0 15px 25px 15px
 		}
 	</style>
-	
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 /* Popup container - can be anything you want */
@@ -92,7 +128,7 @@
 
 /* Add animation (fade in the popup) */
 @-webkit-keyframes fadeIn {
-  from {opacity: 0;} 
+  from {opacity: 0;}
   to {opacity: 1;}
 }
 
@@ -110,7 +146,7 @@
 		<a href="#about" class="ui-btn ui-icon-info ui-btn-icon-notext ui-corner-all ui-btn-right" data-transition="slide"></a>
 		<h1>Resource Finder</h1>
 	</div>
-	
+
 	<div data-role="content" class="content">
 	<p style="text-align:center" target="_blank"><img src="images/LIT_logo.png" width="200px"/ border="0"></p>
 	<a href="#region" data-transition="slide" data-role="button">Region</a>
@@ -123,10 +159,10 @@
 		<a href="#about" class="ui-btn ui-icon-info ui-btn-icon-notext ui-corner-all ui-btn-right" data-transition="slide"></a>
 		<h1>Resource Finder</h1>
 	</div>
-	
+
 	<div data-role="content" class="content">
 		<p>Choose the region for desired program.</p>
-		
+
 		<div data-role="collapsible" data-inset="false">
     		<h3>Massachusetts</h3>
     			<ul data-role="listview">
@@ -152,30 +188,30 @@
 <div data-role="page" id="filter">
 	<div data-role="header" data-position="fixed">
 		<h1>Resource Finder</h1>
-		<a href="#about" class="ui-btn ui-icon-info ui-btn-icon-notext ui-corner-all ui-btn-right" data-transition="slide"></a> 
-		<a href="#region" class="ui-btn ui-icon-info ui-btn-icon-notext ui-corner-all ui-btn-left ui-icon-gear" data-transition="slideup"></a> 
+		<a href="#about" class="ui-btn ui-icon-info ui-btn-icon-notext ui-corner-all ui-btn-right" data-transition="slide"></a>
+		<a href="#region" class="ui-btn ui-icon-info ui-btn-icon-notext ui-corner-all ui-btn-left ui-icon-gear" data-transition="slideup"></a>
 	</div>
-	
+
 	<div data-role="content" class="content">
-		<div class="ui-field-contain">Use the following selections to find social, community based programs & services.
-			<select id="town" name="select-native-1" id="select-native-1" style="width:100%" onChange="list_page();">
-				<option value="0">Choose a Location</option>
-					<option id="loading_selection" value="0">Loading Locations...</option>
-					<option v-for="item in items" v-bind:value="item['fields']['Latitude, Longitude, Zoom']">{{ item['fields']['Name'] }}</option>
+		<div class="ui-field-contain">Use the following selections to find juvenile social, community based programs & services in and around Boston.
+			<select id="town" name="select-native-1" id="select-native-1" style="width:100%" onChange="list_page();saveCookies();">
+        		<option value="0">Choose a Location</option>
+						<option id="loading_selection" value="0">Loading Locations...</option>
+						<option v-for="item in items" v-bind:value="item['fields']['Latitude, Longitude, Zoom']">{{ item['fields']['Name'] }}</option>
     		</select>
 		</div>
 
-		<p> Enter age of the client seeking services. Leave age blank to view all services.</p>
-		<input name="age" id="age" data-type="number" placeholder="Input Age" onChange="list_page();">
+		<p> Enter age of the juvenile seeking services. Leave age blank to view all services.</p>
+		<input name="age" id="age" data-type="number" placeholder="Input Age" onChange="list_page();saveCookies();">
 
 		<fieldset id="categories" data-role="controlgroup">
 			<p style="margin-top:15px;">Check the type(s) of service(s) you are looking for:</p>
 		</fieldset>
 
 		<fieldset data-role="controlgroup" data-type="horizontal">
-    		<input type="radio" name="radio-choice-h-2" id="radio-choice-h-2a" value="list" checked="checked">
+    		<input type="radio" name="radio-choice-h-2" id="radio-choice-h-2a" value="list" checked="checked" onChange="saveCookies();">
     		<label for="radio-choice-h-2a">List View</label>
-    		<input type="radio" name="radio-choice-h-2" id="radio-choice-h-2b" value="map">
+    		<input type="radio" name="radio-choice-h-2" id="radio-choice-h-2b" value="map" onChange="saveCookies();">
     		<label for="radio-choice-h-2b">Map View</label>
 		</fieldset>
 
@@ -257,7 +293,7 @@
 	<div>
 		<div id="map" style="width:100%;height:100px;"></div>
 	</div>
-		
+
 	<div data-role="footer">
 		<body style="text-align:center">
 		<div class="popup" onclick="myFunction()"><h4>Undisclosed Locations</h4>
@@ -283,7 +319,7 @@
 		<form>
 			<label for="text-1"><b>Name of Program:</b></label>
 			<input type=text id=name">
-			
+
 			<label for=number><b>Number of Beds Available:</b></label>
 			<input type="number" name="quantity" min="0" max="50">
 
@@ -292,16 +328,16 @@
 
 			<label for="email-1"><b>Email Address:</b></label>
 			<input type="email" data-clear-btn="false" name="email-1" id="email-1" value="">
-			
+
 			<label for="url-1"><b>Website:</b></label>
 			<input type="url" data-clear-btn="false" name="url-1" id="url-1" value="">
-			
+
 			<label for="text-3"><b>Address:</b></label>
 			<input type=text id=address">
-			
+
 			<label for="textarea-1"><b>Description:</b></label>
 			<textarea name="textarea-1" id="textarea-1"></textarea>
-			
+
 			<input type="submit" value="Submit">
 		</form>
 	</div>
@@ -319,12 +355,12 @@
 
 	var app_id = "app91Hf1BF6Zx11lT";
 	var app_key = "keyMCwJmZpyayqYhY";
-	
+
 	function load_api_data(target,mode=3,id='') {
-		
+
 			apicall = "https://api.airtable.com/v0/"+app_id+"/Eastern;
 	}
-	
+
 	var cat_names = [["Outreach","Community Outreach"],["Counseling","Counseling"],["Training","Job Opportunities/Training"],["Health","Health Services"],["Academic","Academic Support"],["Case","Case Management"],["Mentor","Mentoring"],["Shelter","Shelter"],["LGBTQ","LGBTQ"],["Housing","Housing"]];
 
 	var categories = "";
@@ -350,16 +386,10 @@
 		} else if (mode == 1) {
 			apicall = "https://api.airtable.com/v0/"+app_id+"/Categories/?sort[0][field]=Name&sort[0][direction]=asc";
 		} else if (mode == 2) {
-			//apicall = "https://api.airtable.com/v0/"+app_id+"/" + $('#town').find(":selected").text() + "/?filterByFormula=AND("+ages+"OR("+categories+"))&sort[0][field]=Name&sort[0][direction]=asc";
-			apicall = "https://api.airtable.com/v0/"+app_id+"/Resources/?filterByFormula=AND("+(lat-1)+"<={Latitude},"+(lat+1)+">={Latitude},"+(lon-1)+"<={Longitude},"+(lon+1)+">={Longitude},"+ages+"OR("+categories+"))&sort[0][field]=Name&sort[0][direction]=asc";
-			console.log(apicall)
+			apicall = "https://api.airtable.com/v0/"+app_id+"/" + $('#town').find(":selected").text() + "/?filterByFormula=AND("+ages+"OR("+categories+"))&sort[0][field]=Name&sort[0][direction]=asc";
 		} else if (mode == 3) {
-			//apicall = "https://api.airtable.com/v0/"+app_id+"/" + $('#town').find(":selected").text() + "/?filterByFormula=(RECORD_ID()=\""+id+"\")";
-			apicall = "https://api.airtable.com/v0/"+app_id+"/Resources/?filterByFormula=(RECORD_ID()=\""+id+"\")";
+			apicall = "https://api.airtable.com/v0/"+app_id+"/" + $('#town').find(":selected").text() + "/?filterByFormula=(RECORD_ID()=\""+id+"\")";
 		}
- 
-	
-	var column_names = 
 
 		var app = new Vue({
               el: target,
@@ -398,7 +428,7 @@
 			alert('You must choose a location.');
 		} else if ( isNaN(Number($('#age').val())) ) {
 			alert('You must enter a numeric age (in years) or leave blank.')
-		} else if ($('#checkbox-v-Outreach').is(":checked") || $('#checkbox-v-Counseling').is(":checked") || $('#checkbox-v-Training').is(":checked") || $('#checkbox-v-Health').is(":checked") || $('#checkbox-v-Academic').is(":checked")|| $('#checkbox-v-Case').is(":checked")|| $('#checkbox-v-Mentor').is(":checked")|| $('#checkbox-v-Shelter').is(":checked")) {
+		} else if ($('#checkbox-v-Outreach').is(":checked") || $('#checkbox-v-Counseling').is(":checked") || $('#checkbox-v-Risk').is(":checked") || $('#checkbox-v-Training').is(":checked") || $('#checkbox-v-Health').is(":checked") || $('#checkbox-v-Multi').is(":checked")) {
 			next_page_1()
     } else {
 			alert('You must choose at least one type of service.')
@@ -434,14 +464,11 @@
 				cat_names.forEach((cat, index) => {
 					if ($('#checkbox-v-'+cat[0]).is(":checked")){
 						$("#org_list").html( $("#org_list").html() + "<li data-role=\"list-divider\">"+cat[1]+"</li>")
-						//$("#org_list").html( $("#org_list").html() + "<li v-for=\"item in items\" v-if=\"item['fields']['Category'] == '"+cat[1]+"'\"><a href=\"javascript:void('')\" v-bind:id=\"item['id']\" onClick=\"details_page(this.id);\">{{ item['fields']['Name'] }}<p>Ages: {{ item['fields']['Minimum Age'] }}-{{ item['fields']['Maximum Age'] }}; Gender(s): {{ item['fields']['Gender'] }}</p></a></li>")
-						$("#org_list").html( $("#org_list").html() + "<li v-for=\"item in items\" v-if=\"item['fields']['"+cat[1]+"']==1\"><a href=\"javascript:void('')\" v-bind:id=\"item['id']\" onClick=\"details_page(this.id);\">{{ item['fields']['Name'] }}<p>Ages: {{ item['fields']['Minimum Age'] }}-{{ item['fields']['Maximum Age'] }}; Gender(s): {{ item['fields']['Gender'] }}</p></a></li>")
+						$("#org_list").html( $("#org_list").html() + "<li v-for=\"item in items\" v-if=\"item['fields']['Category'] == '"+cat[1]+"'\"><a href=\"javascript:void('')\" v-bind:id=\"item['id']\" onClick=\"details_page(this.id);\">{{ item['fields']['Name'] }}<p>Ages: {{ item['fields']['Minimum Age'] }}-{{ item['fields']['Maximum Age'] }}; Gender(s): {{ item['fields']['Gender'] }}</p></a></li>")
 						if (categories != "") {
 							categories = categories+",";
 						}
-						categories = categories+"(1={"+cat[1]+"})";
-						console.log(categories)
-						//categories = ""
+						categories = categories+"FIND(\""+cat[1]+"\",{Category})";
 					}
 				});
 
@@ -453,6 +480,7 @@
 
 				$('#town_name').html($('#town').find(":selected").text());
 
+		    load_api_data('#results',2);
 
 				geo_data = $('#town').find(":selected").val().split(',').map(Number);
 				//console.log(geo_data)
@@ -460,8 +488,6 @@
 				lat = geo_data[0];
 				lon = geo_data[1];
 				zoomin = geo_data[2];
-	
-			    load_api_data('#results',2);
 
 	  	} else {
 				return false;
@@ -474,8 +500,8 @@
       	$("#detail").attr("v-for", "item in items");
       	//$("#detail").attr("v-if", "item['id'] == '"+id+"'");
       	$("#detail").html("");
-      	$("#detail").html($("#detail").html() + "<h3>{{ item['fields']['Name'] }}</h3>");
-      	$("#detail").html($("#detail").html() + "<h4>Categories: <span if-v = 1 {{ item['fields'] ['Outreach'] }} </span></h4>");
+      	$("#detail").html($("#detail").html() + "<h3>{{ item['fields']['Name'] }}</h3>")
+      	$("#detail").html($("#detail").html() + "<h4>{{ item['fields']['Category'] }}</h4>");
       	$("#detail").html($("#detail").html() + "<p><b>Ages:</b> {{ item['fields']['Minimum Age'] }}-{{ item['fields']['Maximum Age'] }} &nbsp;&nbsp; <b>Gender(s):</b> {{ item['fields']['Gender'] }}</p>");
 		$("#detail").html($("#detail").html() + "<p><b>Phone:</b> <a v-bind:href=\"'tel:'+item['fields']['Phone']\" target=\"_blank\">{{ item['fields']['Phone'] }}</p>");
 		$("#detail").html($("#detail").html() + "<p><b>Email:</b> <a v-bind:href=\"'mailto:'+item['fields']['Email']\" target=\"_blank\">{{ item['fields']['Email'] }}</a></p>");
