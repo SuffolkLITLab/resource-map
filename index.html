@@ -32,6 +32,8 @@
     }
 
 	</script>
+	<script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+	
 	<script>
 
 	function createCookie(name,value,days) {
@@ -75,9 +77,14 @@
 					createCookie("town",town,365*100);
 					createCookie("region",region,365*100);
 	}
+<<<<<<< HEAD
 
 </script>
+=======
+	</script>
+>>>>>>> ABA-Fellowship
 	<script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+	
 	<style>
 		.content {
 			text-align:left;
@@ -148,7 +155,11 @@
 </style>
 
 </head>
+<<<<<<< HEAD
 <body onLoad="page_load();loadCookies();">
+=======
+<body onLoad="page_load()" onLoad="loadCookies()">
+>>>>>>> ABA-Fellowship
 
 <div data-role="page" id="loading">
 	<div data-role="header" data-position="fixed">
@@ -196,9 +207,16 @@
 
 <div data-role="page" id="filter">
 	<div data-role="header" data-position="fixed">
+<<<<<<< HEAD
 		<h1>Resource Finder</h1>
 		<a href="#about" class="ui-btn ui-icon-info ui-btn-icon-notext ui-corner-all ui-btn-right" data-transition="slide"></a>
 		<a href="#region" class="ui-btn ui-icon-info ui-btn-icon-notext ui-corner-all ui-btn-left ui-icon-gear" data-transition="slideup"></a>
+=======
+		<a href="#about" class="ui-btn ui-icon-info ui-btn-icon-notext ui-corner-all ui-btn-right" data-transition="slide"></a>
+		<h1>Resource Finder</h1>
+		<a href="#about" class="ui-btn ui-icon-info ui-btn-icon-notext ui-corner-all ui-btn-right" data-transition="slide"></a> 
+		<a href="#region" class="ui-btn ui-icon-info ui-btn-icon-notext ui-corner-all ui-btn-left ui-icon-gear" data-transition="slideup"></a> 
+>>>>>>> ABA-Fellowship
 	</div>
 
 	<div data-role="content" class="content">
@@ -224,9 +242,15 @@
     		<label for="radio-choice-h-2b">Map View</label>
 		</fieldset>
 
+<<<<<<< HEAD
 		<a href="#map-page" data-transition="slide" data-role="button">map</a>
 		<a href="#details" data-transition="slide" data-role="button">Details</a>
 		<a href="javascript:results_page();" data-role="button" onClick="saveCookies();i=0">Find Resources</a>
+=======
+		<a href="javascript:results_page();" onClick="saveCookies();i=0;" data-role="button">Find Resources</a>
+		<a href="#map-page" data-transition="slide" data-role="button">map</a>
+		<a href="#details" data-transition="slide" data-role="button">Details</a>
+>>>>>>> ABA-Fellowship
 
 	</div>
 </div>
@@ -246,7 +270,10 @@
 	</div>
 </div>
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> ABA-Fellowship
 <div data-role="page" id="details">
 	<div data-role="header" data-position="fixed">
 		<h1>Details</h1>
@@ -366,8 +393,13 @@
 	var app_key = "keyMCwJmZpyayqYhY";
 
 	function load_api_data(target,mode=3,id='') {
+<<<<<<< HEAD
 
 			apicall = "https://api.airtable.com/v0/"+app_id+"/Eastern;
+=======
+		
+			apicall = "https://api.airtable.com/v0/"+app_id+"/Eastern";
+>>>>>>> ABA-Fellowship
 	}
 
 	var cat_names = [["Outreach","Community Outreach"],["Counseling","Counseling"],["Training","Job Opportunities/Training"],["Health","Health Services"],["Academic","Academic Support"],["Case","Case Management"],["Mentor","Mentoring"],["Shelter","Shelter"],["LGBTQ","LGBTQ"],["Housing","Housing"]];
