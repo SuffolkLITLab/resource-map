@@ -25,11 +25,17 @@
         	$.mobile.hashListeningEnabled = false;
         	$.mobile.pushStateEnabled = false;
     	});
- function page_load() {
-    	setTimeout(function(){
-       	$.mobile.changePage($('#region'), { transition: 'fade'});
-    	}, 1000);
-    }
+function page_load() {
+        setTimeout(function(){
+            if (readCookie("region")) {
+                                load_first();
+                $.mobile.changePage($('#filter'), { transition: 'fade'});
+            } else {
+                                // call function to get list of regions
+                $.mobile.changePage($('#region'), { transition: 'fade'});
+            }
+        }, 1000);
+}
 
 	</script>
 	<script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
@@ -197,7 +203,7 @@
 	</div>
 	
 	<div data-role="content" class="content">
-		<div class="ui-field-contain">Use the following selections to find social, community based programs & services in Massachusetts.
+		<div class="ui-field-contain">Use the following selections to find social, community based programs & services.
 			<select id="town" name="select-native-1" id="select-native-1" style="width:100%" onChange="list_page();saveCookies();">
         		<option value="0">Choose a Location</option>
 						<option id="loading_selection" value="0">Loading Locations...</option>
@@ -356,13 +362,9 @@
 
 <script type="text/javascript">
 
-	var app_id = "app91Hf1BF6Zx11lT";
+	var app_id = "app1coUtTecDQTZuF";
 	var app_key = "keyMCwJmZpyayqYhY";
 	
-	function load_api_data(target,mode=3,id='') {
-		
-			apicall = "https://api.airtable.com/v0/"+app_id+"/Locations";
-	}
 	
 	var cat_names = [["Outreach","Community Outreach"],["Counseling","Counseling"],["Training","Job Opportunities/Training"],["Health","Health Services"],["Academic","Academic Support"],["Case","Case Management"],["Mentor","Mentoring"],["Shelter","Shelter"],["LGBTQ","LGBTQ"],["Housing","Housing"]];
 
@@ -394,7 +396,20 @@
 			apicall = "https://api.airtable.com/v0/"+app_id+"/" + $('#town').find(":selected").text() + "/?filterByFormula=(RECORD_ID()=\""+id+"\")";
 		}
 
-		var app = new Vue({
+function load_api_data(target,mode=3,id='') {
+        work = 1;
+        //https://api.airtable.com/v0/appHUknSmoIogemD5/Boston/?filterByFormula=AND(20<={Maximum Age},20>={Minimum Age},OR((FIND("Community Outreach",{Category})),(FIND("Counseling",{Category}))))
+        if (mode == 0) {
+            apicall = "https://api.airtable.com/v0/"+app_id+"/Locations/?sort[0][field]=Name&sort[0][direction]=asc";
+        } else if (mode == 1) {
+            apicall = "https://api.airtable.com/v0/"+app_id+"/Categories/?sort[0][field]=Name&sort[0][direction]=asc";
+        } else if (mode == 2) {
+            apicall = "https://api.airtable.com/v0/"+app_id+"/" + $('#town').find(":selected").text() + "/?filterByFormula=AND("+ages+"OR("+categories+"))&sort[0][field]=Name&sort[0][direction]=asc";
+        } else if (mode == 3) {
+            apicall = "https://api.airtable.com/v0/"+app_id+"/" + $('#town').find(":selected").text() + "/?filterByFormula=(RECORD_ID()=\""+id+"\")";
+        }
+
+        var app = new Vue({
               el: target,
               data: {
                   items: []
@@ -408,22 +423,22 @@
                       // Init variables
                       var self = this
                       this.items = []
-					axios.get(
-													 apicall,
+                    axios.get(
+                                                     apicall,
                           {
                               headers: { Authorization: "Bearer "+ app_key }
                           }
                       ).then(function(response){
                           self.items = response.data.records;
-													work = 0;
-													if (mode == 0) {	$('#loading_selection').remove() }
+                                                    work = 0;
+                                                    if (mode == 0) {    $('#loading_selection').remove() }
                       }).catch(function(error){
                           console.log(error)
                       })
                   }
               }
           });
-	}
+    }
 
 	function results_page() {
 
