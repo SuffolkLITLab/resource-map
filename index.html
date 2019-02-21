@@ -24,60 +24,64 @@
     	$(document).on("mobileinit", function () {
         	$.mobile.hashListeningEnabled = false;
         	$.mobile.pushStateEnabled = false;
+					$.mobile.changePage.defaults.changeHash = false;
     	});
-function page_load() {
-        setTimeout(function(){
-            if (readCookie("region")) {
-                                load_first();
-                $.mobile.changePage($('#filter'), { transition: 'fade'});
-            } else {
-                                // call function to get list of regions
-                $.mobile.changePage($('#region'), { transition: 'fade'});
-            }
-        }, 1000);
-}
-
+			function page_load() {
+			        setTimeout(function(){
+			            if (readCookie("region")) {
+											console.log("there is a region cookie")
+											app_id = "app1coUtTecDQTZuF";
+											region_to_filter();
+			            } else {
+											console.log("there is NOT a region cookie")
+			                // call function to get list of regions
+											app_id = "app1coUtTecDQTZuF";
+											load_regions();
+			            }
+			        }, 1000);
+			}
+			function region_to_filter(){
+				createCookie('region','cape',365*100);
+				load_first();
+			}
 	</script>
 	<script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
-	
 	<script>
-
-	function createCookie(name,value,days) {
-			if (days) {
-				var date = new Date();
-				date.setTime(date.getTime()+(days*24*60*60*1000));
-				var expires = "; expires="+date.toGMTString();
+		function createCookie(name,value,days) {
+				if (days) {
+					var date = new Date();
+					date.setTime(date.getTime()+(days*24*60*60*1000));
+					var expires = "; expires="+date.toGMTString();
+				}
+				else var expires = "";
+				document.cookie = name+"="+value+expires+"; path=/";
 			}
-			else var expires = "";
-			document.cookie = name+"="+value+expires+"; path=/";
-		}
-		function readCookie(name) {
-			var nameEQ = name + "=";
-			var ca = document.cookie.split(';');
-			for(var i=0;i < ca.length;i++) {
-				var c = ca[i];
-				while (c.charAt(0)==' ') c = c.substring(1,c.length);
-				if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+			function readCookie(name) {
+				var nameEQ = name + "=";
+				var ca = document.cookie.split(';');
+				for(var i=0;i < ca.length;i++) {
+					var c = ca[i];
+					while (c.charAt(0)==' ') c = c.substring(1,c.length);
+					if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+				}
+				return null;
 			}
-			return null;
+		function loadCookies() {
+						if (readCookie("age")) {
+										$("#age").val(readCookie("age"));
+						}
+						if (readCookie("town")) {
+										$("#town").val(readCookie("town"));
+						}
 		}
-	function loadCookies() {
-					if (readCookie("age")) {
-									$("#age").val(readCookie("age"));
-					}
-					if (readCookie("town")) {
-									$("#town").val(readCookie("town"));
-					}
-	}
-	function saveCookies() {
-					age = $("#age").val();
-					town = $("#town").val();
-					createCookie("age",age,365*100);
-					createCookie("town",town,365*100);
-	}
+		function saveCookies() {
+						age = $("#age").val();
+						town = $("#town").val();
+						createCookie("age",age,365*100);
+						createCookie("town",town,365*100);
+		}
 	</script>
-	<script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
-	
+
 	<style>
 		.content {
 			text-align:left;
@@ -86,7 +90,7 @@ function page_load() {
 			padding:0 15px 25px 15px
 		}
 	</style>
-	
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 /* Popup container - can be anything you want */
@@ -137,7 +141,7 @@ function page_load() {
 
 /* Add animation (fade in the popup) */
 @-webkit-keyframes fadeIn {
-  from {opacity: 0;} 
+  from {opacity: 0;}
   to {opacity: 1;}
 }
 
@@ -148,14 +152,14 @@ function page_load() {
 </style>
 
 </head>
-<body onLoad="page_load();onLoad="loadCookies()">
+<body onLoad="page_load();loadCookies();">
 
 <div data-role="page" id="loading">
 	<div data-role="header" data-position="fixed">
 		<a href="#about" class="ui-btn ui-icon-info ui-btn-icon-notext ui-corner-all ui-btn-right" data-transition="slide"></a>
 		<h1>Resource Finder</h1>
 	</div>
-	
+
 	<div data-role="content" class="content">
 	<p style="text-align:center" target="_blank"><img src="images/LIT_logo.png" width="200px"/ border="0"></p>
 	<a href="#region" data-transition="slide" data-role="button">Region</a>
@@ -168,28 +172,10 @@ function page_load() {
 		<a href="#about" class="ui-btn ui-icon-info ui-btn-icon-notext ui-corner-all ui-btn-right" data-transition="slide"></a>
 		<h1>Resource Finder</h1>
 	</div>
-	
-	<div data-role="content" class="content">
-		<p>Choose the region for desired program.</p>
-		
-		<div data-role="collapsible" data-inset="false">
-    		<h3>Massachusetts</h3>
-    			<ul data-role="listview">
-    				<li><a href="#filter" onClick="createCookies('region','cape',365*100);">Cape Code & the Islands</a></li>
-    				<li><a href="#filter">Central Massachusetts</a></li>
-        			<li><a href="#filter">Eastern Massachusetts</a></li>
-        			<li><a href="#filter">Northeastern Massachusetts</a></li>
-        			<li><a href="#filter">Southeastern Massachusetts</a></li>
-        			<li><a href="#filter">Western Massachusetts</a></li>
-    			</ul>
-		</div><!-- /collapsible -->
 
-		<div data-role="collapsible" data-inset="false">
-    		<h3>New York</h3>
-    			<ul data-role="listview">
-					<li><a href="#">Captial Region</a></li>
-    			</ul>
-		</div><!-- /collapsible -->
+	<div data-role="content" id="regions" class="content">
+		<p>Choose the region for desired program.</p>
+
 	</div>
 </div>
 
@@ -198,17 +184,16 @@ function page_load() {
 	<div data-role="header" data-position="fixed">
 		<a href="#about" class="ui-btn ui-icon-info ui-btn-icon-notext ui-corner-all ui-btn-right" data-transition="slide"></a>
 		<h1>Resource Finder</h1>
-		<a href="#about" class="ui-btn ui-icon-info ui-btn-icon-notext ui-corner-all ui-btn-right" data-transition="slide"></a> 
-		<a href="#region" class="ui-btn ui-icon-info ui-btn-icon-notext ui-corner-all ui-btn-left ui-icon-gear" data-transition="slideup"></a> 
+		<a href="#about" class="ui-btn ui-icon-info ui-btn-icon-notext ui-corner-all ui-btn-right" data-transition="slide"></a>
+		<a href="#region" class="ui-btn ui-icon-info ui-btn-icon-notext ui-corner-all ui-btn-left ui-icon-gear" data-transition="slideup"></a>
 	</div>
-	
+
 	<div data-role="content" class="content">
 		<div class="ui-field-contain">Use the following selections to find social, community based programs & services.
 			<select id="town" name="select-native-1" id="select-native-1" style="width:100%" onChange="list_page();saveCookies();">
-        		<option value="0">Choose a Location</option>
-						<option id="loading_selection" value="0">Loading Locations...</option>
+        		<option value="0">Choose a Location</option>
 						<option v-for="item in items" v-bind:value="item['fields']['Latitude, Longitude, Zoom']">{{ item['fields']['Name'] }}</option>
-    		</select>
+    		</select>
 		</div>
 
 		<p> Enter age of the person seeking services. Leave age blank to view all services.</p>
@@ -219,10 +204,10 @@ function page_load() {
 		</fieldset>
 
 		<fieldset data-role="controlgroup" data-type="horizontal">
-    		<input type="radio" name="radio-choice-h-2" id="radio-choice-h-2a" value="list" checked="checked" onChange="saveCookies();">
-    		<label for="radio-choice-h-2a">List View</label>
-    		<input type="radio" name="radio-choice-h-2" id="radio-choice-h-2b" value="map" onChange="saveCookies();">
-    		<label for="radio-choice-h-2b">Map View</label>
+    		<input type="radio" name="radio-choice-h-2" id="radio-choice-h-2a" value="list" checked="checked" onChange="saveCookies();">
+    		<label for="radio-choice-h-2a">List View</label>
+    		<input type="radio" name="radio-choice-h-2" id="radio-choice-h-2b" value="map" onChange="saveCookies();">
+    		<label for="radio-choice-h-2b">Map View</label>
 		</fieldset>
 
 		<a href="javascript:results_page();" onClick="saveCookies();i=0;" data-role="button">Find Resources</a>
@@ -302,7 +287,7 @@ function page_load() {
 	<div>
 		<div id="map" style="width:100%;height:100px;"></div>
 	</div>
-		
+
 	<div data-role="footer">
 		<body style="text-align:center">
 		<div class="popup" onclick="myFunction()"><h4>Undisclosed Locations</h4>
@@ -328,7 +313,7 @@ function page_load() {
 		<form>
 			<label for="text-1"><b>Name of Program:</b></label>
 			<input type=text id=name">
-			
+
 			<label for=number><b>Number of Beds Available:</b></label>
 			<input type="number" name="quantity" min="0" max="50">
 
@@ -337,16 +322,16 @@ function page_load() {
 
 			<label for="email-1"><b>Email Address:</b></label>
 			<input type="email" data-clear-btn="false" name="email-1" id="email-1" value="">
-			
+
 			<label for="url-1"><b>Website:</b></label>
 			<input type="url" data-clear-btn="false" name="url-1" id="url-1" value="">
-			
+
 			<label for="text-3"><b>Address:</b></label>
 			<input type=text id=address">
-			
+
 			<label for="textarea-1"><b>Description:</b></label>
 			<textarea name="textarea-1" id="textarea-1"></textarea>
-			
+
 			<input type="submit" value="Submit">
 		</form>
 	</div>
@@ -362,83 +347,114 @@ function page_load() {
 
 <script type="text/javascript">
 
-	var app_id = "app1coUtTecDQTZuF";
+	var meta_app_id = "app91Hf1BF6Zx11lT";
 	var app_key = "keyMCwJmZpyayqYhY";
-	
-	
-	var cat_names = [["Outreach","Community Outreach"],["Counseling","Counseling"],["Training","Job Opportunities/Training"],["Health","Health Services"],["Academic","Academic Support"],["Case","Case Management"],["Mentor","Mentoring"],["Shelter","Shelter"],["LGBTQ","LGBTQ"],["Housing","Housing"]];
+
+	var app_id = "";
+
+var data;
+var x = [];
+function load_region_list() {
+	axios.get(
+	             'https://api.airtable.com/v0/'+meta_app_id+'/Meta Data/?sort[0][field]=State',
+	            {
+	              headers: { Authorization: "Bearer "+app_key }
+	            }
+	          ).then(function(response){
+								data =  response.data.records;
+								data.forEach(function (arrayItem) {
+								    if ((arrayItem.fields.State) &&  (x.indexOf(arrayItem.fields.State)==-1)) {
+								            x.push(arrayItem.fields.State)
+														//console.log(x);
+								        }
+								});
+	          }).catch(function(error){
+	              console.log(error)
+	          })
+	return x;
+}
+
+	var region_names = load_region_list();
+
+	var cat_names = [];
+
+	// at some point after a region is selected, get this
+	cat_names = [["Outreach","Community Outreach"],["Counseling","Counseling"],["Training","Job Opportunities/Training"],["Health","Health Services"],["Academic","Academic Support"],["Case","Case Management"],["Mentor","Mentoring"],["Shelter","Shelter"],["LGBTQ","LGBTQ"],["Housing","Housing"]];
 
 	var categories = "";
 	var ages = "";
 	var work = 0;
+
+	function load_regions() {
+			console.log("LOAD REGIONS")
+			console.log(region_names)
+			region_names.forEach((cat, index) => {
+					$("#regions").html( $("#regions").html() + "<div data-role=\"collapsible\" id=\"reg_"+cat+"\" data-inset=\"false\"><h3>"+cat+"</h3><ul data-role=\"listview\">");
+					$("#regions").html( $("#regions").html() + "<li v-for=\"item in items\" v-bind:value=\"item['fields']['Region']\"><a href=\"#filter\" onClick=\"region_to_filter();\">{{ item['fields']['Region'] }}</a></li>");
+  				$("#regions").html( $("#regions").html() + "</ul></div>");
+					load_api_data('#reg_'+cat,-1,cat);
+					$( '#'+cat ).enhanceWithin();
+			});
+			//load_api_data('#filter',0);
+			$.mobile.changePage($('#region'), { transition: 'fade'});
+	}
+
 
 	function load_first() {
 			cat_names.forEach((cat, index) => {
 					$("#categories").html( $("#categories").html() + "<input type=\"checkbox\" name=\"checkbox-v-"+cat[0]+"\" id=\"checkbox-v-"+cat[0]+"\" onChange=\"list_page();\" checked=\"checked\">");
 					$("#categories").html( $("#categories").html() + "<label for=\"checkbox-v-"+cat[0]+"\">"+cat[1]+"</label>");
 			});
-			$( '#categories' ).enhanceWithin();
+			//$( '#categories' ).enhanceWithin();
 			load_api_data('#filter',0);
 	}
 
-	load_first();
-
 	function load_api_data(target,mode=3,id='') {
-		work = 1;
-		//https://api.airtable.com/v0/appHUknSmoIogemD5/Boston/?filterByFormula=AND(20<={Maximum Age},20>={Minimum Age},OR((FIND("Community Outreach",{Category})),(FIND("Counseling",{Category}))))
-		if (mode == 0) {
-			apicall = "https://api.airtable.com/v0/"+app_id+"/Locations/?sort[0][field]=Name&sort[0][direction]=asc";
-		} else if (mode == 1) {
-			apicall = "https://api.airtable.com/v0/"+app_id+"/Categories/?sort[0][field]=Name&sort[0][direction]=asc";
-		} else if (mode == 2) {
-			apicall = "https://api.airtable.com/v0/"+app_id+"/" + $('#town').find(":selected").text() + "/?filterByFormula=AND("+ages+"OR("+categories+"))&sort[0][field]=Name&sort[0][direction]=asc";
-		} else if (mode == 3) {
-			apicall = "https://api.airtable.com/v0/"+app_id+"/" + $('#town').find(":selected").text() + "/?filterByFormula=(RECORD_ID()=\""+id+"\")";
-		}
+			work = 1;
+			console.log("load_api_data:",target,mode,id)
+			//https://api.airtable.com/v0/appHUknSmoIogemD5/Boston/?filterByFormula=AND(20<={Maximum Age},20>={Minimum Age},OR((FIND("Community Outreach",{Category})),(FIND("Counseling",{Category}))))
 
-function load_api_data(target,mode=3,id='') {
-        work = 1;
-        //https://api.airtable.com/v0/appHUknSmoIogemD5/Boston/?filterByFormula=AND(20<={Maximum Age},20>={Minimum Age},OR((FIND("Community Outreach",{Category})),(FIND("Counseling",{Category}))))
-        if (mode == 0) {
-            apicall = "https://api.airtable.com/v0/"+app_id+"/Locations/?sort[0][field]=Name&sort[0][direction]=asc";
-        } else if (mode == 1) {
-            apicall = "https://api.airtable.com/v0/"+app_id+"/Categories/?sort[0][field]=Name&sort[0][direction]=asc";
-        } else if (mode == 2) {
-            apicall = "https://api.airtable.com/v0/"+app_id+"/" + $('#town').find(":selected").text() + "/?filterByFormula=AND("+ages+"OR("+categories+"))&sort[0][field]=Name&sort[0][direction]=asc";
-        } else if (mode == 3) {
-            apicall = "https://api.airtable.com/v0/"+app_id+"/" + $('#town').find(":selected").text() + "/?filterByFormula=(RECORD_ID()=\""+id+"\")";
-        }
+			if (mode == -1) {
+				apicall = "https://api.airtable.com/v0/"+meta_app_id+"/Meta Data/?filterByFormula=(State=\""+id+"\")";
+			} else if (mode == 0) {
+				apicall = "https://api.airtable.com/v0/"+app_id+"/Locations/?sort[0][field]=Name&sort[0][direction]=asc";
+			} else if (mode == 1) {
+				apicall = "https://api.airtable.com/v0/"+app_id+"/Categories/?sort[0][field]=Name&sort[0][direction]=asc";
+			} else if (mode == 2) {
+				apicall = "https://api.airtable.com/v0/"+app_id+"/" + $('#town').find(":selected").text() + "/?filterByFormula=AND("+ages+"OR("+categories+"))&sort[0][field]=Name&sort[0][direction]=asc";
+			} else if (mode == 3) {
+				apicall = "https://api.airtable.com/v0/"+app_id+"/" + $('#town').find(":selected").text() + "/?filterByFormula=(RECORD_ID()=\""+id+"\")";
+			}
 
-        var app = new Vue({
-              el: target,
-              data: {
-                  items: []
-              },
-              mounted: function(){
-                 this.loadItems();
-              },
-              methods: {
-                  loadItems: function(){
-
-                      // Init variables
-                      var self = this
-                      this.items = []
-                    axios.get(
-                                                     apicall,
-                          {
-                              headers: { Authorization: "Bearer "+ app_key }
-                          }
-                      ).then(function(response){
-                          self.items = response.data.records;
-                                                    work = 0;
-                                                    if (mode == 0) {    $('#loading_selection').remove() }
-                      }).catch(function(error){
-                          console.log(error)
-                      })
-                  }
-              }
-          });
-    }
+			var app = new Vue({
+	              el: target,
+	              data: {
+	                  items: []
+	              },
+	              mounted: function(){
+	                 this.loadItems();
+	              },
+	              methods: {
+	                  loadItems: function(){
+	                      // Init variables
+	                      var self = this
+	                      this.items = []
+												axios.get(
+																		 apicall,
+					                          {
+					                              headers: { Authorization: "Bearer "+ app_key }
+					                          }
+						                      ).then(function(response){
+						                          self.items = response.data.records;
+																			work = 0;
+																			//console.log(self.items)
+						                      }).catch(function(error){
+						                          console.log(error)
+						                      })
+	                  }
+	              }
+	          });
+	}
 
 	function results_page() {
 
@@ -521,8 +537,8 @@ function load_api_data(target,mode=3,id='') {
       	$("#detail").html($("#detail").html() + "<h3>{{ item['fields']['Name'] }}</h3>")
       	$("#detail").html($("#detail").html() + "<h4>{{ item['fields']['Category'] }}</h4>");
       	$("#detail").html($("#detail").html() + "<p><b>Ages:</b> {{ item['fields']['Minimum Age'] }}-{{ item['fields']['Maximum Age'] }} &nbsp;&nbsp; <b>Gender(s):</b> {{ item['fields']['Gender'] }}</p>");
-		$("#detail").html($("#detail").html() + "<p><b>Phone:</b> <a v-bind:href=\"'tel:'+item['fields']['Phone']\" target=\"_blank\">{{ item['fields']['Phone'] }}</p>");
-		$("#detail").html($("#detail").html() + "<p><b>Email:</b> <a v-bind:href=\"'mailto:'+item['fields']['Email']\" target=\"_blank\">{{ item['fields']['Email'] }}</a></p>");
+				$("#detail").html($("#detail").html() + "<p><b>Phone:</b> <a v-bind:href=\"'tel:'+item['fields']['Phone']\" target=\"_blank\">{{ item['fields']['Phone'] }}</p>");
+				$("#detail").html($("#detail").html() + "<p><b>Email:</b> <a v-bind:href=\"'mailto:'+item['fields']['Email']\" target=\"_blank\">{{ item['fields']['Email'] }}</a></p>");
       	$("#detail").html($("#detail").html() + "<p><b>Website:</b> <a v-bind:href=\"item['fields']['Website']\" target=\"_blank\">{{ item['fields']['Website'] }}</a></p>");
       	$("#detail").html($("#detail").html() + "<p><b>Address:</b> <a v-bind:href=\"'https://www.google.com/maps/place/'+item['fields']['Address']\" target=\"_blank\">{{ item['fields']['Address'] }}</a></p>");
       	$("#detail").html($("#detail").html() + "<p><b>Description:</b> {{ item['fields']['Description'] }}</p>");
@@ -625,3 +641,4 @@ function load_api_data(target,mode=3,id='') {
 
 </body>
 </html>
+
