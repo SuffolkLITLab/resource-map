@@ -26,20 +26,20 @@
         	$.mobile.pushStateEnabled = false;
 					$.mobile.changePage.defaults.changeHash = false;
     	});
-			function page_load() {
-			        setTimeout(function(){
-			            if (readCookie("region")) {
-											console.log("there is a region cookie")
-											app_id = "app1coUtTecDQTZuF";
-											region_to_filter();
-			            } else {
-											console.log("there is NOT a region cookie")
+		//	function page_load() {
+			//        setTimeout(function(){
+			  //          if (readCookie("region")) {
+					//						console.log("there is a region cookie")
+						//					app_id = "app1coUtTecDQTZuF";
+							//				region_to_filter();
+			          //  } else {
+									//		console.log("there is NOT a region cookie")
 			                // call function to get list of regions
-											app_id = "app1coUtTecDQTZuF";
-											load_regions();
-			            }
-			        }, 1000);
-			}
+										//	app_id = "app1coUtTecDQTZuF";
+									//		load_regions();
+			          //  }
+			       // }, 1000);
+		//	}
 			function region_to_filter(){
 				createCookie('region','cape',365*100);
 				load_first();
@@ -641,4 +641,3 @@ function load_region_list() {
 
 </body>
 </html>
-
