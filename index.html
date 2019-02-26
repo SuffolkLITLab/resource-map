@@ -391,7 +391,7 @@ function load_region_list() {
 			region_names.forEach((cat, index) => {
 					$("#regions").html( $("#regions").html() + "<div data-role=\"collapsible\" id=\"reg_"+cat+"\" data-inset=\"false\"><h3>"+cat+"</h3><ul data-role=\"listview\">");
 					$("#regions").html( $("#regions").html() + "<li v-for=\"item in items\" v-bind:value=\"item['fields']['Region']\"><a href=\"#filter\" onClick=\"region_to_filter();\">{{ item['fields']['Region'] }}</a></li>");
-  				$("#regions").html( $("#regions").html() + "</ul></div>");
+  					$("#regions").html( $("#regions").html() + "</ul></div>");
 					load_api_data('#reg_'+cat,-1,cat);
 					$( '#'+cat ).enhanceWithin();
 			});
