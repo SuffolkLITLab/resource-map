@@ -21,6 +21,7 @@
 	<link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
 	<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
 	<script>
+			var app_id = ""
     	$(document).on("mobileinit", function () {
         	$.mobile.hashListeningEnabled = false;
         	$.mobile.pushStateEnabled = false;
@@ -29,19 +30,23 @@
 			function page_load() {
 			        setTimeout(function(){
 			            if (readCookie("region")) {
-											console.log("there is a region cookie")
-											app_id = "app1coUtTecDQTZuF";
-											region_to_filter();
+											console.log(readCookie("region"),"there is a region cookie")
+											app_id = readCookie("region");
+											load_regions(0)
+											load_first();
+											$.mobile.changePage($('#filter'), { transition: 'slide'});
 			            } else {
 											console.log("there is NOT a region cookie")
-			             	//   call function to get list of regions
-											app_id = "app1coUtTecDQTZuF";
+			             	  //   call function to get list of regions
+											//app_id = "app1coUtTecDQTZuF";
 											load_regions();
 			            }
 			        }, 1000);
 			}
-			function region_to_filter(){
-				createCookie('region','cape',365*100);
+			function region_to_filter(region_val){
+				createCookie('region',region_val,365*100);
+				app_id = region_val;
+				console.log(region_val)
 				load_first();
 			}
 	</script>
@@ -176,15 +181,7 @@
 	<div data-role="content" id="regions" class="content">
 		<p>Choose the region for desired program.</p>
 	</div>
-	
-	<div id="regionz">
-	<ul>
-  		<li v-for="item in items">
-    		{{ item.message }}
-  		</li>
-	</ul>
-	</div>
-	
+
 </div>
 
 
@@ -193,15 +190,15 @@
 		<a href="#about" class="ui-btn ui-icon-info ui-btn-icon-notext ui-corner-all ui-btn-right" data-transition="slide"></a>
 		<h1>Resource Finder</h1>
 		<a href="#about" class="ui-btn ui-icon-info ui-btn-icon-notext ui-corner-all ui-btn-right" data-transition="slide"></a>
-		<a href="#region" class="ui-btn ui-icon-info ui-btn-icon-notext ui-corner-all ui-btn-left ui-icon-gear" data-transition="slideup"></a>
+		<a href="#region" class="ui-btn ui-icon-info ui-btn-icon-notext ui-corner-all ui-btn-left ui-icon-gear" data-transition="slide" data-direction="reverse"></a>
 	</div>
 
 	<div data-role="content" class="content">
 		<div class="ui-field-contain">Use the following selections to find social, community based programs & services.
 			<select id="town" name="select-native-1" id="select-native-1" style="width:100%" onChange="list_page();saveCookies();">
-        		<option value="0">Choose a Location</option>
-						<option v-for="item in items" v-bind:value="item['fields']['Latitude, Longitude, Zoom']">{{ item['fields']['Name'] }}</option>
-    		</select>
+        		<option value="0" class="town_entry">Choose a Location</option>
+						<option v-for="item in items" v-bind:value="item['fields']['Latitude, Longitude, Zoom']"  class="town_entry">{{ item['fields']['Name'] }}</option>
+    	</select>
 		</div>
 
 		<p> Enter age of the person seeking services. Leave age blank to view all services.</p>
@@ -358,9 +355,6 @@
 	var meta_app_id = "app91Hf1BF6Zx11lT";
 	var app_key = "keyMCwJmZpyayqYhY";
 
-	var app_id = "";
-
-
 	var data;
 	var x = [];
 	function load_region_list() {
@@ -383,16 +377,7 @@
 	return x;
 	}
 
-	var regionz = new Vue({
-  		el: '#regionz',
-		data: {
-			items: [
-				{ message: 'Eastern' },
-				{ message: 'Western' }
-			]
-		}
-	})
-	
+
 	var region_names = load_region_list();
 
 	var cat_names = [];
@@ -403,36 +388,43 @@
 	var categories = "";
 	var ages = "";
 	var work = 0;
-	
 
+	$("#region").on("pageshow" , function() {
+			region_names.forEach((cat, index) => {
+	  		$('#list_'+cat).listview('refresh');
+			});
+	});
 
-	function load_regions() {
+	function load_regions(go) {
 			console.log("LOAD REGIONS")
 			console.log(region_names)
 			region_names.forEach((cat, index) => {
-					$("#regions").html( $("#regions").html() + "<div data-role=\"collapsible\" id=\"reg_"+cat+"\" data-inset=\"false\"><h3>"+cat+"</h3><ul data-role=\"listview\">");
-					$("#regions").html( $("#regions").html() + "<li v-for=\"item in items\" v-bind:value=\"item['fields']['Region']\"><a href=\"#filter\" onClick=\"region_to_filter();\">{{ item['fields']['Region'] }}</a></li>");
-  					$("#regions").html( $("#regions").html() + "</ul></div>");
-					load_api_data('#reg_'+cat,-1,cat);
-					$( '#'+cat ).enhanceWithin();
+					$("#regions").html( $("#regions").html() + "<div data-role=\"collapsible\" id=\"reg_"+cat+"\" data-inset=\"false\"><h3>"+cat+"</h3><ul id=\"list_"+cat+"\" data-role=\"listview\"><li v-for=\"item in items\"><a href=\"#filter\" v-bind:id=\"item['fields']['API Documentation (Base)']\" onClick=\"region_to_filter(this.id);\">{{ item['fields']['Region'] }}</a></li></ul></div>");
 			});
-			//load_api_data('#filter',0);
-			$.mobile.changePage($('#region'), { transition: 'fade'});
+			region_names.forEach((cat, index) => {
+				load_api_data('#reg_'+cat,-1,cat);
+			});
+			if (go!=0) {
+				$.mobile.changePage($('#region'), { transition: 'fade', });
+			}
 	}
 
 
 	function load_first() {
+			console.log("LOAD FIRST")
+			$("#categories").html("")
+			$("#age").html("")
 			cat_names.forEach((cat, index) => {
 					$("#categories").html( $("#categories").html() + "<input type=\"checkbox\" name=\"checkbox-v-"+cat[0]+"\" id=\"checkbox-v-"+cat[0]+"\" onChange=\"list_page();\" checked=\"checked\">");
 					$("#categories").html( $("#categories").html() + "<label for=\"checkbox-v-"+cat[0]+"\">"+cat[1]+"</label>");
 			});
-			//$( '#categories' ).enhanceWithin();
+			$( '#categories' ).enhanceWithin();
 			load_api_data('#filter',0);
 	}
 
 	function load_api_data(target,mode=3,id='') {
 			work = 1;
-			console.log("load_api_data:",target,mode,id)
+			console.log("LOAD API DATA:",target,mode,id)
 			//https://api.airtable.com/v0/appHUknSmoIogemD5/Boston/?filterByFormula=AND(20<={Maximum Age},20>={Minimum Age},OR((FIND("Community Outreach",{Category})),(FIND("Counseling",{Category}))))
 
 			if (mode == -1) {
@@ -446,6 +438,8 @@
 			} else if (mode == 3) {
 				apicall = "https://api.airtable.com/v0/"+app_id+"/" + $('#town').find(":selected").text() + "/?filterByFormula=(RECORD_ID()=\""+id+"\")";
 			}
+
+			console.log(apicall)
 
 			var app = new Vue({
 	              el: target,
@@ -468,7 +462,8 @@
 						                      ).then(function(response){
 						                          self.items = response.data.records;
 																			work = 0;
-																			//console.log(self.items)
+																			//console.log(response)
+																			console.log(self.items)
 						                      }).catch(function(error){
 						                          console.log(error)
 						                      })
