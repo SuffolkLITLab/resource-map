@@ -22,6 +22,7 @@
 	<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
 	<script>
 			var app_id = ""
+			var region_name = ""
     	$(document).on("mobileinit", function () {
         	$.mobile.hashListeningEnabled = false;
         	$.mobile.pushStateEnabled = false;
@@ -32,6 +33,7 @@
 			            if (readCookie("region")) {
 											console.log(readCookie("region"),"there is a region cookie")
 											app_id = readCookie("region");
+											region_name = readCookie("region_name");
 											load_regions(0)
 											load_first();
 											$.mobile.changePage($('#filter'), { transition: 'slide'});
@@ -43,9 +45,11 @@
 			            }
 			        }, 1000);
 			}
-			function region_to_filter(region_val){
+			function region_to_filter(region_val,rname){
 				createCookie('region',region_val,365*100);
+				createCookie('region_name',region_name,365*100)
 				app_id = region_val;
+				region_name = rname;
 				console.log(region_val)
 				load_first();
 			}
@@ -399,7 +403,7 @@
 			console.log("LOAD REGIONS")
 			console.log(region_names)
 			region_names.forEach((cat, index) => {
-					$("#regions").html( $("#regions").html() + "<div data-role=\"collapsible\" id=\"reg_"+cat+"\" data-inset=\"false\"><h3>"+cat+"</h3><ul id=\"list_"+cat+"\" data-role=\"listview\"><li v-for=\"item in items\"><a href=\"#filter\" v-bind:id=\"item['fields']['API Documentation (Base)']\" onClick=\"region_to_filter(this.id);\">{{ item['fields']['Region'] }}</a></li></ul></div>");
+					$("#regions").html( $("#regions").html() + "<div data-role=\"collapsible\" id=\"reg_"+cat+"\" data-inset=\"false\"><h3>"+cat+"</h3><ul id=\"list_"+cat+"\" data-role=\"listview\"><li v-for=\"item in items\"><a href=\"#filter\" v-bind:id=\"item['fields']['API Documentation (Base)']\" onClick=\"region_to_filter(this.id,$('#'+this.id).html());\">{{ item['fields']['Region'] }}</a></li></ul></div>");
 			});
 			region_names.forEach((cat, index) => {
 				load_api_data('#reg_'+cat,-1,cat);
@@ -434,7 +438,8 @@
 			} else if (mode == 1) {
 				apicall = "https://api.airtable.com/v0/"+app_id+"/Categories/?sort[0][field]=Name&sort[0][direction]=asc";
 			} else if (mode == 2) {
-				apicall = "https://api.airtable.com/v0/"+app_id+"/" + $('#town').find(":selected").text() + "/?filterByFormula=AND("+ages+"OR("+categories+"))&sort[0][field]=Name&sort[0][direction]=asc";
+				apicall = "https://api.airtable.com/v0/"+app_id+"/" + $('#rname').find(":selected").text() + "/?filterByFormula=AND("+(lat-1)+"<={Latitude},"+(lat+1)+">={Latitude},"+(lon-1)+"<={Longitude},"+(lon+1)+">={Longitude})&sort[0][field]=Name&sort[0][direction]=asc";
+			console.log(apicall)
 			} else if (mode == 3) {
 				apicall = "https://api.airtable.com/v0/"+app_id+"/" + $('#town').find(":selected").text() + "/?filterByFormula=(RECORD_ID()=\""+id+"\")";
 			}
