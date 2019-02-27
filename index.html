@@ -23,6 +23,9 @@
 	<script>
 			var app_id = ""
 			var region_name = ""
+			var lat = ""
+			var lon = ""
+			var zoomin = ""
     	$(document).on("mobileinit", function () {
         	$.mobile.hashListeningEnabled = false;
         	$.mobile.pushStateEnabled = false;
@@ -199,7 +202,8 @@
 
 	<div data-role="content" class="content">
 		<div class="ui-field-contain">Use the following selections to find social, community based programs & services.
-			<select id="town" name="select-native-1" id="select-native-1" style="width:100%" onChange="list_page();saveCookies();">
+			<select id="town" name="select-native-1" id="select-native-1" style="width:100%" onChange="list_page();saveCookies();get_lat_log();
+">
         		<option value="0" class="town_entry">Choose a Location</option>
 						<option v-for="item in items" v-bind:value="item['fields']['Latitude, Longitude, Zoom']"  class="town_entry">{{ item['fields']['Name'] }}</option>
     	</select>
@@ -359,6 +363,7 @@
 	var meta_app_id = "app91Hf1BF6Zx11lT";
 	var app_key = "keyMCwJmZpyayqYhY";
 
+
 	var data;
 	var x = [];
 	function load_region_list() {
@@ -438,8 +443,8 @@
 			} else if (mode == 1) {
 				apicall = "https://api.airtable.com/v0/"+app_id+"/Categories/?sort[0][field]=Name&sort[0][direction]=asc";
 			} else if (mode == 2) {
-				apicall = "https://api.airtable.com/v0/"+app_id+"/" + $('#rname').find(":selected").text() + "/?filterByFormula=AND("+(lat-1)+"<={Latitude},"+(lat+1)+">={Latitude},"+(lon-1)+"<={Longitude},"+(lon+1)+">={Longitude})&sort[0][field]=Name&sort[0][direction]=asc";
-			console.log(apicall)
+				apicall = "https://api.airtable.com/v0/"+app_id+"/" + region_name + "/?filterByFormula=AND("+(lat-1)+"<={Latitude},"+(lat+1)+">={Latitude},"+(lon-1)+"<={Longitude},"+(lon+1)+">={Longitude})&sort[0][field]=Name&sort[0][direction]=asc";
+				//console.log(lat,lon,apicall)
 			} else if (mode == 3) {
 				apicall = "https://api.airtable.com/v0/"+app_id+"/" + $('#town').find(":selected").text() + "/?filterByFormula=(RECORD_ID()=\""+id+"\")";
 			}
@@ -478,7 +483,7 @@
 	}
 
 	function results_page() {
-
+	
 		if ($('#town').find(":selected").val() == 0) {
 			alert('You must choose a location.');
 		} else if ( isNaN(Number($('#age').val())) ) {
@@ -508,6 +513,18 @@
 		}
 	}
 
+
+function get_lat_log() {
+
+	geo_data = $('#town').find(":selected").val().split(',').map(Number);
+	console.log("LAT LON "+geo_data)
+	lat = geo_data[0];
+	lon = geo_data[1];
+	zoomin = geo_data[2];
+
+}
+
+
 	function list_page() {
 
 		if ($('#town').find(":selected").val() != 0 && !isNaN(Number($('#age').val())) ) {
@@ -519,7 +536,7 @@
 				cat_names.forEach((cat, index) => {
 					if ($('#checkbox-v-'+cat[0]).is(":checked")){
 						$("#org_list").html( $("#org_list").html() + "<li data-role=\"list-divider\">"+cat[1]+"</li>")
-						$("#org_list").html( $("#org_list").html() + "<li v-for=\"item in items\" v-if=\"item['fields']['Category'] == '"+cat[1]+"'\"><a href=\"javascript:void('')\" v-bind:id=\"item['id']\" onClick=\"details_page(this.id);\">{{ item['fields']['Name'] }}<p>Ages: {{ item['fields']['Minimum Age'] }}-{{ item['fields']['Maximum Age'] }}; Gender(s): {{ item['fields']['Gender'] }}</p></a></li>")
+						$("#org_list").html( $("#org_list").html() + "<li v-for=\"item in items\" v-if=\"item['fields']['Name'] == '"+cat[1]+"'\"><a href=\"javascript:void('')\" v-bind:id=\"item['id']\" onClick=\"details_page(this.id);\">{{ item['fields']['Name'] }}<p>Ages: {{ item['fields']['Minimum Age'] }}-{{ item['fields']['Maximum Age'] }}; Gender(s): {{ item['fields']['Gender'] }}</p></a></li>")
 						if (categories != "") {
 							categories = categories+",";
 						}
@@ -537,12 +554,11 @@
 
 		    load_api_data('#results',2);
 
-				geo_data = $('#town').find(":selected").val().split(',').map(Number);
-				//console.log(geo_data)
-
-				lat = geo_data[0];
-				lon = geo_data[1];
-				zoomin = geo_data[2];
+			//geo_data = $('#town').find(":selected").val().split(',').map(Number);
+			//console.log(geo_data)
+			//lat = geo_data[0];
+			//lon = geo_data[1];
+			//zoomin = geo_data[2];
 
 	  	} else {
 				return false;
